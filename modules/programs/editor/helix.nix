@@ -1,5 +1,11 @@
 { lib, pkgs, config, ... }:
 
+let
+  languages = with pkgs; [
+    nixd
+    gopls
+  ];
+in
 {
   options = {
     helix.enable = lib.mkEnableOption {
@@ -15,10 +21,12 @@
     };
 
     programs.helix.settings = {
+      theme = "tokyonight_moon";
       editor = {
+        mouse = false;
         line-number = "relative";
         lsp.display-messages = true;
-        bufferline = "always";
+        bufferline = "multiple";
         true-color = true;
       };
 
@@ -29,30 +37,23 @@
       };
 
       keys.normal.space.l = ":toggle lsp.display-inlay-hints";
+      keys.normal.esc = [ "collapse_selection" "keep_primary_selection" ];
       
       editor.statusline = {
         left = [ "mode" "spinner" "file-name" "file-modification-indicator" ];
         right = [ "version-control" "diagnostics" "selections" "position" "file-encoding" "file-line-ending" "file-type" ];
         separator = "│";
       };
-    };
 
-    home.packages = with pkgs; [
-      nixd
-    ];
-
-    programs.helix.languages = {
-      language-server.nixd = {
-        command = "${pkgs.nixd}/bin/nixd";
+      editor.cursor-shape = {
+        insert = "bar";
+        select = "underline";
       };
-           
-      language = [
-        {
-          name = "nix";
-          auto-format = true;
-          language-servers = [ "nixd" ];
-        }
-      ];
+
+      editor.end-of-line-diagnostics = "hint";
+      editor.inline-diagnostics.cursor-line = "warning";
     };
+
+    programs.helix.extraPackages = languages;
   };
 }
