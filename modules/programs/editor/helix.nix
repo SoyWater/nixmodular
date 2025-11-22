@@ -21,7 +21,7 @@ in
     };
 
     programs.helix.settings = {
-      theme = "tokyonight_moon";
+      theme = "catppuccin_mocha";
       editor = {
         mouse = false;
         line-number = "relative";

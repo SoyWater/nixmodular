@@ -30,11 +30,22 @@
    ncg = "nix-collect-garbage";
   };
   programs.fish.functions = {
-   nsf = ''
+    nsf = ''
      function nsf -a host
          sudo nixos-rebuild switch --flake ~/nixconfigs#$host --verbose
      end
-   '';
+    '';
+
+    y = ''
+      function y
+      	set tmp (mktemp -t "yazi-cwd.XXXXXX")
+      	yazi $argv --cwd-file="$tmp"
+      	if read -z cwd < "$tmp"; and [ -n "$cwd" ]; and [ "$cwd" != "$PWD" ]
+      		builtin cd -- "$cwd"
+      	end
+      	rm -f -- "$tmp"
+      end
+    '';
   };
 
  
