@@ -9,6 +9,8 @@
     inputs.self.outputs.homeManagerModules.default
   ];
 
+  ghostty.enable = true;
+
   programs.git = {
     enable = true;
     settings.user.email = "ivanlxy123@gmail.com";

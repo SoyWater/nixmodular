@@ -1,4 +1,4 @@
-{ libs, pkgs, ... }:
+{ lib, pkgs, config, ... }:
 
 {
   environment.systemPackages = with pkgs; [
@@ -21,5 +21,18 @@
     p7zip 
     python314 
     nodejs_24
+    tuigreet
   ];
+
+  programs.niri.enable = true;
+  services.greetd = {
+    enable = true;
+    useTextGreeter = true;
+    settings = {
+      default_session = {
+        command = "${pkgs.tuigreet}/bin/tuigreet --time --cmd niri-session";
+        user = "soywater";
+      };
+    };
+  };
 }

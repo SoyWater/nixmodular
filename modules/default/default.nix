@@ -29,6 +29,6 @@ in
   boot.loader.systemd-boot.enable = true;
   boot.loader.efi.canTouchEfiVariables = true;
 
-  users.defaultUserShell = pkgs.fish;
-  programs.fish.enable = true;
+  # users.defaultUserShell = pkgs.fish;
+  # programs.fish.enable = true;
 }
