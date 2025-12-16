@@ -1,15 +1,6 @@
-{ lib, config, ... }:
-
 {
-  options = {
-    yazi.enable = lib.mkEnableOption {
-      name = "enable yazi";
-      default = true;
-    };
-  };
-
-  config = lib.mkIf config.yazi.enable {
+  flake.moduels.homeManager.baseConfig = {
     programs.yazi.enable = true;
-    programs.yazi.enableFishIntegration = config.fish.enable;
+    programs.yazi.enableFishIntegration = true;
   };
 }

@@ -1,15 +1,6 @@
-{ lib, config, ... }:
-
 {
-  options = {
-    zoxide.enable = lib.mkEnableOption {
-      name = "enable zoxide";
-      default = true;
-    };
-  };
-
-  config = lib.mkIf config.zoxide.enable {
+  flake.modules.homeManager.baseConfig = {
     programs.zoxide.enable = true;
-    programs.zoxide.enableFishIntegration = config.fish.enable;
+    programs.zoxide.enableFishIntegration = true;
   };
 }
