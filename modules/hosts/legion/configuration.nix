@@ -26,7 +26,6 @@
           ghostty
           zen-browser
           direnv
-          noctalia
           minecraft
         ];
       }

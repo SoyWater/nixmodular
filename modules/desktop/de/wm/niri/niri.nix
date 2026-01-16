@@ -32,7 +32,7 @@
   flake.modules.homeManager.niri =
   { config, ... }:
   {
-    xdg.configFile."niri".source = (config.lib.my.setupSymlinkRel ./niri);
+    xdg.configFile."niri".source = (config.lib.my.setupSymlinkRel ./config);
     xdg.configFile."niri".recursive = true;
   };
 }
