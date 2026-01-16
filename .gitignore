@@ -1,1 +1,4 @@
 .legacy/*
+.qmlls.ini
+.envrc
+colors.json

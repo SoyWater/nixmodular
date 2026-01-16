@@ -25,8 +25,9 @@
           niri
           ghostty
           zen-browser
-          waybar
           direnv
+          noctalia
+          minecraft
         ];
       }
     ] ++ [
