@@ -28,13 +28,14 @@
 
     flake-parts = {
       url = "github:hercules-ci/flake-parts";
-      inputs.nixpkgs.follows = "nixpkgs";
     };
 
     noctalia = {
       url = "github:noctalia-dev/noctalia-shell";
       inputs.nixpkgs.follows = "nixpkgs";
     };
+
+    awww.url = "git+https://codeberg.org/LGFae/awww";
 
     import-tree.url = "github:vic/import-tree";
     systems.url = "github:nix-systems/default";

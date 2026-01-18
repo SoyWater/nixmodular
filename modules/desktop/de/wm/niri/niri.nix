@@ -7,7 +7,6 @@
     ];
     programs.niri.enable = true;
     programs.niri.useNautilus = false;
-    xdg.portal.config.niri."org.freedesktop.impl.portal.FileChooser" = "gnome";
   
     services.greetd =
     let

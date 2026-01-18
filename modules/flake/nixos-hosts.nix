@@ -13,15 +13,14 @@ in
         hostName = lib.removePrefix prefix name;
         specialArgs = {
           inherit inputs;
-          hostConfig = module // {
-            name = lib.removePrefix prefix name;
-          };
+          hostName = hostName;
         };
       in {
         name = hostName;
         value = inputs.nixpkgs.lib.nixosSystem {
           inherit specialArgs;
-          modules = module.imports ++ [
+          modules = [
+            module
             inputs.home-manager.nixosModules.home-manager
             {
               home-manager.extraSpecialArgs = specialArgs;

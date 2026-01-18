@@ -3,7 +3,7 @@
 # to /etc/nixos/configuration.nix instead.
 {
   flake.modules.nixos."hosts/legion" =
-  { config, lib, modulesPath, ... }:
+  { config, lib, ... }:
   {
 
     boot.initrd.availableKernelModules = [ "xhci_pci" "thunderbolt" "nvme" "usbhid" "usb_storage" "sd_mod" ];

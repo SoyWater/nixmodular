@@ -1,5 +1,4 @@
-{ config, ... }:
-
+{ config, ...}:
 {
   flake.modules.nixos."hosts/legion" =
   { pkgs, inputs, ... }:
@@ -14,7 +13,8 @@
       bluetooth
       pipewire
       power
-
+      docker
+      dms
 
       # user
       soywater

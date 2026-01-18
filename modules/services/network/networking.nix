@@ -1,8 +1,8 @@
 {
   flake.modules.nixos.networking=
-  { hostConfig, ...}:
+  { hostName, ...}:
   {
-    networking.hostName = hostConfig.name;
+    networking.hostName = hostName;
     networking.networkmanager = {
       enable = true;
       wifi.backend = "iwd";

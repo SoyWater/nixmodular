@@ -10,7 +10,7 @@
     programs.ghostty.systemd.enable = true;
     programs.ghostty.enableFishIntegration = true;
     programs.ghostty.settings = {
-      theme = "Catppuccin Mocha";
+      theme = "/home/soywater/.config/ghostty/config-dankcolors";
       window-decoration = "none";
       quit-after-last-window-closed = true;
       quit-after-last-window-closed-delay = "10m";
