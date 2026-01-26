@@ -21,21 +21,23 @@
      ncg = "nix-collect-garbage";
     };
     programs.fish.functions = {
-      nsf = ''
-       function nsf -a host
-           sudo nixos-rebuild switch --flake ~/nixconfigs#$host --verbose
-       end
-      '';
+      nsf = {
+        body = "sudo nixos-rebuild switch --flake ~/nixconfigs#$host --verbose";
+        argumentNames = "host";
+      };
 
-      y = ''
-        function y
+      config = {
+        argumentNames = "name";
+        body = "nix flake init -t mytemplates && mv config.nix $name.nix";
+      };
+
+      y.body = ''
         	set tmp (mktemp -t "yazi-cwd.XXXXXX")
         	yazi $argv --cwd-file="$tmp"
         	if read -z cwd < "$tmp"; and [ -n "$cwd" ]; and [ "$cwd" != "$PWD" ]
         		builtin cd -- "$cwd"
         	end
         	rm -f -- "$tmp"
-        end
       '';
     };
     };

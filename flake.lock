@@ -20,6 +20,19 @@
         "url": "https://codeberg.org/LGFae/awww"
       }
     },
+    "factorio-tarball": {
+      "flake": false,
+      "locked": {
+        "lastModified": 1768305873,
+        "narHash": "sha256-Omd0lj4zqZk4ioP+7aMhDZk1nOpVUl89qqor8Didpok=",
+        "type": "tarball",
+        "url": "file:///home/soywater/nixconfigs/.packages/factorio-space-age_linux_2.0.73.tar.xz"
+      },
+      "original": {
+        "type": "tarball",
+        "url": "file:///home/soywater/nixconfigs/.packages/factorio-space-age_linux_2.0.73.tar.xz"
+      }
+    },
     "flake-compat": {
       "flake": false,
       "locked": {
@@ -110,6 +123,25 @@
         "type": "github"
       }
     },
+    "matugen": {
+      "inputs": {
+        "nixpkgs": "nixpkgs_2",
+        "systems": "systems"
+      },
+      "locked": {
+        "lastModified": 1768585282,
+        "narHash": "sha256-JTH+wQTt8pyS5iPb7+r/70pYfLgi/OFTzimcRmMcs2g=",
+        "owner": "InioX",
+        "repo": "Matugen",
+        "rev": "5905cae968e02d3c1d23ee556e9a0719e5231227",
+        "type": "github"
+      },
+      "original": {
+        "owner": "InioX",
+        "repo": "Matugen",
+        "type": "github"
+      }
+    },
     "nix-index-database": {
       "inputs": {
         "nixpkgs": [
@@ -179,6 +211,22 @@
     },
     "nixpkgs_2": {
       "locked": {
+        "lastModified": 1724479785,
+        "narHash": "sha256-pP3Azj5d6M5nmG68Fu4JqZmdGt4S4vqI5f8te+E/FTw=",
+        "owner": "nixos",
+        "repo": "nixpkgs",
+        "rev": "d0e1602ddde669d5beb01aec49d71a51937ed7be",
+        "type": "github"
+      },
+      "original": {
+        "owner": "nixos",
+        "ref": "nixos-unstable",
+        "repo": "nixpkgs",
+        "type": "github"
+      }
+    },
+    "nixpkgs_3": {
+      "locked": {
         "lastModified": 1768305791,
         "narHash": "sha256-AIdl6WAn9aymeaH/NvBj0H9qM+XuAuYbGMZaP0zcXAQ=",
         "owner": "nixos",
@@ -216,15 +264,17 @@
     "root": {
       "inputs": {
         "awww": "awww",
+        "factorio-tarball": "factorio-tarball",
         "flake-parts": "flake-parts",
         "home-manager": "home-manager",
         "import-tree": "import-tree",
+        "matugen": "matugen",
         "nix-index-database": "nix-index-database",
         "nixos-hardware": "nixos-hardware",
-        "nixpkgs": "nixpkgs_2",
+        "nixpkgs": "nixpkgs_3",
         "noctalia": "noctalia",
         "sops-nix": "sops-nix",
-        "systems": "systems",
+        "systems": "systems_2",
         "zen-browser": "zen-browser"
       }
     },
@@ -270,6 +320,21 @@
       }
     },
     "systems": {
+      "locked": {
+        "lastModified": 1689347949,
+        "narHash": "sha256-12tWmuL2zgBgZkdoB6qXZsgJEH9LR3oUgpaQq2RbI80=",
+        "owner": "nix-systems",
+        "repo": "default-linux",
+        "rev": "31732fcf5e8fea42e59c2488ad31a0e651500f68",
+        "type": "github"
+      },
+      "original": {
+        "owner": "nix-systems",
+        "repo": "default-linux",
+        "type": "github"
+      }
+    },
+    "systems_2": {
       "locked": {
         "lastModified": 1681028828,
         "narHash": "sha256-Vy1rq5AaRuLzOxct8nz4T6wlgyUR7zLU309k9mBC768=",

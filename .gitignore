@@ -2,3 +2,5 @@
 .qmlls.ini
 .envrc
 colors.json
+*.tar*
+.packages/

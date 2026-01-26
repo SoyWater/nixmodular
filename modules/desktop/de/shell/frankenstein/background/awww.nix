@@ -1,5 +1,5 @@
 {
-  flake.modules.homeManager.awww=
+  flake.modules.homeManager.frankenstein=
   { inputs, pkgs, ... }:
   {
     home.packages = [

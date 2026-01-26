@@ -6,6 +6,7 @@
       nixd
       gopls
       typescript-language-server
+      vscode-json-languageserver
     ];
   in
   {
@@ -31,7 +32,11 @@
         };
 
         keys.normal.space.l = ":toggle lsp.display-inlay-hints";
-        keys.normal.esc = [ "collapse_selection" "keep_primary_selection" ];
+        keys.normal = {
+          ret = [ "goto_word" ];
+          esc = [ "collapse_selection" "keep_primary_selection" ];
+        };
+          
       
         editor.statusline = {
           left = [ "mode" "spinner" "file-name" "file-modification-indicator" ];

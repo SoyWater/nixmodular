@@ -36,9 +36,13 @@
     };
 
     awww.url = "git+https://codeberg.org/LGFae/awww";
+    matugen.url = "github:/InioX/Matugen";
 
     import-tree.url = "github:vic/import-tree";
     systems.url = "github:nix-systems/default";
+
+    factorio-tarball.url = "file:///home/soywater/nixconfigs/.packages/factorio-space-age_linux_2.0.73.tar.xz";
+    factorio-tarball.flake = false;
   };
 
   outputs = { flake-parts, import-tree, ... } @ inputs:

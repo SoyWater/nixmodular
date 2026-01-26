@@ -11,6 +11,7 @@
     programs.ghostty.enableFishIntegration = true;
     programs.ghostty.settings = {
       theme = "/home/soywater/.config/ghostty/config-dankcolors";
+      font-family = "JetBrainsMono Nerd Font";
       window-decoration = "none";
       quit-after-last-window-closed = true;
       quit-after-last-window-closed-delay = "10m";
