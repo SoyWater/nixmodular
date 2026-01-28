@@ -173,6 +173,12 @@ window-rule {
     open-floating true
 }
 
+cursor {
+    xcursor-size 50
+
+    hide-when-typing
+}
+
 
 include "monitors.kdl"
 include "inputs.kdl"
