@@ -43,6 +43,7 @@
     ];
 
     hardware.enableAllFirmware = true;
+    hardware.nvidia.modesetting.enable = true;
     boot.kernelParams = [ "usbhid.quirks=048d:c195:0x0004" ];
     hardware.firmware = [ pkgs.linux-firmware ];
     windows-boot-drive = "FS0";
