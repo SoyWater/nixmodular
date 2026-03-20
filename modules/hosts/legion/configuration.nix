@@ -20,6 +20,8 @@
       ffmpeg
       udiskie
       nixld
+      wireshark
+      zen-browser
 
       # user
       soywater
@@ -36,6 +38,8 @@
           gh-dash
           opencode
           factorio
+          forticlient
+          intellij
         ];
       }
     ] ++ [
@@ -49,6 +53,10 @@
     windows-boot-drive = "FS0";
     bootLoader = "limine";
     limine.secureBoot = true;
+
+    systemd.tmpfiles.rules = [
+      "w /sys/bus/platform/drivers/ideapad_acpi/VPC2004:00/conservation_mode - - - - 1"
+    ];
 
 
     nixpkgs.config.allowUnfree = true;

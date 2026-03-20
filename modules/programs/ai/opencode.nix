@@ -18,7 +18,9 @@ in
     home.packages = with pkgs; [
       opencode
     ];
-    xdg.configFile."opencode/opencode.json".source = (config.lib.my.setupSymlinkRel ./opencode.json);
+    xdg.configFile."opencode/opencode.json".source = (config.lib.my.setupSymlinkRel ./opencode/opencode.json);
+    xdg.configFile."opencode/agents".source = (config.lib.my.setupSymlinkRel ./opencode/agents);
+    xdg.configFile."opencode/skills".source = (config.lib.my.setupSymlinkRel ./opencode/skills);
 
     imports = [
     ];

@@ -9,7 +9,7 @@ in
     users.users.${username} = {
       isNormalUser = true;
       description = username;
-      extraGroups = [ "networkmanager" "wheel" "docker" ];
+      extraGroups = [ "networkmanager" "wheel" "docker" "wireshark" ];
       packages = with pkgs; [];
       useDefaultShell = true;
     };
@@ -27,6 +27,7 @@ in
         enable = true;
         settings.user.email = "ivanlxy123@gmail.com";
         settings.user.name = "SoyWater";
+        settings.init.defaultBranch = "main";
       };
 
       programs.gh = {

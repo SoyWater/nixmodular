@@ -1,5 +1,22 @@
+let
+  moduleName = "zen-browser";
+in
 {
-  flake.modules.homeManager.zen-browser =
+  flake.modules.nixos.${moduleName}=
+  { pkgs, ... }:
+  {
+    environment.systemPackages = with pkgs; [
+    ];
+
+    imports = [
+    ];
+
+    xdg.mime.defaultApplications = {
+      "application/pdf" = "zen-beta.desktop";
+    };
+  };
+
+  flake.modules.homeManager.${moduleName} =
   { inputs, pkgs, ... }:
   let
     zenFixed = inputs.zen-browser.packages."${pkgs.system}".default.overrideAttrs (
@@ -24,5 +41,6 @@
   in
   {
     home.packages = [ zenWithWayland ];
+
   };
 }

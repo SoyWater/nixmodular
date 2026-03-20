@@ -7,6 +7,7 @@
       gopls
       typescript-language-server
       vscode-json-languageserver
+      ty
     ];
   in
   {

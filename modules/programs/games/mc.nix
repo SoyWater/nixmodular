@@ -9,7 +9,14 @@
   { pkgs, ... }:
   {
     home.packages = with pkgs; [
-      prismlauncher
+      (prismlauncher.override {
+        jdks = [
+          jdk21
+          jdk17
+          jdk8
+          temurin-bin-25
+        ];
+      })
     ];
 
   };
