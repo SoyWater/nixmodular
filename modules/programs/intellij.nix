@@ -16,7 +16,7 @@ in
   { pkgs, ... }:
   {
     home.packages = with pkgs; [
-      jetbrains.idea-ultimate
+      jetbrains.idea
       temurin-bin-21
     ];
 

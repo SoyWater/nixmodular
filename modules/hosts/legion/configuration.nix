@@ -22,6 +22,7 @@
       nixld
       wireshark
       zen-browser
+      cloudflared
 
       # user
       soywater

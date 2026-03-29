@@ -2,7 +2,7 @@
   flake.modules.nixos.pipewire =
   { pkgs, ... }:
   {
-    hardware.pulseaudio.enable = false;
+    services.pulseaudio.enable = false;
     services.pipewire = {
       enable = true; # if not already enabled
       alsa.enable = true;

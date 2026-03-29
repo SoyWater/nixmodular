@@ -9,7 +9,7 @@ in
     users.users.${username} = {
       isNormalUser = true;
       description = username;
-      extraGroups = [ "networkmanager" "wheel" "docker" "wireshark" ];
+      extraGroups = [ "networkmanager" "wheel" "docker" "wireshark" "video" "render" ];
       packages = with pkgs; [];
       useDefaultShell = true;
     };
@@ -25,6 +25,7 @@ in
 
       programs.git = {
         enable = true;
+        lfs.enable = true;
         settings.user.email = "ivanlxy123@gmail.com";
         settings.user.name = "SoyWater";
         settings.init.defaultBranch = "main";

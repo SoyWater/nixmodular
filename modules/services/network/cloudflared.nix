@@ -1,26 +1,12 @@
 let
-  moduleName = "nixld";
+  moduleName = "cloudflared";
 in
 {
   flake.modules.nixos.${moduleName}=
   { pkgs, ... }:
   {
-    programs.nix-ld.enable = true;
+    services.cloudflared.enable = true;
     environment.systemPackages = with pkgs; [
-      libXScrnSaver
-      libX11
-      libXcursor
-      libXinerama
-      libXrandr
-      libXi
-      libGL
-      SDL2
-      wayland
-      zlib
-      openssl
-      stdenv.cc.cc
-      curl
-      expat
     ];
 
     imports = [

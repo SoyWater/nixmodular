@@ -7,6 +7,21 @@
       "enabled": true
     }
   },
+  "provider": {
+    "modal": {
+      "npm": "@ai-sdk/openai-compatible",
+      "name": "Modal",
+      "options": {
+        "baseURL": "https://api.us-west-2.modal.direct/v1",
+        "apiKey": "modalresearch_psY7Z-rkSjiM-MoHxJnmGnccV4jqUU-nALD6c9wnXE0"
+      },
+      "models": {
+        "zai-org/GLM-5-FP8": {
+          "name": "GLM-5"
+        }
+      }
+    }
+  },
   "permission": {
     "read": {
       "*": "allow",

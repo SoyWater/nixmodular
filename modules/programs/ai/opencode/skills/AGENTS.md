@@ -1,7 +1,8 @@
 ## About Me
 
 **Name:** Ivan
-**Role:** Software developer with a background in devops, networking
+**Role:** Software developer with a background in product management
+**Location:** Czechia, Prague
 
 ### Response Style
 
