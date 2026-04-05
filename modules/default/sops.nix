@@ -1,22 +1,21 @@
 
 {
   flake.modules.nixos.baseConfig =
-  { inputs, config, ... }:
+  { inputs, pkgs, ... }:
 
-let
-  isEd25519 = k: k.type == "ed25519";
-  getKeyPath = k: k.path;
-  keys = builtins.filter isEd25519 config.services.openssh.hostKeys;
-in
 {
     imports = [
       inputs.sops-nix.nixosModules.sops
     ];
 
-    sops = {
-      age.sshKeyPaths = map getKeyPath keys;
-    };
+    environment.systemPackages = with pkgs; [
+      sops
+    ];
 
-    sops.defaultSopsFile = ../../secrets/secrets.yaml;
+    sops = {
+      age.keyFile = "/var/lib/sops-nix/keys.txt";
+      defaultSopsFile = ../../secrets/secrets.yaml;
+      defaultSopsFormat = "yaml";
+    };
   };
 }

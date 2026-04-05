@@ -1,0 +1,11 @@
+keys:
+  - &primary age13z2jsxzq6eq3qcyurm6xcnw4pztu7gp4pnueum8z5papz9t0zarswu595j
+  - &soywater-legion age1l733753aef7p4mp5nvl5t3hqyy86fgvxz2jc62wrnzcw2n8ed38sxxp3vu
+creation_rules:
+  - path_regex: secrets/secrets.yaml$
+    key_groups:
+      - age:
+        - *primary
+        - *soywater-legion
+
+

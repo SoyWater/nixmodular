@@ -39,52 +39,35 @@
     matugen.url = "github:/InioX/Matugen";
 
     import-tree.url = "github:vic/import-tree";
-    systems.url = "github:nix-systems/default";
 
     factorio-tarball.url = "file:///home/soywater/nixconfigs/.packages/factorio-space-age_linux_2.0.73.tar.xz";
     factorio-tarball.flake = false;
   };
 
   outputs = { flake-parts, import-tree, ... } @ inputs:
-    flake-parts.lib.mkFlake { inherit inputs; } (import-tree ./modules);
+    flake-parts.lib.mkFlake { inherit inputs; } 
+    { 
+      systems = [
+        "aarch64-darwin"
+        "aarch64-linux"
+        "x86_64-darwin"
+        "x86_64-linux"
+      ];
 
-    # let
-    #   system = "x86_64-linux";
-    #   pkgs = import nixpkgs {
-    #     inherit system;
-    #    	config.allowUnfree = true;
-    #   };
-    #   lib = nixpkgs.lib;
-    #   hostDir = ./hosts;
-    #   hosts = builtins.filter (x: x != null) (lib.mapAttrsToList (name: value: if (value == "directory") then name else null) (builtins.readDir hostDir));
-    # in
-    # {
-    #   nixosConfigurations = builtins.listToAttrs (map 
-    #   	(host: {
-    #       name = host;
-    #   	  value = lib.nixosSystem {
-    #   	    modules = [
+      imports = [
+        inputs.flake-parts.flakeModules.modules         
+        ./nixos-hosts.nix
+        (import-tree ./modules)
+      ];
 
-    #   	      (hostDir + "/${host}")
-    #   	      ./modules
-
-    #   	      home-manager.nixosModules.home-manager {
-    #   	        home-manager.extraSpecialArgs = { inherit self inputs; };
-    #   	        home-manager.useGlobalPkgs = true;
-    #          		home-manager.useUserPackages = true;
-    #           }
-
-    #   	    ];
-
-    #         specialArgs = {
-    #   	      inherit inputs system host;
-    #   	    };
-    #   	  };
-	  
-    #   	}) 
-    #   	hosts
-    #   );
-
-    #   homeManagerModules.default = ./modules/programs;
-    # };
+      perSystem = { system, ... }: {
+        _module.args.pkgs = import inputs.nixpkgs {
+          inherit system;
+          overlays = [ ];
+          config = {
+            allowUnfree = true;
+          };
+        };
+      };
+    };
 }

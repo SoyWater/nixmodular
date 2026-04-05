@@ -20,9 +20,6 @@ in
       home.homeDirectory = "/home/" + username;
       home.stateVersion = "25.05";
  
-      imports = [
-      ];
-
       programs.git = {
         enable = true;
         lfs.enable = true;
@@ -38,15 +35,6 @@ in
           co = "pr checkout";
           pv = "pr view";
         };
-      };
-
-      home.packages = with pkgs; [
-      ];
-
-      home.file = {
-      };
-
-      home.sessionVariables = {
       };
 
       programs.home-manager.enable = true;

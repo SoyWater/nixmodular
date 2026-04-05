@@ -1,5 +1,6 @@
 { config, ...}:
 {
+  flake.system."legion" = "x86_64-linux";
   flake.modules.nixos."hosts/legion" =
   { pkgs, inputs, ... }:
   {
@@ -58,9 +59,6 @@
     systemd.tmpfiles.rules = [
       "w /sys/bus/platform/drivers/ideapad_acpi/VPC2004:00/conservation_mode - - - - 1"
     ];
-
-
-    nixpkgs.config.allowUnfree = true;
 
     system.stateVersion = "25.05"; # Did you read the comment?
   };

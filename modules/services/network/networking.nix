@@ -5,7 +5,7 @@
     networking.hostName = hostName;
     networking.networkmanager = {
       enable = true;
-      wifi.backend = "iwd";
     };
+
   };
 }

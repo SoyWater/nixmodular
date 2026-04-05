@@ -32,7 +32,7 @@
     # networking.interfaces.enp129s0.useDHCP = lib.mkDefault true;
     # networking.interfaces.wlp130s0.useDHCP = lib.mkDefault true;
 
-    nixpkgs.hostPlatform = lib.mkDefault "x86_64-linux";
+    # nixpkgs.hostPlatform = lib.mkDefault "x86_64-linux";
     hardware.cpu.intel.updateMicrocode = lib.mkDefault config.hardware.enableRedistributableFirmware;
   };
 }

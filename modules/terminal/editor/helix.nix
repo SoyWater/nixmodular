@@ -8,6 +8,7 @@
       typescript-language-server
       vscode-json-languageserver
       ty
+      clang-tools
     ];
   in
   {
