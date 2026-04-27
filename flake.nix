@@ -58,6 +58,7 @@
         inputs.flake-parts.flakeModules.modules         
         ./nixos-hosts.nix
         (import-tree ./modules)
+        (import-tree ./wrapped-applications)
       ];
 
       perSystem = { system, ... }: {

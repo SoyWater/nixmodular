@@ -14,5 +14,3 @@ if [[ -n "$1" ]] ; then
 else
   echo "Usage: compress <fileName>.<ext> ...<file>"
 fi
-
-    

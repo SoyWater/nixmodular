@@ -1,6 +1,5 @@
 #!/usr/bin/env bash
 
-# Check if an argument was provided to satisfy 'set -u' (nounset)
 if [ -z "${1:-}" ]; then
     echo "Usage: extract <filename>"
     exit 1
@@ -48,7 +47,6 @@ if [ -f "$1" ] ; then
             ;;
         *.7z)
             foldername="${filename%.7z}"
-            # 7z uses -o without a space
             7z x "$1" -o"$foldername"
             ;;
         *.rar)
@@ -59,7 +57,6 @@ if [ -f "$1" ] ; then
         *.bz2)
             foldername="${filename%.bz2}"
             mkdir -p "$foldername"
-            # bzip2 is a file compressor, so we stream it to a file inside the new dir
             bzip2 -dc "$1" > "$foldername/$foldername"
             ;;
         *.gz)

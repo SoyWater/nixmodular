@@ -11,11 +11,11 @@ in
     (name: module:
       let
         hostName = lib.removePrefix prefix name;
-        specialArgs = {
-          inherit inputs;
-          hostName = hostName;
-        };
         system = config.flake.system.${hostName};
+        specialArgs = withSystem system ({ config, ... }: {
+          inherit inputs hostName;
+          packages = config.packages;
+        });
       in {
         name = hostName;
         value = inputs.nixpkgs.lib.nixosSystem {

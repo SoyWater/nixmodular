@@ -2,7 +2,7 @@
 {
   flake.system."legion" = "x86_64-linux";
   flake.modules.nixos."hosts/legion" =
-  { pkgs, inputs, ... }:
+  { pkgs, inputs, packages, ... }:
   {
     
     imports = with config.flake.modules.nixos; [
@@ -16,13 +16,11 @@
       power
       docker
       dms
-      compression
       fonts
       ffmpeg
       udiskie
       nixld
       wireshark
-      zen-browser
       cloudflared
       virtman
 
@@ -34,7 +32,6 @@
           baseConfig
           niri
           ghostty
-          zen-browser
           direnv
           minecraft
           lutris
@@ -49,6 +46,18 @@
       }
     ] ++ [
       inputs.nixos-hardware.nixosModules.lenovo-legion-16iax10h
+    ];
+
+    environment.systemPackages = [
+      packages.compress
+    ];
+
+    xdg.mime.defaultApplications = {
+      "application/pdf" = "zen-beta.desktop";
+    };
+
+    home-manager.users.soywater.home.packages = [
+      packages.zen-browser-wayland
     ];
 
     hardware.enableAllFirmware = true;
