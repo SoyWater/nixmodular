@@ -1,5 +1,5 @@
 let
-  moduleName = "intellij";
+  moduleName = "zoom";
 in
 {
   flake.modules.nixos.${moduleName}=
@@ -16,8 +16,7 @@ in
   { pkgs, ... }:
   {
     home.packages = with pkgs; [
-      jetbrains.idea
-      temurin-bin-21
+      zoom-us
     ];
 
     imports = [

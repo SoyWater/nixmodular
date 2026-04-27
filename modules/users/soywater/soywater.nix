@@ -9,7 +9,7 @@ in
     users.users.${username} = {
       isNormalUser = true;
       description = username;
-      extraGroups = [ "networkmanager" "wheel" "docker" "wireshark" "video" "render" ];
+      extraGroups = [ "networkmanager" "wheel" "docker" "libvirtd" "wireshark" "video" "render" ];
       packages = with pkgs; [];
       useDefaultShell = true;
     };

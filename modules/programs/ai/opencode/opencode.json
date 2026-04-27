@@ -31,16 +31,12 @@
     },
     "edit": "allow",
     "bash": {
-      "*": "ask",
-      "ls": "allow",
-      "mkdir": "allow",
-      "npm": "allow",
+      "*": "allow",
       "sudo *": "deny",
       "rm -rf /": "deny",
       "rm -rf /*": "deny",
       "rm -rf ~": "deny",
       "rm -rf ~/*": "deny",
-      ":(){:|:&};:": "deny"
     },
     "external_directory": "ask",
   },

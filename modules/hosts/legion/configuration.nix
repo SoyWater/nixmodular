@@ -24,6 +24,7 @@
       wireshark
       zen-browser
       cloudflared
+      virtman
 
       # user
       soywater
@@ -41,7 +42,9 @@
           opencode
           factorio
           forticlient
-          intellij
+          editors
+          codex
+          zoom
         ];
       }
     ] ++ [
