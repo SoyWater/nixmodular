@@ -44,6 +44,26 @@
         "type": "github"
       }
     },
+    "dms-plugin-registry": {
+      "inputs": {
+        "nixpkgs": [
+          "nixpkgs"
+        ]
+      },
+      "locked": {
+        "lastModified": 1777368078,
+        "narHash": "sha256-7lYxzEMQGDt8FgniDfZrAXT9FeE9mvUQVMYjsjrwc8c=",
+        "owner": "AvengeMedia",
+        "repo": "dms-plugin-registry",
+        "rev": "4eadcd73f5cd30529d37891814797b4e793e5206",
+        "type": "github"
+      },
+      "original": {
+        "owner": "AvengeMedia",
+        "repo": "dms-plugin-registry",
+        "type": "github"
+      }
+    },
     "factorio-flake": {
       "inputs": {
         "nixpkgs": [
@@ -406,6 +426,7 @@
       "inputs": {
         "awww": "awww",
         "dms": "dms",
+        "dms-plugin-registry": "dms-plugin-registry",
         "factorio-flake": "factorio-flake",
         "flake-parts": "flake-parts",
         "home-manager": "home-manager",

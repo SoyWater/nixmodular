@@ -1,0 +1,13 @@
+[config]
+
+[templates.fcitx5]
+input_path = '/home/soywater/.config/matugen/templates/fcitx5-theme.conf'
+output_path = '/home/soywater/.local/share/fcitx5/themes/dank-matugen/theme.conf'
+
+[templates.fcitx5_panel]
+input_path = '/home/soywater/.config/matugen/templates/fcitx5-panel.svg'
+output_path = '/home/soywater/.local/share/fcitx5/themes/dank-matugen/panel.svg'
+
+[templates.fcitx5_highlight]
+input_path = '/home/soywater/.config/matugen/templates/fcitx5-highlight.svg'
+output_path = '/home/soywater/.local/share/fcitx5/themes/dank-matugen/highlight.svg'

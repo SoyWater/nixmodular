@@ -1,6 +1,7 @@
 {
-  flake.modules.nixos.baseConfig = {
-    
+  flake.modules.nixos.baseConfig =
+  { pkgs, ... }:
+  {
     time.timeZone = "Asia/Singapore";
 
     i18n.defaultLocale = "en_SG.UTF-8";
@@ -15,6 +16,17 @@
       LC_PAPER = "en_SG.UTF-8";
       LC_TELEPHONE = "en_SG.UTF-8";
       LC_TIME = "en_SG.UTF-8";
+    };
+
+    i18n.inputMethod = {
+      enable = true;
+      type = "fcitx5";
+      fcitx5 = {
+        waylandFrontend = true;
+        addons = with pkgs; [
+          qt6Packages.fcitx5-chinese-addons
+        ];
+      };
     };
 
     services.xserver.xkb = {

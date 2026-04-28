@@ -10,7 +10,7 @@ in
       isNormalUser = true;
       initialPassword = "password";
       description = username;
-      extraGroups = [ "networkmanager" "wheel" "docker" "libvirtd" "wireshark" "video" "render" ];
+      extraGroups = [ "greeter" "networkmanager" "wheel" "docker" "libvirtd" "wireshark" "video" "render" ];
       packages = with pkgs; [];
       useDefaultShell = true;
     };

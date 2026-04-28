@@ -51,6 +51,11 @@
       inputs.quickshell.follows = "quickshell";
     };
 
+    dms-plugin-registry = {
+      url = "github:AvengeMedia/dms-plugin-registry";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
+
     awww.url = "git+https://codeberg.org/LGFae/awww";
     matugen.url = "github:/InioX/Matugen";
 
