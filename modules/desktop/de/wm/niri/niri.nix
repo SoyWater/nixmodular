@@ -37,6 +37,34 @@
       programs.niri.config = null;
     })
     {
+      home.packages = [
+        (pkgs.writeShellApplication {
+          name = "niri-force-kill-picked-window";
+          runtimeInputs = with pkgs; [
+            gnugrep
+            niri-unstable
+            procps
+          ];
+          text = ''
+            set -eu
+
+            selection="$(niri msg pick-window 2>/dev/null || true)"
+            pid="$(printf '%s\n' "$selection" | grep -m1 -oE 'PID:[[:space:]]*[0-9]+' | grep -oE '[0-9]+$' || true)"
+
+            case "$pid" in
+              ""|*[!0-9]*)
+                exit 0
+                ;;
+            esac
+
+            if [ "$pid" -le 1 ]; then
+              exit 0
+            fi
+
+            kill -KILL -- "$pid" 2>/dev/null || true
+          '';
+        })
+      ];
       home.sessionVariables.TERMCMD = "ghostty --title=termfilechooser --command";
       xdg.configFile."xdg-desktop-portal-termfilechooser/config".text = ''
         [filechooser]

@@ -25,6 +25,7 @@ binds {
     
     Mod+O repeat=false { toggle-overview; }
     Mod+Q repeat=false { close-window; }
+    Mod+Ctrl+Shift+Q hotkey-overlay-title="Force Kill Picked Window" { spawn "niri-force-kill-picked-window"; }
 
     Mod+Left  { focus-column-left; }
     Mod+Down  { focus-window-down; }
