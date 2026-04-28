@@ -35,6 +35,22 @@
       inputs.nixpkgs.follows = "nixpkgs";
     };
 
+    niri = {
+      url = "github:sodiboo/niri-flake";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
+
+    quickshell = {
+      url = "git+https://git.outfoxxed.me/quickshell/quickshell";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
+
+    dms = {
+      url = "github:AvengeMedia/DankMaterialShell";
+      inputs.nixpkgs.follows = "nixpkgs";
+      inputs.quickshell.follows = "quickshell";
+    };
+
     awww.url = "git+https://codeberg.org/LGFae/awww";
     matugen.url = "github:/InioX/Matugen";
 
@@ -75,6 +91,7 @@
           inherit system;
           overlays = [
             openldapNoChecksOverlay
+            inputs.niri.overlays.niri
           ];
           config = {
             allowUnfree = true;

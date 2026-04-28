@@ -30,6 +30,7 @@
       {
         home-manager.users.soywater.imports = with config.flake.modules.homeManager; [
           baseConfig
+          dms
           niri
           ghostty
           direnv
