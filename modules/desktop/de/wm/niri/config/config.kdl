@@ -173,17 +173,13 @@ window-rule {
     open-floating true
 }
 
-cursor {
-    xcursor-size 50
 
-    hide-when-typing
-}
-
-
-include "monitors.kdl"
 include "inputs.kdl"
 include "binds.kdl"
 
+include "dms/cursor.kdl"
+include "dms/outputs.kdl"
+include "dms/backdrop.kdl"
 include "dms/alttab.kdl"
 include "dms/wpblur.kdl"
 include "dms/colors.kdl"

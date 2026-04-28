@@ -30,11 +30,14 @@
       {
         home-manager.users.soywater.imports = with config.flake.modules.homeManager; [
           baseConfig
+          dms
           niri
           ghostty
           direnv
           opencode
         ];
+
+        home-manager.users.soywater.dotFilesPath = "/home/soywater/test-configs";
       }
     ] ++ [
       inputs.nixos-hardware.nixosModules.lenovo-legion-16iax10h

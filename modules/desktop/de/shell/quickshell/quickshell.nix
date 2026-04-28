@@ -6,13 +6,16 @@
   };
 
   flake.modules.homeManager.quickshell =
-  { config, pkgs, ... }:
+  { config, inputs, pkgs, ... }:
   {
     home.packages = [
       pkgs.kdePackages.qtdeclarative
     ];
-    programs.quickshell.enable = true;
-    programs.quickshell.systemd.enable = true;
+    programs.quickshell = {
+      enable = true;
+      package = inputs.quickshell.packages.${pkgs.stdenv.hostPlatform.system}.default;
+      systemd.enable = true;
+    };
     xdg.configFile."quickshell".source = (config.lib.my.setupSymlinkRel ./quickshell);
     xdg.configFile."quickshell".recursive = true;
 
