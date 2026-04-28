@@ -40,8 +40,10 @@
 
     import-tree.url = "github:vic/import-tree";
 
-    factorio-tarball.url = "file:///home/soywater/nixconfigs/.packages/factorio-space-age_linux_2.0.73.tar.xz";
-    factorio-tarball.flake = false;
+    factorio-flake = {
+      url = "github:SoyWater/factorio-flake";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
   };
 
   outputs = { flake-parts, import-tree, ... } @ inputs:

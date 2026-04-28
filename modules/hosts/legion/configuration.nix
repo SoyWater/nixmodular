@@ -34,7 +34,6 @@
           ghostty
           direnv
           opencode
-          factorio
         ];
       }
     ] ++ [
@@ -62,6 +61,7 @@
     users.users.soywater.packages = [
       packages.codex
       packages.editors
+      packages.factorio
       packages.forticlient
       packages.gh-dash
       packages.lutris

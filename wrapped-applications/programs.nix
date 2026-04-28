@@ -21,6 +21,7 @@
         zed-editor
       ];
     };
+    packages.factorio = inputs'.factorio-flake.packages.default;
 
     packages.forticlient =
       let

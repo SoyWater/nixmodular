@@ -20,17 +20,24 @@
         "url": "https://codeberg.org/LGFae/awww"
       }
     },
-    "factorio-tarball": {
-      "flake": false,
+    "factorio-flake": {
+      "inputs": {
+        "nixpkgs": [
+          "nixpkgs"
+        ]
+      },
       "locked": {
-        "lastModified": 1768305873,
-        "narHash": "sha256-Omd0lj4zqZk4ioP+7aMhDZk1nOpVUl89qqor8Didpok=",
-        "type": "tarball",
-        "url": "file:///home/soywater/nixconfigs/.packages/factorio-space-age_linux_2.0.73.tar.xz"
+        "lastModified": 1777369198,
+        "narHash": "sha256-vPci9BmJtcKIeAJ6e92cfNgnBRBhJgTV+J4NN2Ng+vw=",
+        "owner": "SoyWater",
+        "repo": "factorio-flake",
+        "rev": "7ae289ab4d2dc2c7bb23143d4a6ec19511fd7bc9",
+        "type": "github"
       },
       "original": {
-        "type": "tarball",
-        "url": "file:///home/soywater/nixconfigs/.packages/factorio-space-age_linux_2.0.73.tar.xz"
+        "owner": "SoyWater",
+        "repo": "factorio-flake",
+        "type": "github"
       }
     },
     "flake-compat": {
@@ -264,7 +271,7 @@
     "root": {
       "inputs": {
         "awww": "awww",
-        "factorio-tarball": "factorio-tarball",
+        "factorio-flake": "factorio-flake",
         "flake-parts": "flake-parts",
         "home-manager": "home-manager",
         "import-tree": "import-tree",
