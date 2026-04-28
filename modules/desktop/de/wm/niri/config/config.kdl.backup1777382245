@@ -194,5 +194,3 @@ include "dms/binds.kdl"
 include "dms/outputs.kdl"
 
 include "dms/windowrules.kdl"
-
-include "dms/cursor.kdl"
