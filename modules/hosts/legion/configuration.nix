@@ -33,15 +33,8 @@
           niri
           ghostty
           direnv
-          minecraft
-          lutris
-          gh-dash
           opencode
           factorio
-          forticlient
-          editors
-          codex
-          zoom
         ];
       }
     ] ++ [
@@ -52,12 +45,29 @@
       packages.compress
     ];
 
+    nix.settings = {
+      extra-substituters = [
+        "https://aseipp-nix-cache.freetls.fastly.net?priority=30"
+        "https://nix-community.cachix.org?priority=35"
+      ];
+      extra-trusted-public-keys = [
+        "nix-community.cachix.org-1:mB9FSh9qf2dCimDSUo8Zy7bkq5CX+/rkCWyvRCYg3Fs="
+      ];
+    };
+
     xdg.mime.defaultApplications = {
       "application/pdf" = "zen-beta.desktop";
     };
 
-    home-manager.users.soywater.home.packages = [
+    users.users.soywater.packages = [
+      packages.codex
+      packages.editors
+      packages.forticlient
+      packages.gh-dash
+      packages.lutris
+      packages.minecraft
       packages.zen-browser-wayland
+      packages.zoom
     ];
 
     hardware.enableAllFirmware = true;

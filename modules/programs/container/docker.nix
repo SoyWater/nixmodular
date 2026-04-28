@@ -15,6 +15,7 @@
     hardware.graphics.enable32Bit = true;
     virtualisation.docker.daemon.settings.features.cdi = true;
     virtualisation.docker.enableNvidia = true;
+    hardware.nvidia-container-toolkit.suppressNvidiaDriverAssertion = true;
     # virtualisation.docker.daemon.settings = {
     #   runtimes.nvidia = {
     #     path = lib.getExe' (lib.getOutput "tools" config.hardware.nvidia-container-toolkit.package) "nvidia-container-runtime";

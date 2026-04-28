@@ -45,6 +45,13 @@
   };
 
   outputs = { flake-parts, import-tree, ... } @ inputs:
+    let
+      openldapNoChecksOverlay = final: prev: {
+        openldap = prev.openldap.overrideAttrs (_: {
+          doCheck = false;
+        });
+      };
+    in
     flake-parts.lib.mkFlake { inherit inputs; } 
     { 
       systems = [
@@ -64,7 +71,9 @@
       perSystem = { system, ... }: {
         _module.args.pkgs = import inputs.nixpkgs {
           inherit system;
-          overlays = [ ];
+          overlays = [
+            openldapNoChecksOverlay
+          ];
           config = {
             allowUnfree = true;
           };

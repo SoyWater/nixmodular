@@ -8,6 +8,7 @@ in
   {
     users.users.${username} = {
       isNormalUser = true;
+      initialPassword = "password";
       description = username;
       extraGroups = [ "networkmanager" "wheel" "docker" "libvirtd" "wireshark" "video" "render" ];
       packages = with pkgs; [];
