@@ -80,6 +80,10 @@
 
     home.packages = with pkgs; [
       adw-gtk3
+      capitaine-cursors
+      phinger-cursors
+      vanilla-dmz
+      whitesur-cursors
       wl-mirror
       gpu-screen-recorder
       udisks2
@@ -88,6 +92,14 @@
       e2fsprogs
       exfatprogs
     ];
+
+    home.pointerCursor = {
+      enable = true;
+      package = pkgs.bibata-cursors;
+      name = "Bibata-Modern-Ice";
+      size = 24;
+      dotIcons.enable = false;
+    };
 
     xdg.configFile."fcitx5/conf/classicui.conf".source =
       config.lib.my.setupSymlinkRel ./fcitx5/conf/classicui.conf;
