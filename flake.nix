@@ -56,6 +56,12 @@
       inputs.nixpkgs.follows = "nixpkgs";
     };
 
+    vicinae.url = "github:vicinaehq/vicinae";
+    vicinae-extensions = {
+      url = "github:vicinaehq/extensions";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
+
     awww.url = "git+https://codeberg.org/LGFae/awww";
     matugen.url = "github:/InioX/Matugen";
 

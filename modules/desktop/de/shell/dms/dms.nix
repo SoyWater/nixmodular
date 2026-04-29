@@ -9,6 +9,10 @@
 
     programs.dank-material-shell = {
       enable = true;
+      enableCalendarEvents = false;
+      enableClipboardPaste = false;
+      enableVPN = false;
+
       greeter = {
         enable = true;
         compositor.name = "niri";
@@ -16,6 +20,14 @@
       };
     };
     services.upower.enable = lib.mkDefault true;
+    nix.settings = {
+      extra-substituters = [
+        "https://vicinae.cachix.org"
+      ];
+      extra-trusted-public-keys = [
+        "vicinae.cachix.org-1:1kDrfienkGHPYbkpNj1mWTr7Fm1+zcenzgTizIcI3oc="
+      ];
+    };
   };
 
   flake.modules.homeManager.dms =
@@ -24,16 +36,45 @@
     imports = [
       inputs.dms.homeModules.dank-material-shell
       inputs.dms-plugin-registry.modules.default
+      inputs.vicinae.homeManagerModules.default
     ];
 
     programs.dank-material-shell = {
       enable = true;
       systemd.enable = true;
+      enableCalendarEvents = false;
+      enableClipboardPaste = false;
+      enableVPN = false;
       plugins = {
         displayMirror.enable = true;
         screenRecorder.enable = true;
         usbManager.enable = true;
       };
+    };
+
+    services.vicinae = {
+      enable = true;
+      systemd = {
+        enable = true;
+        autoStart = true;
+        environment = {
+          USE_LAYER_SHELL = "1";
+        };
+      };
+      settings = {
+        close_on_focus_loss = true;
+        consider_preedit = true;
+        favorites = [ "clipboard:history" ];
+        pop_to_root_on_close = true;
+        search_files_in_root = true;
+        launcher_window = {
+          opacity = 0.98;
+        };
+      };
+      extensions = with inputs.vicinae-extensions.packages.${pkgs.stdenv.hostPlatform.system}; [
+        firefox
+        nix
+      ];
     };
 
     home.packages = with pkgs; [
@@ -60,6 +101,9 @@
 
     xdg.configFile."matugen/templates/fcitx5-highlight.svg".source =
       config.lib.my.setupSymlinkRel ./matugen/templates/fcitx5-highlight.svg;
+
+    xdg.configFile."matugen/templates/vicinae.toml".source =
+      config.lib.my.setupSymlinkRel ./matugen/templates/vicinae.toml;
 
     xdg.dataFile."fcitx5/themes/dank-matugen/arrow.png".source =
       "${pkgs.fcitx5}/share/fcitx5/themes/default-dark/arrow.png";

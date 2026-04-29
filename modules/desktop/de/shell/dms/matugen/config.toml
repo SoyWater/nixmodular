@@ -11,3 +11,8 @@ output_path = '/home/soywater/.local/share/fcitx5/themes/dank-matugen/panel.svg'
 [templates.fcitx5_highlight]
 input_path = '/home/soywater/.config/matugen/templates/fcitx5-highlight.svg'
 output_path = '/home/soywater/.local/share/fcitx5/themes/dank-matugen/highlight.svg'
+
+[templates.vicinae]
+input_path = '/home/soywater/.config/matugen/templates/vicinae.toml'
+output_path = '/home/soywater/.local/share/vicinae/themes/matugen.toml'
+post_hook = 'vicinae theme set matugen'
