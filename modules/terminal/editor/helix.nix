@@ -18,7 +18,7 @@
       };
 
       programs.helix.settings = {
-        theme = "catppuccin_mocha";
+        theme = "matugen";
         editor = {
           mouse = false;
           line-number = "relative";

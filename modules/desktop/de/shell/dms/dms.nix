@@ -31,7 +31,7 @@
   };
 
   flake.modules.homeManager.dms =
-  { config, inputs, pkgs, ... }:
+  { config, inputs, lib, pkgs, ... }:
   {
     imports = [
       inputs.dms.homeModules.dank-material-shell
@@ -66,6 +66,7 @@
         consider_preedit = true;
         favorites = [ "clipboard:history" ];
         pop_to_root_on_close = true;
+        providers."@knoopx/vicinae-extension-firefox-0".preferences.profile_dir = ".zen/";
         search_files_in_root = true;
         launcher_window = {
           opacity = 0.98;
@@ -78,6 +79,7 @@
     };
 
     home.packages = with pkgs; [
+      adw-gtk3
       wl-mirror
       gpu-screen-recorder
       udisks2
@@ -105,6 +107,19 @@
     xdg.configFile."matugen/templates/vicinae.toml".source =
       config.lib.my.setupSymlinkRel ./matugen/templates/vicinae.toml;
 
+    xdg.configFile."matugen/templates/helix.toml".source =
+      config.lib.my.setupSymlinkRel ./matugen/templates/helix.toml;
+
+    xdg.configFile."gtk-3.0/gtk.css".text = ''
+      @import url("dank-colors.css");
+    '';
+    xdg.configFile."gtk-3.0/gtk.css".force = true;
+
+    xdg.configFile."gtk-4.0/gtk.css".text = ''
+      @import url("dank-colors.css");
+    '';
+    xdg.configFile."gtk-4.0/gtk.css".force = true;
+
     xdg.dataFile."fcitx5/themes/dank-matugen/arrow.png".source =
       "${pkgs.fcitx5}/share/fcitx5/themes/default-dark/arrow.png";
     xdg.dataFile."fcitx5/themes/dank-matugen/next.png".source =
@@ -117,6 +132,20 @@
     home.file.".local/share/icons/hicolor".source =
       "${pkgs.fcitx5}/share/icons/hicolor";
     home.file.".local/share/icons/hicolor".recursive = true;
+
+    home.activation.linkZenDmsTheme = lib.hm.dag.entryAfter [ "writeBoundary" ] ''
+      zen_css="${config.xdg.configHome}/DankMaterialShell/zen.css"
+
+      for profile_dir in \
+        "$(${pkgs.findutils}/bin/find "${config.home.homeDirectory}/.zen" -maxdepth 1 -type d -name "*.Default Profile" 2>/dev/null | ${pkgs.coreutils}/bin/head -n 1)" \
+        "$(${pkgs.findutils}/bin/find "${config.xdg.configHome}/zen" -maxdepth 1 -type d -name "*Default (release)" 2>/dev/null | ${pkgs.coreutils}/bin/head -n 1)" \
+        "$(${pkgs.findutils}/bin/find "${config.home.homeDirectory}/.var/app/app.zen_browser.zen/.zen" -maxdepth 1 -type d -name "*Default (release)" 2>/dev/null | ${pkgs.coreutils}/bin/head -n 1)"
+      do
+        [ -z "$profile_dir" ] && continue
+        ${pkgs.coreutils}/bin/mkdir -p "$profile_dir/chrome"
+        ${pkgs.coreutils}/bin/ln -sfn "$zen_css" "$profile_dir/chrome/userChrome.css"
+      done
+    '';
 
     xdg.configFile."niri/dms".source = config.lib.my.setupSymlinkRel ./config;
     xdg.configFile."niri/dms".recursive = true;

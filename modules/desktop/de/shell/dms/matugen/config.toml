@@ -16,3 +16,7 @@ output_path = '/home/soywater/.local/share/fcitx5/themes/dank-matugen/highlight.
 input_path = '/home/soywater/.config/matugen/templates/vicinae.toml'
 output_path = '/home/soywater/.local/share/vicinae/themes/matugen.toml'
 post_hook = 'vicinae theme set matugen'
+
+[templates.helix]
+input_path = '/home/soywater/.config/matugen/templates/helix.toml'
+output_path = '/home/soywater/.config/helix/themes/matugen.toml'

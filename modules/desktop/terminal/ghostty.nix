@@ -10,9 +10,11 @@
     programs.ghostty.systemd.enable = true;
     programs.ghostty.enableFishIntegration = true;
     programs.ghostty.settings = {
-      theme = "/home/soywater/.config/ghostty/config-dankcolors";
+      theme = "dankcolors";
       font-family = "JetBrainsMono Nerd Font";
       window-decoration = "none";
+      window-padding-x = 14;
+      window-padding-y = 10;
       quit-after-last-window-closed = true;
       quit-after-last-window-closed-delay = "10m";
       command = "${pkgs.fish}/bin/fish";
