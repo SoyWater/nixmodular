@@ -21,6 +21,10 @@
      ncg = "nix-collect-garbage";
     };
     programs.fish.functions = {
+      starship_transient_prompt_func.body = ''
+        starship module character
+      '';
+
       nsf = {
         body = "sudo nixos-rebuild switch --flake ~/nixconfigs#$host --verbose";
         argumentNames = "host";

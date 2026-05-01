@@ -122,6 +122,9 @@
     xdg.configFile."matugen/templates/helix.toml".source =
       config.lib.my.setupSymlinkRel ./matugen/templates/helix.toml;
 
+    xdg.configFile."matugen/templates/starship.toml".source =
+      config.lib.my.setupSymlinkRel ./matugen/templates/starship.toml;
+
     xdg.configFile."gtk-3.0/gtk.css".text = ''
       @import url("dank-colors.css");
     '';

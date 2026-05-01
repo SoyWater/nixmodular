@@ -1,0 +1,104 @@
+"$schema" = "https://starship.rs/config-schema.json"
+
+command_timeout = 1000
+add_newline = false
+palette = "matugen"
+
+format = """
+[](fg:surface_max)$directory[](fg:surface_max bg:primary)$git_branch$git_status[](fg:primary)
+[╰─](fg:muted)$character"""
+
+right_format = """
+[](fg:tertiary)$python$nodejs$rust$golang$java$docker_context[](fg:primary bg:tertiary)$nix_shell$direnv[](fg:surface_max bg:primary)$time[](fg:surface_max)"""
+
+[palettes.matugen]
+fg = "{{colors.on_surface.default.hex}}"
+muted = "{{colors.on_surface_variant.default.hex}}"
+surface = "{{colors.surface_container.default.hex}}"
+surface_hi = "{{colors.surface_container_high.default.hex}}"
+surface_max = "{{colors.surface_container_highest.default.hex}}"
+primary = "{{colors.primary.default.hex}}"
+on_primary = "{{colors.on_primary.default.hex}}"
+secondary = "{{colors.secondary.default.hex}}"
+on_secondary = "{{colors.on_secondary.default.hex}}"
+tertiary = "{{colors.tertiary.default.hex}}"
+on_tertiary = "{{colors.on_tertiary.default.hex}}"
+danger = "{{colors.error.default.hex}}"
+warning = "{{dank16.color11.default.hex}}"
+success = "{{dank16.color10.default.hex}}"
+info = "{{dank16.color12.default.hex}}"
+
+[character]
+success_symbol = "[❯](bold fg:muted)"
+error_symbol = "[❯](bold fg:danger)"
+vimcmd_symbol = "[❮](bold fg:secondary)"
+
+[directory]
+style = "bold fg:fg bg:surface_max"
+format = "[ 󰉋 $path ]($style)"
+truncation_length = 4
+truncation_symbol = "…/"
+read_only = " 󰌾"
+
+[directory.substitutions]
+"Documents" = "󰈙 "
+"Downloads" = " "
+"Music" = " "
+"Pictures" = " "
+"nixconfigs" = " cfg"
+
+[git_branch]
+symbol = ""
+style = "bold fg:on_primary bg:primary"
+format = "[ $symbol $branch ]($style)"
+
+[git_status]
+style = "bold fg:on_primary bg:primary"
+format = "[$all_status$ahead_behind ]($style)"
+
+[time]
+disabled = false
+time_format = "%R"
+style = "bold fg:primary bg:surface_max"
+format = "[ 󰥔 $time ]($style)"
+
+[docker_context]
+symbol = ""
+style = "bold fg:on_tertiary bg:tertiary"
+format = "[  $context ]($style)"
+
+[golang]
+symbol = ""
+style = "bold fg:on_tertiary bg:tertiary"
+format = "[ $symbol $version ]($style)"
+
+[java]
+symbol = ""
+style = "bold fg:on_tertiary bg:tertiary"
+format = "[ $symbol $version ]($style)"
+
+[nodejs]
+symbol = ""
+style = "bold fg:on_tertiary bg:tertiary"
+format = "[ $symbol $version ]($style)"
+
+[nix_shell]
+symbol = ""
+style = "bold fg:on_primary bg:primary"
+format = "[ $symbol $state ]($style)"
+
+[direnv]
+disabled = false
+style = "bold fg:on_primary bg:primary"
+format = '[(\($loaded\)) ]($style)'
+
+[python]
+symbol = ""
+style = "bold fg:on_tertiary bg:tertiary"
+version_format = "${raw}"
+format = '[ $symbol ${pyenv_prefix}(${version} )(\($virtualenv\) )]($style)'
+
+[rust]
+symbol = ""
+style = "bold fg:on_tertiary bg:tertiary"
+format = "[ $symbol $version ]($style)"
