@@ -8,7 +8,14 @@ in
     environment.systemPackages = with pkgs; [
       dnsmasq
     ];
-    virtualisation.libvirtd.enable = true;
+
+    networking.firewall.trustedInterfaces = [ "virbr0" ];
+
+    virtualisation.libvirtd = {
+      enable = true;
+      qemu.vhostUserPackages = with pkgs; [ virtiofsd ];
+    };
+
     programs.virt-manager.enable = true;
 
     imports = [

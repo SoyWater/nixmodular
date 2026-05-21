@@ -21,7 +21,6 @@
       udiskie
       nixld
       wireshark
-      cloudflared
       virtman
 
       # user
@@ -69,7 +68,12 @@
       packages.minecraft
       packages.zen-browser-wayland
       packages.zoom
+      pkgs.stremio-linux-shell
+      pkgs.chromium
     ];
+    programs.kdeconnect.enable = true;
+    programs.kdeconnect.package = pkgs.valent;
+    services.input-remapper.enable = true;
 
     hardware.enableAllFirmware = true;
     hardware.nvidia.modesetting.enable = true;

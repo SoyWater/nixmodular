@@ -164,12 +164,16 @@ screenshot-path "~/Pictures/Screenshots/Screenshot from %Y-%m-%d %H-%M-%S.png"
 animations {
 }
 
-// Open the Firefox picture-in-picture player as floating by default.
+// Open browser picture-in-picture players as floating by default.
 window-rule {
-    // This app-id regular expression will work for both:
+    // Firefox:
     // - host Firefox (app-id is "firefox")
     // - Flatpak Firefox (app-id is "org.mozilla.firefox")
     match app-id=r#"firefox$"# title="^Picture-in-Picture$"
+
+    // Zen Browser beta.
+    match app-id=r#"^zen-beta$"# title="^Picture-in-Picture$"
+
     open-floating true
 }
 

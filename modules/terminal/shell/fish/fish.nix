@@ -1,6 +1,9 @@
 {
   flake.modules.homeManager.baseConfig = {
     programs.fish.enable = true;
+    programs.fish.interactiveShellInit = ''
+      fish_vi_key_bindings
+    '';
     programs.fish.shellAliases = {
    		".." = "cd ..";
   		"..." = "cd ../..";

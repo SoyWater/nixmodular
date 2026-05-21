@@ -3,6 +3,9 @@
 
   inputs = {
     nixpkgs.url = "github:nixos/nixpkgs/nixos-unstable";
+    # Keep the system on the older nixpkgs lock for the MT7925 Bluetooth regression,
+    # but allow Codex to move independently.
+    nixpkgs-codex.url = "github:nixos/nixpkgs/nixos-unstable";
 
     home-manager = {
       url = "github:nix-community/home-manager";
@@ -97,17 +100,26 @@
         (import-tree ./wrapped-applications)
       ];
 
-      perSystem = { system, ... }: {
-        _module.args.pkgs = import inputs.nixpkgs {
-          inherit system;
-          overlays = [
-            openldapNoChecksOverlay
-            inputs.niri.overlays.niri
-          ];
-          config = {
+      perSystem = { system, ... }:
+        let
+          nixpkgsConfig = {
             allowUnfree = true;
           };
+        in
+        {
+          _module.args.pkgs = import inputs.nixpkgs {
+            inherit system;
+            overlays = [
+              openldapNoChecksOverlay
+              inputs.niri.overlays.niri
+            ];
+            config = nixpkgsConfig;
+          };
+
+          _module.args.pkgsCodex = import inputs.nixpkgs-codex {
+            inherit system;
+            config = nixpkgsConfig;
+          };
         };
-      };
     };
 }

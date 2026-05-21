@@ -65,11 +65,12 @@
           '';
         })
       ];
-      home.sessionVariables.TERMCMD = "ghostty --title=termfilechooser --command";
+      home.sessionVariables.TERMCMD = "${lib.getExe pkgs.ghostty} --title=termfilechooser -e";
       xdg.configFile."xdg-desktop-portal-termfilechooser/config".text = ''
         [filechooser]
         cmd=${pkgs.xdg-desktop-portal-termfilechooser}/share/xdg-desktop-portal-termfilechooser/yazi-wrapper.sh
         default_dir=$HOME
+        env=TERMCMD=${lib.getExe pkgs.ghostty} --title=termfilechooser -e
         open_mode=last
         save_mode=last
       '';

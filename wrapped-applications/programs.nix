@@ -1,10 +1,10 @@
 { ... }:
 {
-  perSystem = { inputs', pkgs, ... }: {
+  perSystem = { inputs', pkgs, pkgsCodex, ... }: {
     packages.codex = pkgs.symlinkJoin {
       name = "codex";
       paths = [
-        pkgs.codex
+        pkgsCodex.codex
       ];
       nativeBuildInputs = [ pkgs.makeWrapper ];
       postBuild = ''
