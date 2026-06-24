@@ -66,6 +66,7 @@
       packages.gh-dash
       packages.lutris
       packages.minecraft
+      packages.neovim
       packages.zen-browser-wayland
       packages.zoom
       pkgs.stremio-linux-shell

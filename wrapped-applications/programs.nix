@@ -74,6 +74,7 @@
         temurin-bin-25
       ];
     };
+    packages.neovim = inputs'.nvim.packages.default;
     packages.zen-browser-wayland =
       let
         zenFixed = inputs'.zen-browser.packages.default;

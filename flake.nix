@@ -74,6 +74,11 @@
       url = "github:SoyWater/factorio-flake";
       inputs.nixpkgs.follows = "nixpkgs";
     };
+
+    nvim = {
+      url = "./nvim";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
   };
 
   outputs = { flake-parts, import-tree, ... } @ inputs:
