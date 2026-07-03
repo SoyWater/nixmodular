@@ -20,7 +20,6 @@
       ffmpeg
       udiskie
       nixld
-      wireshark
       virtman
 
       # user
@@ -33,7 +32,6 @@
           niri
           ghostty
           direnv
-          opencode
         ];
       }
     ] ++ [

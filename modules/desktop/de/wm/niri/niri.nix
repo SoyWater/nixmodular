@@ -78,7 +78,6 @@
       xdg.configFile."niri/monitors.kdl".source = config.lib.my.setupSymlinkRel ./config/monitors.kdl;
       xdg.configFile."niri/inputs.kdl".source = config.lib.my.setupSymlinkRel ./config/inputs.kdl;
       xdg.configFile."niri/binds.kdl".source = config.lib.my.setupSymlinkRel ./config/binds.kdl;
-      xdg.configFile."niri/noctalia.kdl".source = config.lib.my.setupSymlinkRel ./config/noctalia.kdl;
     }
   ];
 }
