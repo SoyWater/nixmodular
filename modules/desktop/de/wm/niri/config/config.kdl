@@ -177,6 +177,11 @@ window-rule {
     open-floating true
 }
 
+window-rule {
+    match app-id=r#"nm-openconnect-auth-dialog"#
+    open-floating true
+}
+
 
 include "inputs.kdl"
 include "binds.kdl"

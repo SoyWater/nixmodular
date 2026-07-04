@@ -60,7 +60,6 @@
       packages.codex
       packages.editors
       packages.factorio
-      packages.forticlient
       packages.gh-dash
       packages.lutris
       packages.minecraft
