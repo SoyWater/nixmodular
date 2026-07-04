@@ -1,19 +1,19 @@
 
 {
   flake.modules.nixos.baseConfig =
-  { inputs, pkgs, ... }:
+  { inputs, packages, ... }:
 
 {
     imports = [
       inputs.sops-nix.nixosModules.sops
     ];
 
-    environment.systemPackages = with pkgs; [
-      sops
+    environment.systemPackages = [
+      packages.sops
     ];
 
     sops = {
-      age.keyFile = "/var/lib/sops-nix/keys.txt";
+      age.sshKeyPaths = [ "/etc/ssh/ssh_host_ed25519_key" ];
       defaultSopsFile = ../../secrets/secrets.yaml;
       defaultSopsFormat = "yaml";
     };

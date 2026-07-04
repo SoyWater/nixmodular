@@ -1,11 +1,9 @@
 keys:
-  - &primary age13z2jsxzq6eq3qcyurm6xcnw4pztu7gp4pnueum8z5papz9t0zarswu595j
-  - &soywater-legion age1l733753aef7p4mp5nvl5t3hqyy86fgvxz2jc62wrnzcw2n8ed38sxxp3vu
+  - &master_backup "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIAvjnBXoUlfQnMh3YQCAymYeSkq/p8vUr1NrZTLVObo9"
+  - &legion_host "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIOC+nCzSY90Yj0QXD8ZHbOysDoYBcyRw2ab4Z3PlpsNw"
 creation_rules:
   - path_regex: secrets/secrets.yaml$
     key_groups:
       - age:
-        - *primary
-        - *soywater-legion
-
-
+        - *master_backup
+        - *legion_host

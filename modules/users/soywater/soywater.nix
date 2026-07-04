@@ -8,7 +8,7 @@ in
   {
     users.users.${username} = {
       isNormalUser = true;
-      initialPassword = "password";
+      hashedPassword = "$6$J88TmSWqq8YEMo.Y$e965ncDYBEWtQyzExyd0DQHOBaroGGr2CkOsb1MGrvuoQwhMIrfy4/LGpBFIGa6by08nSBhugWxt2LiHHR8ZV1";
       description = username;
       extraGroups = [ "greeter" "networkmanager" "wheel" "docker" "libvirtd" "video" "render" ];
       packages = with pkgs; [];
