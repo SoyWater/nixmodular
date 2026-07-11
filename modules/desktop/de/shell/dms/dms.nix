@@ -148,6 +148,29 @@
       "${pkgs.fcitx5}/share/icons/hicolor";
     home.file.".local/share/icons/hicolor".recursive = true;
 
+    home.activation.cleanStaleDmsGeneratedThemeLinks = lib.hm.dag.entryAfter [ "writeBoundary" ] ''
+      for path in \
+        "${config.xdg.dataHome}/vicinae/themes/matugen.toml" \
+        "${config.xdg.configHome}/helix/themes/matugen.toml" \
+        "${config.xdg.configHome}/ghostty/themes/dankcolors" \
+        "${config.xdg.configHome}/starship.toml" \
+        "${config.xdg.dataHome}/fcitx5/themes/dank-matugen/theme.conf" \
+        "${config.xdg.dataHome}/fcitx5/themes/dank-matugen/panel.svg" \
+        "${config.xdg.dataHome}/fcitx5/themes/dank-matugen/highlight.svg"
+      do
+        ${pkgs.coreutils}/bin/mkdir -p "$(${pkgs.coreutils}/bin/dirname "$path")"
+
+        if [ -L "$path" ]; then
+          target="$(${pkgs.coreutils}/bin/readlink "$path")"
+          case "$target" in
+            /run/user/*/dms/generated/*)
+              ${pkgs.coreutils}/bin/rm -f "$path"
+              ;;
+          esac
+        fi
+      done
+    '';
+
     home.activation.linkZenDmsTheme = lib.hm.dag.entryAfter [ "writeBoundary" ] ''
       zen_css="${config.xdg.configHome}/DankMaterialShell/zen.css"
 
