@@ -24,11 +24,6 @@
 
     nixos-hardware.url = "github:NixOS/nixos-hardware/master";
 
-    nix-index-database = {
-      url = "github:nix-community/nix-index-database";
-      inputs.nixpkgs.follows = "nixpkgs";
-    };
-
     sops-nix = {
       url = "github:Mic92/sops-nix";
       inputs.nixpkgs.follows = "nixpkgs";
@@ -69,9 +64,6 @@
       url = "github:vicinaehq/extensions";
       inputs.nixpkgs.follows = "nixpkgs";
     };
-
-    awww.url = "git+https://codeberg.org/LGFae/awww";
-    matugen.url = "github:/InioX/Matugen";
 
     import-tree.url = "github:vic/import-tree";
 

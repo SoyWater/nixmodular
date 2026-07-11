@@ -1,10 +1,5 @@
 { ... }:
 {
-  perSystem = { lib, pkgs, ... }: {
-    wrappers.control_type = lib.mkDefault "build";
-    wrappers.packages.niri-desktop = pkgs.stdenv.isLinux;
-  };
-
   flake.wrappers.niri-desktop =
     { lib, pkgs, wlib, ... }:
     let
