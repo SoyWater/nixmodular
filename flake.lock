@@ -20,6 +20,26 @@
         "url": "https://codeberg.org/LGFae/awww"
       }
     },
+    "custom-applications": {
+      "inputs": {
+        "nixpkgs": [
+          "nixpkgs"
+        ]
+      },
+      "locked": {
+        "lastModified": 1783764910,
+        "narHash": "sha256-cIPIdpaztOCcCx4mPXdfKAtgw/nbLka3iGW7xV5E5UA=",
+        "owner": "SoyWater",
+        "repo": "custom-nix-applications",
+        "rev": "9f825829b50ca2163bf46abffa582f32ed5b19e5",
+        "type": "github"
+      },
+      "original": {
+        "owner": "SoyWater",
+        "repo": "custom-nix-applications",
+        "type": "github"
+      }
+    },
     "dms": {
       "inputs": {
         "flake-compat": "flake-compat_2",
@@ -335,22 +355,6 @@
         "type": "github"
       }
     },
-    "nixpkgs-codex": {
-      "locked": {
-        "lastModified": 1783522502,
-        "narHash": "sha256-iffAls3iaNTyJC2faYcUXSI+Gp02cDjYl+MygxKl2GI=",
-        "owner": "nixos",
-        "repo": "nixpkgs",
-        "rev": "0bb7ec54c8483066ec9d7720e780a5caa71f8612",
-        "type": "github"
-      },
-      "original": {
-        "owner": "nixos",
-        "ref": "nixos-unstable",
-        "repo": "nixpkgs",
-        "type": "github"
-      }
-    },
     "nixpkgs-lib": {
       "locked": {
         "lastModified": 1765674936,
@@ -504,6 +508,7 @@
     "root": {
       "inputs": {
         "awww": "awww",
+        "custom-applications": "custom-applications",
         "dms": "dms",
         "dms-plugin-registry": "dms-plugin-registry",
         "factorio-flake": "factorio-flake",
@@ -515,7 +520,6 @@
         "nix-index-database": "nix-index-database",
         "nixos-hardware": "nixos-hardware",
         "nixpkgs": "nixpkgs_3",
-        "nixpkgs-codex": "nixpkgs-codex",
         "nvim": "nvim",
         "quickshell": "quickshell",
         "sops-nix": "sops-nix",

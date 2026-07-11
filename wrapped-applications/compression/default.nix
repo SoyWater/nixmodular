@@ -15,13 +15,13 @@
       compressCommand = pkgs.writeShellApplication {
         name = "compress";
         runtimeInputs = runtimeArchiveTools;
-        text = builtins.readFile ./compression/compress.sh;
+        text = builtins.readFile ./compress.sh;
       };
 
       extractCommand = pkgs.writeShellApplication {
         name = "extract";
         runtimeInputs = runtimeArchiveTools;
-        text = builtins.readFile ./compression/extract.sh;
+        text = builtins.readFile ./extract.sh;
       };
     in
     {

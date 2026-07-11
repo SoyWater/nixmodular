@@ -1,12 +1,17 @@
 {
   description = "NixOs Full Config";
 
+  nixConfig = {
+    extra-substituters = [
+      "https://custom-nix-applications.cachix.org"
+    ];
+    extra-trusted-public-keys = [
+      "custom-nix-applications.cachix.org-1:PK67OYpIq7614gth55JteSG/U2Q1DKqDAN/Wb+rEzOY="
+    ];
+  };
+
   inputs = {
     nixpkgs.url = "github:nixos/nixpkgs/nixos-unstable";
-    # Keep the system on the older nixpkgs lock for the MT7925 Bluetooth regression,
-    # but allow Codex to move independently.
-    nixpkgs-codex.url = "github:nixos/nixpkgs/nixos-unstable";
-
     home-manager = {
       url = "github:nix-community/home-manager";
       inputs.nixpkgs.follows = "nixpkgs";
@@ -75,6 +80,11 @@
       inputs.nixpkgs.follows = "nixpkgs";
     };
 
+    custom-applications = {
+      url = "github:SoyWater/custom-nix-applications";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
+
     nvim = {
       url = "./nvim";
       inputs.nixpkgs.follows = "nixpkgs";
@@ -118,12 +128,8 @@
             overlays = [
               openldapNoChecksOverlay
               inputs.niri.overlays.niri
+              inputs.custom-applications.overlays.default
             ];
-            config = nixpkgsConfig;
-          };
-
-          _module.args.pkgsCodex = import inputs.nixpkgs-codex {
-            inherit system;
             config = nixpkgsConfig;
           };
         };
