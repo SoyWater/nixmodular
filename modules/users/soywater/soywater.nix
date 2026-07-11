@@ -13,6 +13,9 @@ in
       extraGroups = [ "greeter" "networkmanager" "wheel" "docker" "libvirtd" "video" "render" ];
       packages = with pkgs; [];
       useDefaultShell = true;
+      openssh.authorizedKeys.keys = [
+        "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIO74viF4tK+qO+XiKKTp3IxqBjiZtc7udYJWsEY3qcNw soywater@legion"
+      ];
     };
 
 

@@ -16,5 +16,17 @@
       useRoutingFeatures = "client";
     };
 
+    services.openssh = {
+      enable = true;
+      openFirewall = false;
+      settings = {
+        KbdInteractiveAuthentication = false;
+        PasswordAuthentication = false;
+        PermitRootLogin = "no";
+      };
+    };
+
+    networking.firewall.interfaces.tailscale0.allowedTCPPorts = [ 22 ];
+
   };
 }

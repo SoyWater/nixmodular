@@ -33,6 +33,11 @@
       url = "github:hercules-ci/flake-parts";
     };
 
+    wrappers = {
+      url = "github:BirdeeHub/nix-wrapper-modules";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
+
     niri = {
       url = "github:sodiboo/niri-flake";
       inputs.nixpkgs.follows = "nixpkgs";
@@ -95,6 +100,7 @@
 
       imports = [
         inputs.flake-parts.flakeModules.modules         
+        inputs.wrappers.flakeModules.wrappers
         ./nixos-hosts.nix
         (import-tree ./modules)
         (import-tree ./wrapped-applications)
