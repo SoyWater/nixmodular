@@ -1,0 +1,8 @@
+// Palette-driven Niri colors. The wrapper's static config owns behavior;
+// this optional include owns colors rendered by Noctalia.
+layout {
+    focus-ring {
+        active-color "{{colors.primary.default.hex}}"
+        inactive-color "{{colors.outline.default.hex}}"
+    }
+}

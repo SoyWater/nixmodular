@@ -1,0 +1,27 @@
+{ lib, pkgs, ... }:
+let
+  niriConfigDir = ./config/niri;
+  niriBaseConfig = lib.concatStringsSep "\n" (
+    lib.filter
+      (line: !(lib.hasPrefix "include " line))
+      (lib.splitString "\n" (builtins.readFile "${niriConfigDir}/config.kdl"))
+  );
+  niriBaseConfigFile = pkgs.writeText "niri-base.kdl" niriBaseConfig;
+  niriStaticIncludes = map (
+    file:
+    toString (pkgs.writeText (builtins.baseNameOf file) (builtins.readFile file))
+  ) [
+    "${niriConfigDir}/inputs.kdl"
+    "${niriConfigDir}/binds.kdl"
+  ];
+in
+{
+  package = pkgs.niri;
+  runtimePkgs = [ pkgs.xwayland-satellite ];
+  extraSettings =
+    [ { include = toString niriBaseConfigFile; } ]
+    ++ (map (path: { include = path; }) niriStaticIncludes);
+  passthru.cargoBuildNoDefaultFeatures = pkgs.niri.cargoBuildNoDefaultFeatures;
+  passthru.cargoBuildFeatures = pkgs.niri.cargoBuildFeatures;
+  meta.platforms = lib.platforms.linux;
+}

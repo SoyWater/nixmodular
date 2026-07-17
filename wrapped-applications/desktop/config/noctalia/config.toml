@@ -1,0 +1,62 @@
+# Noctalia v5 baseline. GUI changes are intentionally kept in
+# ~/.local/state/noctalia/settings.toml and override this file.
+
+[shell]
+time_format = "{:%H:%M}"
+offline_mode = true
+niri_overview_type_to_launch_enabled = false
+
+[wallpaper]
+enabled = false
+fill_mode = "crop"
+directory = "~/Pictures/Wallpapers"
+
+[theme]
+mode = "dark"
+source = "builtin"
+builtin = "Noctalia"
+
+[theme.templates]
+enable_builtin_templates = false
+enable_community_templates = false
+builtin_ids = []
+community_ids = []
+
+[theme.templates.user.niri]
+input_path = "templates/niri.kdl"
+output_path = "$XDG_CONFIG_HOME/niri/noctalia.kdl"
+post_hook = "niri msg action load-config-file"
+
+[theme.templates.user.ghostty]
+input_path = "templates/ghostty"
+output_path = "$XDG_CONFIG_HOME/ghostty/themes/dankcolors"
+
+[theme.templates.user.helix]
+input_path = "templates/helix.toml"
+output_path = "$XDG_CONFIG_HOME/helix/themes/matugen.toml"
+
+[theme.templates.user.vicinae]
+input_path = "templates/vicinae.toml"
+output_path = "$XDG_DATA_HOME/vicinae/themes/matugen.toml"
+post_hook = "vicinae theme set matugen"
+
+[backdrop]
+enabled = true
+blur_intensity = 0.5
+tint_intensity = 0.3
+
+[notification]
+enable_daemon = true
+show_app_name = true
+show_actions = true
+
+[lockscreen]
+enabled = true
+
+[bar.main]
+position = "bottom"
+thickness = 34
+reserve_space = true
+start = ["launcher", "wallpaper", "workspaces"]
+center = ["clock"]
+end = ["media", "tray", "notifications", "clipboard", "network", "bluetooth", "volume", "brightness", "battery", "control-center", "session"]

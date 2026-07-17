@@ -1,0 +1,35 @@
+{ inputs }:
+{ lib, pkgs, ... }:
+let
+  system = pkgs.stdenv.hostPlatform.system;
+  noctaliaPackage = inputs.noctalia.packages.${system}.default;
+  vicinaePackage = inputs.vicinae.packages.${system}.default;
+  noctaliaNiriConfig = pkgs.writeText "desktop-noctalia.kdl" (
+    builtins.readFile ./config/noctalia/noctalia.kdl
+  );
+  addDesktopBinToPath = [
+    {
+      name = "desktop-bin-path";
+      data = ''
+        export PATH="$(dirname "$0")''${PATH:+:$PATH}"
+      '';
+    }
+  ];
+in
+{
+  extraSettings = [ { include = toString noctaliaNiriConfig; } ];
+  runShell = addDesktopBinToPath;
+
+  wrapperVariants.noctalia = {
+    mirror = false;
+    package = noctaliaPackage;
+    env.NOCTALIA_CONFIG_HOME = ./config;
+    runShell = addDesktopBinToPath;
+  };
+
+  wrapperVariants.vicinae = {
+    mirror = false;
+    package = vicinaePackage;
+    runShell = addDesktopBinToPath;
+  };
+}

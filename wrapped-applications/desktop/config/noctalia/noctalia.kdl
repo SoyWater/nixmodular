@@ -1,0 +1,48 @@
+// Noctalia v5 integration for the standalone desktop wrapper.
+
+spawn-at-startup "noctalia"
+
+// Noctalia's documented window rules.
+window-rule {
+    geometry-corner-radius 20
+    clip-to-geometry true
+}
+
+window-rule {
+    match app-id="dev.noctalia.Noctalia"
+    open-floating true
+    default-column-width { fixed 1080; }
+    default-window-height { fixed 920; }
+}
+
+layer-rule {
+  match namespace="^noctalia-wallpaper"
+  place-within-backdrop true
+}
+
+// Set transparent workspace background color so the backdrop is visible at all times.
+layout {
+  background-color "transparent"
+}
+
+debug {
+    honor-xdg-activation-with-invalid-serial
+}
+
+binds {
+    // Noctalia panels and shell actions.
+    Mod+Space hotkey-overlay-title="Noctalia Launcher" { spawn-sh "noctalia msg panel-toggle launcher"; }
+    Mod+S hotkey-overlay-title="Noctalia Control Center" { spawn-sh "noctalia msg panel-toggle control-center"; }
+    Mod+Comma hotkey-overlay-title="Noctalia Settings" { spawn-sh "noctalia msg settings-toggle"; }
+    Mod+Alt+L hotkey-overlay-title="Lock Screen" { spawn-sh "noctalia msg session lock"; }
+    Mod+Y hotkey-overlay-title="Browse Wallpapers" { spawn-sh "noctalia msg panel-toggle wallpaper"; }
+    Mod+Tab hotkey-overlay-title="Window Switcher" { spawn-sh "noctalia msg window-switcher"; }
+    Mod+N hotkey-overlay-title="Notification Center" { spawn-sh "noctalia msg panel-toggle control-center notifications"; }
+
+    XF86MonBrightnessDown allow-when-locked=true { spawn-sh "noctalia msg brightness-down"; }
+    XF86MonBrightnessUp allow-when-locked=true { spawn-sh "noctalia msg brightness-up"; }
+
+    // Existing Vicinae bindings remain separate from Noctalia's launcher.
+    Alt+Space hotkey-overlay-title="Vicinae Launcher" { spawn "vicinae" "vicinae://toggle"; }
+    Mod+V hotkey-overlay-title="Vicinae Clipboard" { spawn "vicinae" "vicinae://launch/clipboard/history?toggle=true"; }
+}
