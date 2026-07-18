@@ -8,9 +8,9 @@ input {
             // layout "us,ru"
             // options "grp:win_space_toggle,compose:ralt,ctrl:nocaps"
 
-            // If this section is empty, niri will fetch xkb settings
-            // from org.freedesktop.locale1. You can control these using
-            // localectl set-x11-keymap.
+            // Keep the US layout and map the Bridge75 F13 key to F13.
+            layout "us"
+            options "fkeys:basic_13-24"
         }
 
         // Enable numlock on startup, omitting this setting disables it.
