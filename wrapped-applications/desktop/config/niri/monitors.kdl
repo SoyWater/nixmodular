@@ -1,0 +1,17 @@
+output "eDP-1" {
+    mode "2560x1600@165.000"
+    scale 1.5
+    transform "normal"
+    position x=0 y=0
+    focus-at-startup
+}
+
+output "HDMI-A-1" {
+    focus-at-startup
+    mode "1920x1080@165.002"
+    scale 1
+    transform "normal"
+    hot-corners {
+        off
+    }
+}

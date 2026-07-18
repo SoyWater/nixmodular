@@ -2,6 +2,7 @@
 let
   niriStaticIncludes = [
     ./config/niri/config.kdl
+    ./config/niri/monitors.kdl
     ./config/niri/inputs.kdl
     ./config/niri/binds.kdl
   ];

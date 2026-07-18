@@ -6,5 +6,9 @@ The `niri-desktop` to `desktop` migration is intentionally scoped to:
 - `wrapped-applications/`; and
 - this guidance file.
 
-Do not edit anything under `modules/` for this migration. NixOS, Home Manager,
-greeter, and active host wiring are deferred to later slices.
+The active `legion` desktop cutover additionally permits:
+
+- `modules/features/desktop.nix`; and
+- `modules/hosts/legion/configuration.nix`.
+
+Do not edit any other path under `modules/` for this migration.

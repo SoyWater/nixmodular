@@ -7,7 +7,7 @@
     
     imports = with config.flake.modules.nixos; [
       baseConfig
-      niri
+      desktop
       networking
       ghostty
       dualBoot
@@ -15,7 +15,6 @@
       pipewire
       power
       docker
-      dms
       fonts
       ffmpeg
       udiskie
@@ -28,8 +27,6 @@
       {
         home-manager.users.soywater.imports = with config.flake.modules.homeManager; [
           baseConfig
-          dms
-          niri
           ghostty
           direnv
         ];
