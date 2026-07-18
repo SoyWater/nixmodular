@@ -3,7 +3,6 @@
 let
   system = pkgs.stdenv.hostPlatform.system;
   noctaliaPackage = inputs.noctalia.packages.${system}.default;
-  vicinaePackage = inputs.vicinae.packages.${system}.default;
 in
 {
   # Make `noctalia` available to Niri's spawn-at-startup and IPC bindings.
@@ -28,10 +27,5 @@ in
     mirror = false;
     package = noctaliaPackage;
     env.NOCTALIA_CONFIG_HOME = ./config;
-  };
-
-  wrapperVariants.vicinae = {
-    mirror = false;
-    package = vicinaePackage;
   };
 }

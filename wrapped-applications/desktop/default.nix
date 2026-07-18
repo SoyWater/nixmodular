@@ -25,6 +25,7 @@
           wlib.wrapperModules.niri
           (import ./niri-module { inherit lib pkgs; })
           ((import ./noctalia-module { inherit inputs; }) { inherit lib pkgs; })
+          ((import ./vicinae-module { inherit inputs; }) { inherit pkgs; })
           (import ./force-kill-module { inherit pkgs; })
         ];
       };
