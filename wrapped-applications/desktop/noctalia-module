@@ -26,6 +26,12 @@ in
         (toString noctaliaNiriConfig)
       ];
     }
+    {
+      include = [
+        { optional = true; }
+        "~/.config/niri/noctalia.kdl"
+      ];
+    }
   ];
   runShell = addDesktopBinToPath;
 

@@ -6,7 +6,6 @@ let
     "${niriConfigDir}/inputs.kdl"
     "${niriConfigDir}/binds.kdl"
   ];
-  niriRuntimeIncludes = [ "~/.config/niri/noctalia.kdl" ];
 in
 {
   package = pkgs.niri;
@@ -15,8 +14,7 @@ in
   disableConfigValidation = true;
   runtimePkgs = [ pkgs.xwayland-satellite ];
   extraSettings =
-    (map (path: { include = toString path; }) niriStaticIncludes)
-    ++ (map (path: { include = [ { optional = true; } path ]; }) niriRuntimeIncludes);
+    map (path: { include = toString path; }) niriStaticIncludes;
   passthru.cargoBuildNoDefaultFeatures = pkgs.niri.cargoBuildNoDefaultFeatures;
   passthru.cargoBuildFeatures = pkgs.niri.cargoBuildFeatures;
   meta.platforms = lib.platforms.linux;
