@@ -54,7 +54,7 @@ show_actions = true
 enabled = true
 
 [bar.main]
-position = "bottom"
+position = "top"
 thickness = 34
 reserve_space = true
 start = ["launcher", "wallpaper", "workspaces"]
