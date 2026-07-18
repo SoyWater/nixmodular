@@ -36,41 +36,42 @@
 
     hardware.cpu.intel.updateMicrocode = lib.mkDefault config.hardware.enableRedistributableFirmware;
 
-    hardware.graphics.extraPackages = with pkgs; [
+    hardware.enableRedistributableFirmware = true;
+    hardware.enableAllFirmware = true;
+
+    hardware.graphics = {
+      enable = true;
+      enable32Bit = true;
+      extraPackages = with pkgs; [
       (intel-vaapi-driver.override { enableHybridCodec = false; })
       intel-ocl
       intel-media-driver
       intel-compute-runtime
       vpl-gpu-rt
-    ];
-    hardware.graphics.extraPackages32 = with pkgs.driversi686Linux; [
-      (intel-vaapi-driver.override { enableHybridCodec = false; })
-      intel-media-driver
-    ];
+      ];
+      extraPackages32 = with pkgs.driversi686Linux; [
+        (intel-vaapi-driver.override { enableHybridCodec = false; })
+        intel-media-driver
+      ];
+    };
 
     hardware.nvidia = {
-      open = lib.mkOverride 990 (
-        config.hardware.nvidia.package ? open
-        && config.hardware.nvidia.package ? firmware
-      );
-      powerManagement.enable = lib.mkDefault true;
+      open = true;
+      modesetting.enable = true;
+      nvidiaSettings = true;
+      package = config.boot.kernelPackages.nvidiaPackages.latest;
+      powerManagement = {
+        enable = true;
+        finegrained = true;
+      };
       prime = {
         intelBusId = "PCI:00:02:0";
         nvidiaBusId = "PCI:02:00:0";
-        offload = {
-          enable = lib.mkOverride 990 true;
-          enableOffloadCmd = true;
-        };
+        offload.enable = true;
+        offload.enableOffloadCmd = true;
       };
     };
 
-    services.fstrim.enable = lib.mkDefault true;
-    services.tlp.enable = lib.mkDefault (
-      (lib.versionOlder (lib.versions.majorMinor lib.version) "21.05")
-      || !config.services.power-profiles-daemon.enable
-    );
-    services.thermald.enable = lib.mkDefault true;
-    services.xserver.videoDrivers = lib.mkDefault [ "nvidia" ];
     services.xserver.dpi = 189;
 
     console.font = lib.mkIf (

@@ -2,23 +2,17 @@
 {
   flake.system."legion" = "x86_64-linux";
   flake.modules.nixos."hosts/legion" =
-  { pkgs, packages, ... } @ nixosArgs:
+  { packages, pkgs, ... } @ nixosArgs:
   {
     
     imports = with config.flake.modules.nixos; [
       baseConfig
       desktop
-      networking
+      services
       ghostty
       dualBoot
-      bluetooth
-      pipewire
-      power
       docker
       fonts
-      ffmpeg
-      udiskie
-      nixld
       virtman
 
       # user
@@ -34,23 +28,10 @@
     ];
 
     # Keep the host package set aligned with the selected kernel and provide
-    # the hardware diagnostics/tools needed on Legion.
-    environment.systemPackages = with pkgs; [
+    # the selected-kernel headers needed on Legion.
+    environment.systemPackages = [
       packages.compress
       nixosArgs.config.boot.kernelPackages.kernel.dev
-
-      usbutils
-      dmidecode
-      mesa-demos
-      vulkan-tools
-      libva-utils
-      nvme-cli
-      smartmontools
-      lm_sensors
-      powertop
-      fwupd
-      bolt
-      alsa-utils
     ];
 
     nix.settings = {
@@ -85,46 +66,7 @@
     # Use the newest kernel/driver pair available in the selected nixpkgs.
     boot.kernelPackages = pkgs.linuxPackages_latest;
 
-    hardware.enableRedistributableFirmware = true;
-    hardware.enableAllFirmware = true;
-    hardware.graphics = {
-      enable = true;
-      enable32Bit = true;
-    };
-
-    services.qbittorrent.enable = true;
-    hardware.nvidia.modesetting.enable = true;
-    services.xserver.videoDrivers = [ "nvidia" ];
-    hardware.nvidia = {
-      open = true;
-      nvidiaSettings = true;
-      package = nixosArgs.config.boot.kernelPackages.nvidiaPackages.latest;
-      powerManagement = {
-        enable = true;
-        finegrained = true;
-      };
-      prime = {
-        intelBusId = "PCI:00:02:0";
-        nvidiaBusId = "PCI:02:00:0";
-        offload = {
-          enable = true;
-          enableOffloadCmd = true;
-        };
-      };
-    };
-
-    powerManagement.enable = true;
-    services.thermald.enable = true;
-    services.fwupd.enable = true;
-    services.hardware.bolt.enable = true;
-    services.fstrim.enable = true;
-
-    hardware.bluetooth.settings = {
-      General.Experimental = true;
-    };
-
     boot.kernelParams = [ "usbhid.quirks=048d:c195:0x0004" ];
-    hardware.firmware = [ pkgs.linux-firmware ];
     windows-boot-drive = "FS0";
     bootLoader = "limine";
     limine.secureBoot = true;

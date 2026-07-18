@@ -12,7 +12,6 @@
       ];
     };
     hardware.nvidia-container-toolkit.enable = true;
-    hardware.graphics.enable32Bit = true;
     virtualisation.docker.daemon.settings.features.cdi = true;
     virtualisation.docker.enableNvidia = true;
     hardware.nvidia-container-toolkit.suppressNvidiaDriverAssertion = true;
