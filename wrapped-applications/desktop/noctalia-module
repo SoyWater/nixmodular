@@ -1,14 +1,9 @@
 { inputs }:
-{ lib, pkgs, wlib, ... }:
+{ lib, pkgs, ... }:
 let
   system = pkgs.stdenv.hostPlatform.system;
   noctaliaPackage = inputs.noctalia.packages.${system}.default;
   vicinaePackage = inputs.vicinae.packages.${system}.default;
-  noctaliaConfigDir = "/home/soywater/nixconfigs/wrapped-applications/desktop/config/noctalia";
-  noctaliaConfigHome = wlib.mkOutOfStoreSymlink pkgs noctaliaConfigDir;
-  noctaliaNiriConfig = wlib.mkOutOfStoreSymlink pkgs (
-    "${noctaliaConfigDir}/noctalia.kdl"
-  );
   addDesktopBinToPath = [
     {
       name = "desktop-bin-path";
@@ -23,7 +18,7 @@ in
     {
       include = [
         { optional = true; }
-        (toString noctaliaNiriConfig)
+        ./config/noctalia/noctalia.kdl
       ];
     }
     {
@@ -38,7 +33,7 @@ in
   wrapperVariants.noctalia = {
     mirror = false;
     package = noctaliaPackage;
-    env.NOCTALIA_CONFIG_HOME = noctaliaConfigHome;
+    env.NOCTALIA_CONFIG_HOME = ./config;
     runShell = addDesktopBinToPath;
   };
 

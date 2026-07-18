@@ -14,7 +14,7 @@
       {
         imports = [
           wlib.wrapperModules.niri
-          (import ./niri-module { inherit lib pkgs wlib; })
+          (import ./niri-module { inherit lib pkgs; })
         ];
       };
 
@@ -23,8 +23,8 @@
       {
         imports = [
           wlib.wrapperModules.niri
-          (import ./niri-module { inherit lib pkgs wlib; })
-          ((import ./noctalia-module { inherit inputs; }) { inherit lib pkgs wlib; })
+          (import ./niri-module { inherit lib pkgs; })
+          ((import ./noctalia-module { inherit inputs; }) { inherit lib pkgs; })
           (import ./force-kill-module { inherit pkgs; })
         ];
       };

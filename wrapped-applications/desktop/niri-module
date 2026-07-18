@@ -1,20 +1,18 @@
-{ lib, pkgs, wlib, ... }:
+{ lib, pkgs, ... }:
 let
-  niriConfigDir = "/home/soywater/nixconfigs/wrapped-applications/desktop/config/niri";
-  niriStaticIncludes = map (path: wlib.mkOutOfStoreSymlink pkgs path) [
-    "${niriConfigDir}/config.kdl"
-    "${niriConfigDir}/inputs.kdl"
-    "${niriConfigDir}/binds.kdl"
+  niriStaticIncludes = [
+    ./config/niri/config.kdl
+    ./config/niri/inputs.kdl
+    ./config/niri/binds.kdl
   ];
 in
 {
   package = pkgs.niri;
-  # The included KDL files intentionally live outside the Nix store, so niri's
-  # build-time validation sandbox cannot read them.
-  disableConfigValidation = true;
+
   runtimePkgs = [ pkgs.xwayland-satellite ];
   extraSettings =
-    map (path: { include = toString path; }) niriStaticIncludes;
+    map (path: { include = path; }) niriStaticIncludes;
+
   passthru.cargoBuildNoDefaultFeatures = pkgs.niri.cargoBuildNoDefaultFeatures;
   passthru.cargoBuildFeatures = pkgs.niri.cargoBuildFeatures;
   meta.platforms = lib.platforms.linux;
