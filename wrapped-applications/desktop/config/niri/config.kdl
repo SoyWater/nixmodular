@@ -148,11 +148,9 @@ layout {
     }
 }
 
-// Render the compositor on the NVIDIA GPU, which directly owns HDMI-A-1.
-// Keep this path stable across DRM render-node numbering changes.
-debug {
-    render-drm-device "/dev/dri/by-path/pci-0000:02:00.0-render"
-}
+// The Legion startup service writes this when selecting the renderer based on
+// whether HDMI-A-1 is connected. Without it, Niri uses its default renderer.
+include "optional"=true "~/.config/niri/gpu.kdl"
 
  hotkey-overlay {
     skip-at-startup
