@@ -4,16 +4,11 @@ let
   system = pkgs.stdenv.hostPlatform.system;
   noctaliaPackage = inputs.noctalia.packages.${system}.default;
   vicinaePackage = inputs.vicinae.packages.${system}.default;
-  addDesktopBinToPath = [
-    {
-      name = "desktop-bin-path";
-      data = ''
-        export PATH="$(dirname "$0")''${PATH:+:$PATH}"
-      '';
-    }
-  ];
 in
 {
+  # Make `noctalia` available to Niri's spawn-at-startup and IPC bindings.
+  runtimePkgs = [ noctaliaPackage ];
+  env.NOCTALIA_CONFIG_HOME = ./config;
   extraSettings = [
     {
       include = [
@@ -28,18 +23,15 @@ in
       ];
     }
   ];
-  runShell = addDesktopBinToPath;
 
   wrapperVariants.noctalia = {
     mirror = false;
     package = noctaliaPackage;
     env.NOCTALIA_CONFIG_HOME = ./config;
-    runShell = addDesktopBinToPath;
   };
 
   wrapperVariants.vicinae = {
     mirror = false;
     package = vicinaePackage;
-    runShell = addDesktopBinToPath;
   };
 }
