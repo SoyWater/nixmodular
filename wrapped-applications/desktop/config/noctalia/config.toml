@@ -1,62 +1,207 @@
-# Noctalia v5 baseline. GUI changes are intentionally kept in
-# ~/.local/state/noctalia/settings.toml and override this file.
-
-[shell]
-time_format = "{:%H:%M}"
-offline_mode = true
-niri_overview_type_to_launch_enabled = false
-
-[wallpaper]
-enabled = false
-fill_mode = "crop"
-directory = "~/Pictures/Wallpapers"
-
-[theme]
-mode = "dark"
-source = "builtin"
-builtin = "Noctalia"
-
-[theme.templates]
-enable_builtin_templates = false
-enable_community_templates = false
-builtin_ids = []
-community_ids = []
-
-[theme.templates.user.niri]
-input_path = "templates/niri.kdl"
-output_path = "~/.config/niri/noctalia.kdl"
-post_hook = "niri msg action load-config-file"
-
-[theme.templates.user.ghostty]
-input_path = "templates/ghostty"
-output_path = "$XDG_CONFIG_HOME/ghostty/themes/dankcolors"
-
-[theme.templates.user.helix]
-input_path = "templates/helix.toml"
-output_path = "$XDG_CONFIG_HOME/helix/themes/matugen.toml"
-
-[theme.templates.user.vicinae]
-input_path = "templates/vicinae.toml"
-output_path = "$XDG_DATA_HOME/vicinae/themes/matugen.toml"
-post_hook = "vicinae theme set matugen"
+# Noctalia v5 configuration flattened from the active user settings.
+# Keep the wrapper's config and templates as the source of truth.
 
 [backdrop]
-enabled = true
 blur_intensity = 0.5
-tint_intensity = 0.3
+enabled = false
+tint_intensity = 0.29999999999999999
 
-[notification]
-enable_daemon = true
-show_app_name = true
-show_actions = true
+[bar.main]
+background_opacity = 0.0
+border_width = 0.0
+capsule_opacity = 1.0
+capsule = true
+capsule_thickness = 1.0
+center = [ "media", "clock" ]
+end = [ "tray", "notifications", "network", "bluetooth", "volume", "brightness", "battery", "control-center", "session" ]
+margin_edge = 2
+margin_ends = 2
+margin_opposite_edge = 2
+padding = 1
+position = "top"
+radius = 80
+reserve_space = true
+scale = 0.85
+shadow = false
+start = [ "launcher", "wallpaper", "clipboard", "workspaces" ]
+thickness = 25
+
+[control_center.calendar]
+show_events_card = false
+
+[desktop_widgets]
+enabled = false
+schema_version = 2
+widget_order = []
+
+    [desktop_widgets.grid]
+    cell_size = 16
+    major_interval = 4
+    visible = true
+
+    [desktop_widgets.widget]
 
 [lockscreen]
 enabled = true
+fingerprint = false
 
-[bar.main]
-position = "top"
-thickness = 34
-reserve_space = true
-start = ["launcher", "wallpaper", "workspaces"]
-center = ["clock"]
-end = ["media", "tray", "notifications", "clipboard", "network", "bluetooth", "volume", "brightness", "battery", "control-center", "session"]
+[lockscreen_widgets]
+enabled = false
+schema_version = 2
+widget_order = [ "lockscreen-login-box@winit", "lockscreen-login-box@HDMI-A-1", "lockscreen-login-box@eDP-1" ]
+
+    [lockscreen_widgets.grid]
+    cell_size = 16
+    major_interval = 4
+    visible = true
+
+    [lockscreen_widgets.widget."lockscreen-login-box@HDMI-A-1"]
+    box_height = 70.0
+    box_width = 400.0
+    cx = 960.0
+    cy = 961.0
+    output = "HDMI-A-1"
+    rotation = 0.0
+    type = "login_box"
+
+        [lockscreen_widgets.widget."lockscreen-login-box@HDMI-A-1".settings]
+        background_color = "surface_variant"
+        background_opacity = 0.88
+        background_radius = 12.0
+        input_opacity = 1.0
+        input_radius = 6.0
+        show_caps_lock = true
+        show_keyboard_layout = true
+        show_login_button = true
+        show_password_hint = true
+
+    [lockscreen_widgets.widget."lockscreen-login-box@eDP-1"]
+    box_height = 70.0
+    box_width = 400.0
+    cx = 854.0
+    cy = 948.0
+    output = "eDP-1"
+    rotation = 0.0
+    type = "login_box"
+
+        [lockscreen_widgets.widget."lockscreen-login-box@eDP-1".settings]
+        background_color = "surface_variant"
+        background_opacity = 0.88
+        background_radius = 12.0
+        input_opacity = 1.0
+        input_radius = 6.0
+        show_caps_lock = true
+        show_keyboard_layout = true
+        show_login_button = true
+        show_password_hint = true
+
+    [lockscreen_widgets.widget."lockscreen-login-box@winit"]
+    box_height = 70.0
+    box_width = 400.0
+    cx = 477.0
+    cy = 917.0
+    output = "winit"
+    rotation = 0.0
+    type = "login_box"
+
+        [lockscreen_widgets.widget."lockscreen-login-box@winit".settings]
+        background_color = "surface_variant"
+        background_opacity = 0.88
+        background_radius = 12.0
+        input_opacity = 1.0
+        input_radius = 6.0
+        show_caps_lock = true
+        show_keyboard_layout = true
+        show_login_button = true
+        show_password_hint = true
+
+[notification]
+enable_daemon = true
+layer = "overlay"
+show_actions = true
+show_app_name = true
+
+[osd]
+background_opacity = 0.99999997764825821
+position = "bottom_center"
+position_vertical = "center_left"
+
+[shell]
+niri_overview_type_to_launch_enabled = false
+offline_mode = true
+polkit_agent = true
+settings_show_advanced = false
+time_format = "{:%H:%M · %a %d/%m}"
+
+    [shell.animation]
+    speed = 3.0000000447034836
+
+    [shell.greeter_sync]
+    auto_sync = true
+
+    [shell.panel]
+    control_center_placement = "floating"
+    wallpaper_placement = "floating"
+    wallpaper_position = "center"
+
+[system.monitor]
+gpu_poll_seconds = 5
+
+[theme]
+builtin = "Noctalia"
+community_palette = "Oxocarbon"
+mode = "dark"
+source = "wallpaper"
+wallpaper_scheme = "m3-tonal-spot"
+
+    [theme.templates]
+    builtin_ids = []
+    community_ids = []
+    enable_builtin_templates = false
+    enable_community_templates = false
+
+        [theme.templates.user.ghostty]
+        input_path = "templates/ghostty"
+        output_path = "$XDG_CONFIG_HOME/ghostty/themes/dankcolors"
+
+        [theme.templates.user.helix]
+        input_path = "templates/helix.toml"
+        output_path = "$XDG_CONFIG_HOME/helix/themes/matugen.toml"
+
+        [theme.templates.user.niri]
+        input_path = "templates/niri.kdl"
+        output_path = "~/.config/niri/noctalia.kdl"
+        post_hook = "niri msg action load-config-file"
+
+        [theme.templates.user.vicinae]
+        input_path = "templates/vicinae.toml"
+        output_path = "$XDG_DATA_HOME/vicinae/themes/matugen.toml"
+        post_hook = "vicinae theme set matugen"
+
+[wallpaper]
+directory = "/home/soywater/Pictures/Wallpapers"
+enabled = true
+fill_mode = "crop"
+
+    [wallpaper.default]
+    path = "/home/soywater/Pictures/Wallpapers/a_pixel_art_of_a_person_walking_by_a_building.jpg"
+
+    [wallpaper.last]
+    path = "/home/soywater/Pictures/Wallpapers/a_pixel_art_of_a_person_walking_by_a_building.jpg"
+
+    [wallpaper.monitors.HDMI-A-1]
+    path = "/home/soywater/Pictures/Wallpapers/a_pixel_art_of_a_person_walking_by_a_building.jpg"
+
+    [wallpaper.monitors.eDP-1]
+    path = "/home/soywater/Pictures/Wallpapers/a_pixel_art_of_a_person_walking_by_a_building.jpg"
+
+[weather]
+enabled = false
+refresh_minutes = 5
+
+[widget.clock]
+format = "{:%H:%M · %a %d/%m}"
+
+[widget.session]
+color = "primary"
+icon_color = "secondary"
