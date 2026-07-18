@@ -4,7 +4,7 @@ spawn-at-startup "noctalia"
 
 // Noctalia's documented window rules.
 window-rule {
-    geometry-corner-radius 20
+    geometry-corner-radius 5
     clip-to-geometry true
 }
 
@@ -23,6 +23,11 @@ layer-rule {
 // Set transparent workspace background color so the backdrop is visible at all times.
 layout {
   background-color "transparent"
+}
+
+debug {
+  // Allows notification actions and window activation from Noctalia.
+  honor-xdg-activation-with-invalid-serial
 }
 
 binds {

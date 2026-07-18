@@ -45,11 +45,9 @@
         settings.General.Experimental = true;
       };
 
-      # Removable devices, media tools, and nix-ld compatibility.
       services.udisks2.enable = true;
       programs.nix-ld.enable = true;
 
-      # Power, thermal, firmware, and hardware maintenance services.
       powerManagement.enable = true;
       services.thermald.enable = true;
       services.tlp = {
@@ -66,7 +64,6 @@
       services.hardware.bolt.enable = true;
 
       # Legion service integrations.
-      services.qbittorrent.enable = true;
       services.xserver.videoDrivers = [ "nvidia" ];
 
       environment.systemPackages = with pkgs; [
