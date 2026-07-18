@@ -2,7 +2,7 @@
 {
   flake.system."legion" = "x86_64-linux";
   flake.modules.nixos."hosts/legion" =
-  { pkgs, inputs, packages, ... }:
+  { pkgs, packages, ... }:
   {
     
     imports = with config.flake.modules.nixos; [
@@ -31,8 +31,6 @@
           direnv
         ];
       }
-    ] ++ [
-      inputs.nixos-hardware.nixosModules.lenovo-legion-16iax10h
     ];
 
     environment.systemPackages = [
