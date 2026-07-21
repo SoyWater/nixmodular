@@ -56,6 +56,12 @@
       };
 
       services.gnome.gnome-keyring.enable = true;
+
+      hardware.logitech.wireless = {
+        enable = true;
+        enableGraphical = true;
+      };
+
       xdg.portal = {
         enable = true;
         extraPortals = with pkgs; [
