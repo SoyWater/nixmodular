@@ -62,6 +62,11 @@
         enableGraphical = true;
       };
 
+      # Solaar needs this to emulate key events for device rules.  Keep the
+      # capability limited to the logged-in desktop user.
+      hardware.uinput.enable = true;
+      users.groups.uinput.members = [ "soywater" ];
+
       xdg.portal = {
         enable = true;
         extraPortals = with pkgs; [

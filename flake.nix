@@ -96,6 +96,15 @@
           doCheck = false;
         });
       };
+      solaarNotificationsOverlay = final: prev: {
+        solaar = prev.solaar.overrideAttrs (old: {
+          buildInputs = old.buildInputs ++ [ final.libnotify ];
+          # Enabling libnotify exposes Solaar's notification tests, which
+          # assume a graphical display during the Nix build sandbox.
+          doCheck = false;
+          doInstallCheck = false;
+        });
+      };
     in
     flake-parts.lib.mkFlake { inherit inputs; } 
     { 
@@ -125,6 +134,7 @@
             inherit system;
             overlays = [
               openldapNoChecksOverlay
+              solaarNotificationsOverlay
               inputs.niri.overlays.niri
               inputs.custom-applications.overlays.default
             ];
