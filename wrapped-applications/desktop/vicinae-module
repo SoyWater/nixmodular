@@ -1,17 +1,6 @@
-{ inputs }:
-{ pkgs, ... }:
-let
-  system = pkgs.stdenv.hostPlatform.system;
-  vicinaePackage = inputs.vicinae.packages.${system}.default;
-in
+{ ... }:
 {
   # Vicinae's settings.json remains user-writable for GUI changes. This module
-  # owns the declarative Niri integration and makes the CLI available to it.
-  runtimePkgs = [ vicinaePackage ];
+  # owns the declarative Niri integration.
   extraSettings = [ { include = ./config/vicinae/vicinae.kdl; } ];
-
-  wrapperVariants.vicinae = {
-    mirror = false;
-    package = vicinaePackage;
-  };
 }

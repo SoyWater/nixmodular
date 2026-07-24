@@ -1,12 +1,4 @@
-// Noctalia v5 integration for the standalone desktop wrapper.
-
 spawn-at-startup "noctalia"
-
-// Noctalia's documented window rules.
-window-rule {
-    geometry-corner-radius 5
-    clip-to-geometry true
-}
 
 window-rule {
     match app-id="dev.noctalia.Noctalia"
@@ -15,14 +7,21 @@ window-rule {
     default-window-height { fixed 920; }
 }
 
+// Persistent wallpaper
 layer-rule {
   match namespace="^noctalia-wallpaper"
   place-within-backdrop true
 }
-
-// Set transparent workspace background color so the backdrop is visible at all times.
 layout {
   background-color "transparent"
+}
+
+// Transparent bar
+layer-rule {
+  match namespace="^noctalia-bar-"
+  background-effect {
+    blur false
+  }
 }
 
 debug {
@@ -32,7 +31,6 @@ debug {
 
 binds {
     // Noctalia panels and shell actions.
-    Mod+Space hotkey-overlay-title="Noctalia Launcher" { spawn-sh "noctalia msg panel-toggle launcher"; }
     Mod+S hotkey-overlay-title="Noctalia Control Center" { spawn-sh "noctalia msg panel-toggle control-center"; }
     Mod+Comma hotkey-overlay-title="Noctalia Settings" { spawn-sh "noctalia msg settings-toggle"; }
     Mod+Alt+L hotkey-overlay-title="Lock Screen" { spawn-sh "noctalia msg session lock"; }

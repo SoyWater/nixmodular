@@ -7,6 +7,21 @@
         imports = [ wlib.modules.default ];
         package = inputs.noctalia.packages.${pkgs.stdenv.hostPlatform.system}.default;
         env.NOCTALIA_CONFIG_HOME = wlib.mkOutOfStoreSymlink pkgs "/home/soywater/nixconfigs/wrapped-applications/desktop/config";
+        env.NOCTALIA_STATE_HOME = "/home/soywater/.local/state/noctalia";
+      };
+
+    ghostty =
+      { pkgs, wlib, ... }:
+      {
+        imports = [ wlib.modules.default ];
+        package = pkgs.ghostty;
+      };
+
+    vicinae =
+      { pkgs, wlib, ... }:
+      {
+        imports = [ wlib.modules.default ];
+        package = inputs.vicinae.packages.${pkgs.stdenv.hostPlatform.system}.default;
       };
 
     niri =
@@ -24,9 +39,26 @@
         imports = [
           wlib.wrapperModules.niri
           (import ./niri-module { inherit lib pkgs wlib; })
-          ((import ./noctalia-module { inherit inputs; }) { inherit lib pkgs wlib; })
-          ((import ./vicinae-module { inherit inputs; }) { inherit pkgs; })
+          (import ./noctalia-module { inherit pkgs wlib; })
+          (import ./vicinae-module { })
           (import ./force-kill-module { inherit pkgs; })
+          (import ./gpu-selector-module { inherit pkgs; })
+          {
+            wrapperVariants = {
+              noctalia = {
+                mirror = false;
+                package = inputs.self.packages.${pkgs.stdenv.hostPlatform.system}.noctalia;
+              };
+              vicinae = {
+                mirror = false;
+                package = inputs.self.packages.${pkgs.stdenv.hostPlatform.system}.vicinae;
+              };
+              ghostty = {
+                mirror = false;
+                package = inputs.self.packages.${pkgs.stdenv.hostPlatform.system}.ghostty;
+              };
+            };
+          }
         ];
       };
   };

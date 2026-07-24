@@ -1,16 +1,9 @@
-{ inputs }:
-{ lib, pkgs, wlib, ... }:
+{ pkgs, wlib, ... }:
 let
-  system = pkgs.stdenv.hostPlatform.system;
-  noctaliaPackage = inputs.noctalia.packages.${system}.default;
   noctaliaConfigDir = "/home/soywater/nixconfigs/wrapped-applications/desktop/config";
-  noctaliaConfigHome = wlib.mkOutOfStoreSymlink pkgs noctaliaConfigDir;
   noctaliaNiriConfig = wlib.mkOutOfStoreSymlink pkgs "${noctaliaConfigDir}/noctalia/noctalia.kdl";
 in
 {
-  # Make `noctalia` available to Niri's spawn-at-startup and IPC bindings.
-  runtimePkgs = [ noctaliaPackage ];
-  env.NOCTALIA_CONFIG_HOME = noctaliaConfigHome;
   extraSettings = [
     {
       include = [
@@ -21,14 +14,9 @@ in
     {
       include = [
         { optional = true; }
-        "~/.config/niri/noctalia.kdl"
+        "~/.local/state/noctalia/themes/niri/noctalia.kdl"
       ];
     }
   ];
 
-  wrapperVariants.noctalia = {
-    mirror = false;
-    package = noctaliaPackage;
-    env.NOCTALIA_CONFIG_HOME = noctaliaConfigHome;
-  };
 }

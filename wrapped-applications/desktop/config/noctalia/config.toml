@@ -23,7 +23,7 @@ radius = 80
 reserve_space = true
 scale = 0.85
 shadow = false
-start = [ "launcher", "wallpaper", "clipboard", "workspaces" ]
+start = [ "wallpaper", "workspaces" ]
 thickness = 25
 
 [control_center.calendar]
@@ -127,6 +127,7 @@ position = "bottom_center"
 position_vertical = "center_left"
 
 [shell]
+clipboard_enabled = false
 niri_overview_type_to_launch_enabled = false
 offline_mode = true
 polkit_agent = true
@@ -162,21 +163,23 @@ wallpaper_scheme = "m3-tonal-spot"
 
         [theme.templates.user.ghostty]
         input_path = "templates/ghostty"
-        output_path = "$XDG_CONFIG_HOME/ghostty/themes/dankcolors"
+        output_path = "~/.local/state/noctalia/themes/ghostty/dankcolors"
+        post_hook = "mkdir -p \"$HOME/.config/ghostty/themes\" && ln -sfn \"$HOME/.local/state/noctalia/themes/ghostty/dankcolors\" \"$HOME/.config/ghostty/themes/dankcolors\" && (pgrep -f ghostty >/dev/null && pkill -SIGUSR2 ghostty || true)"
 
         [theme.templates.user.helix]
         input_path = "templates/helix.toml"
-        output_path = "$XDG_CONFIG_HOME/helix/themes/matugen.toml"
+        output_path = "~/.local/state/noctalia/themes/helix/matugen.toml"
+        post_hook = "mkdir -p \"$HOME/.config/helix/themes\" && ln -sfn \"$HOME/.local/state/noctalia/themes/helix/matugen.toml\" \"$HOME/.config/helix/themes/matugen.toml\""
 
         [theme.templates.user.niri]
         input_path = "templates/niri.kdl"
-        output_path = "~/.config/niri/noctalia.kdl"
+        output_path = "~/.local/state/noctalia/themes/niri/noctalia.kdl"
         post_hook = "niri msg action load-config-file"
 
         [theme.templates.user.vicinae]
         input_path = "templates/vicinae.toml"
-        output_path = "$XDG_DATA_HOME/vicinae/themes/matugen.toml"
-        post_hook = "vicinae theme set matugen"
+        output_path = "~/.local/state/noctalia/themes/vicinae/matugen.toml"
+        post_hook = "mkdir -p \"$HOME/.local/share/vicinae/themes\" && ln -sfn \"$HOME/.local/state/noctalia/themes/vicinae/matugen.toml\" \"$HOME/.local/share/vicinae/themes/matugen.toml\" && vicinae theme set matugen"
 
 [wallpaper]
 directory = "/home/soywater/Pictures/Wallpapers"
