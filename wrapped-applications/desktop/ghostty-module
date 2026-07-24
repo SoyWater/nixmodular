@@ -1,0 +1,8 @@
+{ ghosttyPackage }:
+{ ... }:
+{
+  wrapperVariants.ghostty = {
+    mirror = false;
+    package = ghosttyPackage;
+  };
+}

@@ -39,26 +39,17 @@
         imports = [
           wlib.wrapperModules.niri
           (import ./niri-module { inherit lib pkgs wlib; })
-          (import ./noctalia-module { inherit pkgs wlib; })
-          (import ./vicinae-module { })
+          ((import ./noctalia-module {
+            noctaliaPackage = inputs.self.packages.${pkgs.stdenv.hostPlatform.system}.noctalia;
+          }) { inherit pkgs wlib; })
+          ((import ./vicinae-module {
+            vicinaePackage = inputs.self.packages.${pkgs.stdenv.hostPlatform.system}.vicinae;
+          }) { })
+          ((import ./ghostty-module {
+            ghosttyPackage = inputs.self.packages.${pkgs.stdenv.hostPlatform.system}.ghostty;
+          }) { })
           (import ./force-kill-module { inherit pkgs; })
           (import ./gpu-selector-module { inherit pkgs; })
-          {
-            wrapperVariants = {
-              noctalia = {
-                mirror = false;
-                package = inputs.self.packages.${pkgs.stdenv.hostPlatform.system}.noctalia;
-              };
-              vicinae = {
-                mirror = false;
-                package = inputs.self.packages.${pkgs.stdenv.hostPlatform.system}.vicinae;
-              };
-              ghostty = {
-                mirror = false;
-                package = inputs.self.packages.${pkgs.stdenv.hostPlatform.system}.ghostty;
-              };
-            };
-          }
         ];
       };
   };

@@ -1,3 +1,4 @@
+{ noctaliaPackage }:
 { pkgs, wlib, ... }:
 let
   noctaliaConfigDir = "/home/soywater/nixconfigs/wrapped-applications/desktop/config";
@@ -18,5 +19,10 @@ in
       ];
     }
   ];
+
+  wrapperVariants.noctalia = {
+    mirror = false;
+    package = noctaliaPackage;
+  };
 
 }

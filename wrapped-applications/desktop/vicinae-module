@@ -1,6 +1,12 @@
+{ vicinaePackage }:
 { ... }:
 {
   # Vicinae's settings.json remains user-writable for GUI changes. This module
   # owns the declarative Niri integration.
   extraSettings = [ { include = ./config/vicinae/vicinae.kdl; } ];
+
+  wrapperVariants.vicinae = {
+    mirror = false;
+    package = vicinaePackage;
+  };
 }
