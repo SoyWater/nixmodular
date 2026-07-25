@@ -1,5 +1,5 @@
-{ vicinaePackage }:
-{ ... }:
+{ inputs }:
+{ pkgs, ... }:
 let
   vicinaeConfig = "/home/soywater/nixconfigs/wrapped-applications/desktop/config/vicinae/settings.json";
 in
@@ -13,6 +13,6 @@ in
 
   wrapperVariants.vicinae = {
     mirror = false;
-    package = vicinaePackage;
+    package = inputs.self.packages.${pkgs.stdenv.hostPlatform.system}.vicinae;
   };
 }

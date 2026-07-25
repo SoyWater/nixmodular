@@ -1,4 +1,4 @@
-{ noctaliaPackage }:
+{ inputs }:
 { pkgs, wlib, ... }:
 let
   noctaliaConfigDir = "/home/soywater/nixconfigs/wrapped-applications/desktop/config";
@@ -22,7 +22,7 @@ in
 
   wrapperVariants.noctalia = {
     mirror = false;
-    package = noctaliaPackage;
+    package = inputs.self.packages.${pkgs.stdenv.hostPlatform.system}.noctalia;
   };
 
 }

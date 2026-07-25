@@ -1,8 +1,8 @@
-{ ghosttyPackage }:
-{ ... }:
+{ inputs }:
+{ pkgs, ... }:
 {
   wrapperVariants.ghostty = {
     mirror = false;
-    package = ghosttyPackage;
+    package = inputs.self.packages.${pkgs.stdenv.hostPlatform.system}.ghostty;
   };
 }
