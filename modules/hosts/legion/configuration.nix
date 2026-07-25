@@ -10,7 +10,6 @@
       terminal
       services
       dualBoot
-      fonts
       virtualization
 
       # user
