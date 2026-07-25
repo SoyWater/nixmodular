@@ -1,9 +1,15 @@
 { vicinaePackage }:
 { ... }:
+let
+  vicinaeConfig = "/home/soywater/nixconfigs/wrapped-applications/desktop/config/vicinae/settings.json";
+in
 {
-  # Vicinae's settings.json remains user-writable for GUI changes. This module
-  # owns the declarative Niri integration.
-  extraSettings = [ { include = ./config/vicinae/vicinae.kdl; } ];
+  # The settings file remains user-writable for GUI changes. Keep it outside
+  # the Nix store so Vicinae can use atomic saves.
+  extraSettings = [
+    { "spawn-at-startup" = [ "vicinae" "server" "--config" vicinaeConfig ]; }
+    { include = ./config/vicinae/vicinae.kdl; }
+  ];
 
   wrapperVariants.vicinae = {
     mirror = false;

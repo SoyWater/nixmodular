@@ -1,6 +1,3 @@
-// Vicinae's server must run before its control commands can be used.
-spawn-at-startup "vicinae" "server"
-
 // Let windows opened by Vicinae receive focus on Niri.
 debug {
     honor-xdg-activation-with-invalid-serial
