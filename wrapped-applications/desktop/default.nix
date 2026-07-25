@@ -1,21 +1,30 @@
 { inputs, ... }:
+let
+  defaultDesktopConfigHome = "/home/soywater/nixconfigs/wrapped-applications/desktop/config";
+in
 {
   flake.wrappers = {
     noctalia =
-      { pkgs, wlib, ... }:
+      { config, pkgs, wlib, ... }:
+      let
+        desktopConfigHome = config._module.args.desktopConfigHome or defaultDesktopConfigHome;
+      in
       {
         imports = [ wlib.modules.default ];
         package = inputs.noctalia.packages.${pkgs.stdenv.hostPlatform.system}.default;
-        env.NOCTALIA_CONFIG_HOME = wlib.mkOutOfStoreSymlink pkgs "/home/soywater/nixconfigs/wrapped-applications/desktop/config";
+        env.NOCTALIA_CONFIG_HOME = wlib.mkOutOfStoreSymlink pkgs desktopConfigHome;
         env.NOCTALIA_STATE_HOME = "/home/soywater/.local/state/noctalia";
       };
 
     ghostty =
-      { pkgs, wlib, ... }:
+      { config, pkgs, wlib, ... }:
+      let
+        desktopConfigHome = config._module.args.desktopConfigHome or defaultDesktopConfigHome;
+      in
       {
         imports = [ wlib.modules.default ];
         package = pkgs.ghostty;
-        env.XDG_CONFIG_HOME = wlib.mkOutOfStoreSymlink pkgs "/home/soywater/nixconfigs/wrapped-applications/desktop/config";
+        env.XDG_CONFIG_HOME = wlib.mkOutOfStoreSymlink pkgs desktopConfigHome;
       };
 
     vicinae =
@@ -30,14 +39,17 @@
       {
         imports = [
           wlib.wrapperModules.niri
-          (import ./niri-module { inherit lib pkgs wlib; })
+          (import ./niri-module {
+            inherit lib pkgs wlib defaultDesktopConfigHome;
+          })
         ];
       };
 
     desktop =
       { lib, pkgs, wlib, ... }:
       let
-        importDesktopModule = module: import module { inherit inputs lib pkgs wlib; };
+        importDesktopModule = module: args@{ config, lib, pkgs, wlib, ... }:
+          import module (args // { inherit inputs defaultDesktopConfigHome; });
       in
       {
         imports = [

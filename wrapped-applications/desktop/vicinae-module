@@ -1,6 +1,7 @@
-{ inputs, pkgs, ... }:
+{ config, inputs, pkgs, defaultDesktopConfigHome, ... }:
 let
-  vicinaeConfig = "/home/soywater/nixconfigs/wrapped-applications/desktop/config/vicinae/settings.json";
+  desktopConfigHome = config._module.args.desktopConfigHome or defaultDesktopConfigHome;
+  vicinaeConfig = "${desktopConfigHome}/vicinae/settings.json";
 in
 {
   # The settings file remains user-writable for GUI changes. Keep it outside

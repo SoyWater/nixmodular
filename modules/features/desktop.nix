@@ -1,12 +1,19 @@
+{ ... }:
 {
   flake.modules.nixos.desktop =
-    { inputs, packages, pkgs, ... }:
+    { config, inputs, packages, pkgs, ... }:
+    let
+      desktopConfigHome = "${config.users.users.soywater.home}/nixconfigs/wrapped-applications/desktop/config";
+      desktopPackage = packages.desktop.wrap {
+        _module.args.desktopConfigHome = desktopConfigHome;
+      };
+    in
     {
       imports = [ inputs.noctalia-greeter.nixosModules.default ];
 
       environment = {
         pathsToLink = [ "/share/wayland-sessions" ];
-        systemPackages = [ packages.desktop ];
+        systemPackages = [ desktopPackage ];
       };
 
       services.gnome.gnome-keyring.enable = true;

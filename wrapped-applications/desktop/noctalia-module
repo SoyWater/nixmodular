@@ -1,7 +1,7 @@
-{ inputs, pkgs, wlib, ... }:
+{ config, inputs, lib, pkgs, wlib, defaultDesktopConfigHome, ... }:
 let
-  noctaliaConfigDir = "/home/soywater/nixconfigs/wrapped-applications/desktop/config";
-  noctaliaNiriConfig = wlib.mkOutOfStoreSymlink pkgs "${noctaliaConfigDir}/noctalia/noctalia.kdl";
+  desktopConfigHome = config._module.args.desktopConfigHome or defaultDesktopConfigHome;
+  noctaliaNiriConfig = wlib.mkOutOfStoreSymlink pkgs "${desktopConfigHome}/noctalia/noctalia.kdl";
 in
 {
   extraSettings = [
@@ -21,7 +21,9 @@ in
 
   wrapperVariants.noctalia = {
     mirror = false;
-    package = inputs.self.packages.${pkgs.stdenv.hostPlatform.system}.noctalia;
+    package = inputs.self.packages.${pkgs.stdenv.hostPlatform.system}.noctalia.wrap {
+      env.NOCTALIA_CONFIG_HOME = lib.mkForce (wlib.mkOutOfStoreSymlink pkgs desktopConfigHome);
+    };
   };
 
 }

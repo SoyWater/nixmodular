@@ -164,7 +164,7 @@ wallpaper_scheme = "m3-tonal-spot"
         [theme.templates.user.ghostty]
         input_path = "templates/ghostty"
         output_path = "~/.local/state/noctalia/themes/ghostty/dankcolors"
-        post_hook = "mkdir -p \"/home/soywater/nixconfigs/wrapped-applications/desktop/config/ghostty/themes\" && ln -sfn \"$HOME/.local/state/noctalia/themes/ghostty/dankcolors\" \"/home/soywater/nixconfigs/wrapped-applications/desktop/config/ghostty/themes/dankcolors\" && (pgrep -f ghostty >/dev/null && pkill -SIGUSR2 ghostty || true)"
+        post_hook = "mkdir -p \"$NOCTALIA_CONFIG_HOME/ghostty/themes\" && ln -sfn \"$HOME/.local/state/noctalia/themes/ghostty/dankcolors\" \"$NOCTALIA_CONFIG_HOME/ghostty/themes/dankcolors\" && (pgrep -f ghostty >/dev/null && pkill -SIGUSR2 ghostty || true)"
 
         [theme.templates.user.helix]
         input_path = "templates/helix.toml"
