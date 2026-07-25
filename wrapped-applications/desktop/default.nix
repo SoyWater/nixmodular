@@ -18,6 +18,7 @@ in
         package = inputs.noctalia.packages.${pkgs.stdenv.hostPlatform.system}.default;
         env.NOCTALIA_CONFIG_HOME = wlib.mkOutOfStoreSymlink pkgs "${desktopConfigHome}/wrapped-applications/desktop/config";
         env.NOCTALIA_STATE_HOME = "${desktopConfigHome}/.temp";
+        env.FONTCONFIG_FILE = inputs.self.packages.${pkgs.stdenv.hostPlatform.system}.maple-mono-fontconfig;
       };
 
     vicinae =
@@ -30,6 +31,7 @@ in
         imports = [ wlib.modules.default ];
         package = inputs.vicinae.packages.${pkgs.stdenv.hostPlatform.system}.default;
         env.XDG_DATA_HOME = "${desktopConfigHome}/.temp";
+        env.FONTCONFIG_FILE = inputs.self.packages.${pkgs.stdenv.hostPlatform.system}.maple-mono-fontconfig;
       };
 
     niri =
@@ -38,7 +40,7 @@ in
         imports = [
           wlib.wrapperModules.niri
           (import ./niri-module {
-            inherit lib pkgs wlib;
+            inherit inputs lib pkgs wlib;
             desktopConfigHome = defaultDesktopConfigHome;
           })
         ];

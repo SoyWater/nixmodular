@@ -1,4 +1,4 @@
-{ lib, pkgs, wlib, desktopConfigHome, ... }:
+{ inputs, lib, pkgs, wlib, desktopConfigHome, ... }:
 let
   niriConfigDir = "${desktopConfigHome}/wrapped-applications/desktop/config/niri";
   niriStaticIncludes = map (path: wlib.mkOutOfStoreSymlink pkgs path) [
@@ -17,6 +17,7 @@ in
 
   runtimePkgs = [ pkgs.xwayland-satellite ];
   env = {
+    FONTCONFIG_FILE = inputs.self.packages.${pkgs.stdenv.hostPlatform.system}.maple-mono-fontconfig;
     XCURSOR_THEME = "Bibata-Modern-Ice";
     XCURSOR_SIZE = "24";
     XCURSOR_PATH = "${pkgs.bibata-cursors}/share/icons";

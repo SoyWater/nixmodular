@@ -26,6 +26,7 @@ in
       {
         imports = [ wlib.modules.default ];
         package = pkgs.helix;
+        env.FONTCONFIG_FILE = inputs.self.packages.${pkgs.stdenv.hostPlatform.system}.maple-mono-fontconfig;
         runtimePkgs = with pkgs; [
           nixd
           gopls

@@ -1,4 +1,4 @@
-{ config, lib, pkgs, wlib, ... }:
+{ config, inputs, lib, pkgs, wlib, ... }:
 let
   phases = [
     "vendor"
@@ -20,6 +20,9 @@ in
 
   config = {
     package = pkgs.fish;
+    terminalFish.final = [
+      ''set -gx FONTCONFIG_FILE ${inputs.self.packages.${pkgs.stdenv.hostPlatform.system}.maple-mono-fontconfig}''
+    ];
     shellAliases = {
       ".." = "cd ..";
       "..." = "cd ../..";
