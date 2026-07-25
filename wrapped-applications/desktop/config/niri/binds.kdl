@@ -15,13 +15,9 @@ binds {
     XF86AudioPrev        allow-when-locked=true { spawn-sh "playerctl previous"; }
     XF86AudioNext        allow-when-locked=true { spawn-sh "playerctl next"; }
 
-    // XF86MonBrightnessUp allow-when-locked=true { spawn "brightnessctl" "--class=backlight" "set" "+10%"; }
-    // XF86MonBrightnessDown allow-when-locked=true { spawn "brightnessctl" "--class=backlight" "set" "10%-"; }
 
     Mod+Shift+P { power-off-monitors; }
     Mod+Ctrl+0 { spawn-sh "niri msg outputs | grep -n2 eDP | grep Disabled -q && { niri msg output eDP-1 on; } || { niri msg output eDP-1 off; }"; }
-
-
     
     Mod+O repeat=false { toggle-overview; }
     Mod+Q repeat=false { close-window; }
