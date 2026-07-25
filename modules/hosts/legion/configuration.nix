@@ -9,9 +9,8 @@
       desktop
       services
       dualBoot
-      docker
       fonts
-      virtman
+      virtualization
 
       # user
       soywater
