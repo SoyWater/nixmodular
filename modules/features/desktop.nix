@@ -1,20 +1,12 @@
 {
   flake.modules.nixos.desktop =
-    { inputs, lib, packages, pkgs, ... }:
+    { inputs, packages, pkgs, ... }:
     {
       imports = [ inputs.noctalia-greeter.nixosModules.default ];
 
       environment = {
         pathsToLink = [ "/share/wayland-sessions" ];
-        systemPackages = [
-          packages.desktop
-          pkgs.bibata-cursors
-        ];
-        sessionVariables = {
-          XCURSOR_THEME = "Bibata-Modern-Ice";
-          XCURSOR_SIZE = "24";
-          XCURSOR_PATH = lib.mkAfter [ "${pkgs.bibata-cursors}/share/icons" ];
-        };
+        systemPackages = [ packages.desktop ];
       };
 
       services.gnome.gnome-keyring.enable = true;

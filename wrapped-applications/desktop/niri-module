@@ -16,6 +16,11 @@ in
   disableConfigValidation = true;
 
   runtimePkgs = [ pkgs.xwayland-satellite ];
+  env = {
+    XCURSOR_THEME = "Bibata-Modern-Ice";
+    XCURSOR_SIZE = "24";
+    XCURSOR_PATH = "${pkgs.bibata-cursors}/share/icons";
+  };
   extraSettings =
     map (path: { include = toString path; }) niriStaticIncludes;
 
