@@ -16,15 +16,16 @@ in
         env.NOCTALIA_STATE_HOME = "/home/soywater/.local/state/noctalia";
       };
 
-    ghostty =
-      { config, pkgs, wlib, ... }:
-      let
-        desktopConfigHome = config._module.args.desktopConfigHome or defaultDesktopConfigHome;
-      in
+    kitty =
+      { config, lib, pkgs, wlib, ... }:
       {
-        imports = [ wlib.modules.default ];
-        package = pkgs.ghostty;
-        env.XDG_CONFIG_HOME = wlib.mkOutOfStoreSymlink pkgs desktopConfigHome;
+        imports = [
+          wlib.modules.default
+          (import ./kitty-module {
+            inherit config lib pkgs defaultDesktopConfigHome;
+            kittyStandalone = true;
+          })
+        ];
       };
 
     vicinae =
@@ -57,7 +58,7 @@ in
           (importDesktopModule ./niri-module)
           (importDesktopModule ./noctalia-module)
           (importDesktopModule ./vicinae-module)
-          (importDesktopModule ./ghostty-module)
+          (importDesktopModule ./kitty-module)
           (importDesktopModule ./force-kill-module)
           (importDesktopModule ./gpu-selector-module)
         ];

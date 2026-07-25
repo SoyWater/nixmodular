@@ -161,10 +161,10 @@ wallpaper_scheme = "m3-tonal-spot"
     enable_builtin_templates = false
     enable_community_templates = false
 
-        [theme.templates.user.ghostty]
-        input_path = "templates/ghostty"
-        output_path = "~/.local/state/noctalia/themes/ghostty/dankcolors"
-        post_hook = "mkdir -p \"$NOCTALIA_CONFIG_HOME/ghostty/themes\" && ln -sfn \"$HOME/.local/state/noctalia/themes/ghostty/dankcolors\" \"$NOCTALIA_CONFIG_HOME/ghostty/themes/dankcolors\" && (pgrep -f ghostty >/dev/null && pkill -SIGUSR2 ghostty || true)"
+        [theme.templates.user.kitty]
+        input_path = "templates/kitty.conf"
+        output_path = "~/.local/state/noctalia/themes/kitty/dankcolors.conf"
+        post_hook = "pgrep -x kitty >/dev/null && pkill -SIGUSR1 kitty || true"
 
         [theme.templates.user.helix]
         input_path = "templates/helix.toml"

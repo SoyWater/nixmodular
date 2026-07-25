@@ -1,8 +1,0 @@
-theme = dankcolors
-font-family = JetBrainsMono Nerd Font
-window-decoration = none
-window-padding-x = 14
-window-padding-y = 10
-quit-after-last-window-closed = true
-quit-after-last-window-closed-delay = 10m
-command = fish

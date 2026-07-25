@@ -1,0 +1,33 @@
+{ config ? null, lib, pkgs, defaultDesktopConfigHome, kittyStandalone ? false, ... }:
+let
+  desktopConfigHome =
+    if config == null then defaultDesktopConfigHome
+    else config._module.args.desktopConfigHome or defaultDesktopConfigHome;
+  kittyConfig = "${desktopConfigHome}/kitty/kitty.conf";
+  kittyWithConfig = pkgs.symlinkJoin {
+    name = "kitty-with-desktop-config";
+    paths = [ pkgs.kitty ];
+    nativeBuildInputs = [ pkgs.makeWrapper ];
+    postBuild = ''
+      rm "$out/bin/kitty"
+      makeWrapper ${pkgs.kitty}/bin/kitty "$out/bin/kitty" \
+        --add-flags "--config ${kittyConfig}" \
+        --add-flags "--single-instance"
+      cp "$out/share/applications/kitty.desktop" "$TMPDIR/kitty.desktop"
+      substituteInPlace "$TMPDIR/kitty.desktop" \
+        --replace-fail "Exec=kitty" "Exec=kitty --config ${kittyConfig} --single-instance"
+      rm "$out/share/applications/kitty.desktop"
+      cp "$TMPDIR/kitty.desktop" "$out/share/applications/kitty.desktop"
+    '';
+  };
+in
+{
+  package = lib.mkIf kittyStandalone kittyWithConfig;
+
+  wrapperVariants.kitty = {
+    mirror = false;
+    package = kittyWithConfig;
+  };
+
+  meta.platforms = lib.platforms.linux;
+}
