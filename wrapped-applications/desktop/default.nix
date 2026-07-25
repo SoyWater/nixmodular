@@ -17,14 +17,16 @@ in
       };
 
     kitty =
-      { config, lib, pkgs, wlib, ... }:
+      { config, pkgs, wlib, ... }:
+      let
+        desktopConfigHome = config._module.args.desktopConfigHome or defaultDesktopConfigHome;
+      in
       {
-        imports = [
-          wlib.modules.default
-          (import ./kitty-module {
-            inherit config lib pkgs defaultDesktopConfigHome;
-            kittyStandalone = true;
-          })
+        imports = [ wlib.modules.default ];
+        package = pkgs.kitty;
+        addFlag = [
+          [ "--config" "${desktopConfigHome}/kitty/kitty.conf" ]
+          "--single-instance"
         ];
       };
 
