@@ -6,10 +6,15 @@ in
   { pkgs, ... }:
   {
     fonts.packages = with pkgs; [
-      fira
-      noto-fonts-cjk-sans
-      nerd-fonts.jetbrains-mono
+      maple-mono.NF-CN
     ];
+
+    fonts.fontconfig.defaultFonts = {
+      serif = [ "Maple Mono NF CN" ];
+      sansSerif = [ "Maple Mono NF CN" ];
+      monospace = [ "Maple Mono NF CN" ];
+      emoji = [ "Maple Mono NF CN" ];
+    };
 
     imports = [
     ];
