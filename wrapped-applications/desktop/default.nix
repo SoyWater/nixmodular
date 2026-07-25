@@ -14,11 +14,9 @@
       { pkgs, wlib, ... }:
       {
         imports = [ wlib.modules.default ];
-      }
-      // (import ./ghostty-wrapper {
-          ghosttyPackage = pkgs.ghostty;
-          inherit pkgs wlib;
-        });
+        package = pkgs.ghostty;
+        env.XDG_CONFIG_HOME = wlib.mkOutOfStoreSymlink pkgs "/home/soywater/nixconfigs/wrapped-applications/desktop/config";
+      };
 
     vicinae =
       { pkgs, wlib, ... }:
@@ -50,7 +48,7 @@
           }) { })
           ((import ./ghostty-module {
             ghosttyPackage = inputs.self.packages.${pkgs.stdenv.hostPlatform.system}.ghostty;
-          }) { inherit pkgs wlib; })
+          }) { })
           (import ./force-kill-module { inherit pkgs; })
           (import ./gpu-selector-module { inherit pkgs; })
         ];

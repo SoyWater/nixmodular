@@ -1,7 +1,8 @@
 { ghosttyPackage }:
-{ pkgs, wlib, ... }:
+{ ... }:
 {
-  wrapperVariants.ghostty =
-    (import ./ghostty-wrapper { inherit pkgs wlib ghosttyPackage; })
-    // { mirror = false; };
+  wrapperVariants.ghostty = {
+    mirror = false;
+    package = ghosttyPackage;
+  };
 }
