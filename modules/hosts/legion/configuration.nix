@@ -15,12 +15,6 @@
 
       # user
       soywater
-    ] ++ [
-      {
-        home-manager.users.soywater.imports = with config.flake.modules.homeManager; [
-          baseConfig
-        ];
-      }
     ];
 
     # Keep the host package set aligned with the selected kernel and provide
