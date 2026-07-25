@@ -18,6 +18,27 @@ in
         env.STARSHIP_CONFIG = "${terminalConfigHome}/.temp/noctalia/themes/starship/matugen.toml";
       };
 
+    helix =
+      { config, pkgs, wlib, ... }:
+      let
+        terminalConfigHome = config._module.args.terminalConfigHome or defaultTerminalConfigHome;
+      in
+      {
+        imports = [ wlib.modules.default ];
+        package = pkgs.helix;
+        runtimePkgs = with pkgs; [
+          nixd
+          gopls
+          typescript-language-server
+          vscode-json-languageserver
+          ty
+          clang-tools
+        ];
+        addFlag = [
+          [ "--config" "${terminalConfigHome}/wrapped-applications/terminal/config/helix/config.toml" ]
+        ];
+      };
+
     terminal =
       { config, lib, pkgs, wlib, ... }:
       let
@@ -31,6 +52,7 @@ in
           (importTerminalModule ./kitty-module)
           (importTerminalModule ./direnv-module)
           (importTerminalModule ./fzf-module)
+          (importTerminalModule ./helix-module)
           (importTerminalModule ./zoxide-module)
           (importTerminalModule ./starship-module)
           (importTerminalModule ./yazi-module)

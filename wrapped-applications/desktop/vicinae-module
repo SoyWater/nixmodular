@@ -1,4 +1,4 @@
-{ inputs, pkgs, desktopConfigHome, desktopTempHome, ... }:
+{ inputs, pkgs, desktopConfigHome, ... }:
 let
   vicinaeConfig = "${desktopConfigHome}/wrapped-applications/desktop/config/vicinae/settings.json";
 in
@@ -13,7 +13,7 @@ in
   constructFiles.vicinae = {
     relPath = "bin/vicinae";
     content = "${inputs.self.packages.${pkgs.stdenv.hostPlatform.system}.vicinae.wrap {
-      _module.args.desktopTempHome = desktopTempHome;
+      _module.args.desktopConfigHome = desktopConfigHome;
     }}/bin/vicinae";
     builder = ''ln -s "$(cat "$1")" "$2"'';
   };

@@ -1,0 +1,15 @@
+{ inputs, pkgs, terminalConfigHome, ... }:
+{
+  env = {
+    EDITOR = "hx";
+    VISUAL = "hx";
+  };
+
+  constructFiles.helix = {
+    relPath = "bin/hx";
+    content = "${inputs.self.packages.${pkgs.stdenv.hostPlatform.system}.helix.wrap {
+      _module.args.terminalConfigHome = terminalConfigHome;
+    }}/bin/hx";
+    builder = ''ln -s "$(cat "$1")" "$2"'';
+  };
+}

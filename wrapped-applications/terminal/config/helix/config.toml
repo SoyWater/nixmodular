@@ -1,0 +1,35 @@
+theme = "matugen"
+
+[editor]
+mouse = false
+line-number = "relative"
+bufferline = "multiple"
+true-color = true
+end-of-line-diagnostics = "hint"
+
+[editor.lsp]
+display-messages = true
+
+[editor.indent-guides]
+render = true
+character = "┊"
+skip-levels = 1
+
+[editor.statusline]
+left = ["mode", "spinner", "file-name", "file-modification-indicator"]
+right = ["version-control", "diagnostics", "selections", "position", "file-encoding", "file-line-ending", "file-type"]
+separator = "│"
+
+[editor.cursor-shape]
+insert = "bar"
+select = "underline"
+
+[editor.inline-diagnostics]
+cursor-line = "warning"
+
+[keys.normal]
+ret = ["goto_word"]
+esc = ["collapse_selection", "keep_primary_selection"]
+
+[keys.normal.space]
+l = ":toggle lsp.display-inlay-hints"

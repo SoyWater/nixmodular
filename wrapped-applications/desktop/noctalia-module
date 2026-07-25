@@ -1,4 +1,4 @@
-{ inputs, pkgs, wlib, desktopConfigHome, desktopTempHome, ... }:
+{ inputs, pkgs, wlib, desktopConfigHome, ... }:
 let
   noctaliaNiriConfig = wlib.mkOutOfStoreSymlink pkgs "${desktopConfigHome}/wrapped-applications/desktop/config/noctalia/noctalia.kdl";
 in
@@ -13,7 +13,7 @@ in
     {
       include = [
         { optional = true; }
-        "${desktopTempHome}/noctalia/themes/niri/noctalia.kdl"
+        "${desktopConfigHome}/.temp/noctalia/themes/niri/noctalia.kdl"
       ];
     }
   ];
@@ -22,7 +22,6 @@ in
     relPath = "bin/noctalia";
     content = "${inputs.self.packages.${pkgs.stdenv.hostPlatform.system}.noctalia.wrap {
       _module.args.desktopConfigHome = desktopConfigHome;
-      _module.args.desktopTempHome = desktopTempHome;
     }}/bin/noctalia";
     builder = ''ln -s "$(cat "$1")" "$2"'';
   };

@@ -1,7 +1,6 @@
 { inputs, ... }:
 let
   defaultDesktopConfigHome = "/home/soywater/nixconfigs";
-  defaultDesktopTempHome = "/home/soywater/nixconfigs/.temp";
 in
 {
   flake.wrappers = {
@@ -9,13 +8,12 @@ in
       { config, pkgs, wlib, ... }:
       let
         desktopConfigHome = config._module.args.desktopConfigHome or defaultDesktopConfigHome;
-        desktopTempHome = config._module.args.desktopTempHome or defaultDesktopTempHome;
       in
       {
         imports = [ wlib.modules.default ];
         package = inputs.noctalia.packages.${pkgs.stdenv.hostPlatform.system}.default;
-        env.NOCTALIA_CONFIG_HOME = wlib.mkOutOfStoreSymlink pkgs "${desktopConfigHome}/wrapped-applications/desktop/config/noctalia";
-        env.NOCTALIA_STATE_HOME = "${desktopTempHome}/noctalia";
+        env.NOCTALIA_CONFIG_HOME = wlib.mkOutOfStoreSymlink pkgs "${desktopConfigHome}/wrapped-applications/desktop/config";
+        env.NOCTALIA_STATE_HOME = "${desktopConfigHome}/.temp";
       };
 
     kitty =
@@ -35,12 +33,13 @@ in
     vicinae =
       { config, pkgs, wlib, ... }:
       let
-        desktopTempHome = config._module.args.desktopTempHome or defaultDesktopTempHome;
+
+        desktopConfigHome = config._module.args.desktopConfigHome or defaultDesktopConfigHome;
       in
       {
         imports = [ wlib.modules.default ];
         package = inputs.vicinae.packages.${pkgs.stdenv.hostPlatform.system}.default;
-        env.XDG_DATA_HOME = desktopTempHome;
+        env.XDG_DATA_HOME = "${desktopConfigHome}/.temp";
       };
 
     niri =
@@ -59,9 +58,8 @@ in
       { config, lib, pkgs, wlib, ... }:
       let
         desktopConfigHome = config._module.args.desktopConfigHome or defaultDesktopConfigHome;
-        desktopTempHome = config._module.args.desktopTempHome or defaultDesktopTempHome;
         importDesktopModule = module: args@{ config, lib, pkgs, wlib, ... }:
-          import module (args // { inherit inputs desktopConfigHome desktopTempHome; });
+          import module (args // { inherit inputs desktopConfigHome; });
       in
       {
         imports = [
