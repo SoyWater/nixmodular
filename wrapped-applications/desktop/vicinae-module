@@ -11,8 +11,9 @@ in
     { include = ./config/vicinae/vicinae.kdl; }
   ];
 
-  wrapperVariants.vicinae = {
-    mirror = false;
-    package = inputs.self.packages.${pkgs.stdenv.hostPlatform.system}.vicinae;
+  constructFiles.vicinae = {
+    relPath = "bin/vicinae";
+    content = "${inputs.self.packages.${pkgs.stdenv.hostPlatform.system}.vicinae}/bin/vicinae";
+    builder = ''ln -s "$(cat "$1")" "$2"'';
   };
 }

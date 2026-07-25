@@ -19,11 +19,11 @@ in
     }
   ];
 
-  wrapperVariants.noctalia = {
-    mirror = false;
-    package = inputs.self.packages.${pkgs.stdenv.hostPlatform.system}.noctalia.wrap {
+  constructFiles.noctalia = {
+    relPath = "bin/noctalia";
+    content = "${inputs.self.packages.${pkgs.stdenv.hostPlatform.system}.noctalia.wrap {
       env.NOCTALIA_CONFIG_HOME = lib.mkForce (wlib.mkOutOfStoreSymlink pkgs desktopConfigHome);
-    };
+    }}/bin/noctalia";
+    builder = ''ln -s "$(cat "$1")" "$2"'';
   };
-
 }

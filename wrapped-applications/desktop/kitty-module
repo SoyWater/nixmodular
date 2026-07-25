@@ -3,10 +3,11 @@ let
   desktopConfigHome = config._module.args.desktopConfigHome or defaultDesktopConfigHome;
 in
 {
-  wrapperVariants.kitty = {
-    mirror = false;
-    package = inputs.self.packages.${pkgs.stdenv.hostPlatform.system}.kitty.wrap {
+  constructFiles.kitty = {
+    relPath = "bin/kitty";
+    content = "${inputs.self.packages.${pkgs.stdenv.hostPlatform.system}.kitty.wrap {
       _module.args.desktopConfigHome = desktopConfigHome;
-    };
+    }}/bin/kitty";
+    builder = ''ln -s "$(cat "$1")" "$2"'';
   };
 }

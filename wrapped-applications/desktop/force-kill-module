@@ -1,17 +1,13 @@
 { pkgs, ... }:
-let
-  niriForceKillPickedWindow = pkgs.writeShellApplication {
-    name = "niri-force-kill-picked-window";
-    runtimeInputs = with pkgs; [
-      gnugrep
-      niri
-      procps
-    ];
-    text = ''
+{
+  constructFiles.niri-force-kill-picked-window = {
+    relPath = "bin/niri-force-kill-picked-window";
+    content = ''
+      #!${pkgs.runtimeShell}
       set -eu
 
-      selection="$(niri msg pick-window 2>/dev/null || true)"
-      pid="$(printf '%s\n' "$selection" | grep -m1 -oE 'PID:[[:space:]]*[0-9]+' | grep -oE '[0-9]+$' || true)"
+      selection="$(''${placeholder "out"}/bin/niri msg pick-window 2>/dev/null || true)"
+      pid="$(printf '%s\n' "$selection" | ${pkgs.gnugrep}/bin/grep -m1 -oE 'PID:[[:space:]]*[0-9]+' | ${pkgs.gnugrep}/bin/grep -oE '[0-9]+$' || true)"
 
       case "$pid" in
         ""|*[!0-9]*)
@@ -25,11 +21,9 @@ let
 
       kill -KILL -- "$pid" 2>/dev/null || true
     '';
-  };
-in
-{
-  wrapperVariants.niri-force-kill-picked-window = {
-    mirror = false;
-    package = niriForceKillPickedWindow;
+    builder = ''
+      cp "$1" "$2"
+      chmod +x "$2"
+    '';
   };
 }
