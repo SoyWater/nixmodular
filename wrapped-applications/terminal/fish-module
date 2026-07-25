@@ -1,0 +1,53 @@
+{ config, lib, pkgs, wlib, ... }:
+let
+  phases = [
+    "vendor"
+    "functions"
+    "hooks"
+    "prompt"
+    "final"
+  ];
+in
+{
+  imports = [ wlib.wrapperModules.fish ];
+
+  options.terminalFish = lib.genAttrs phases (_:
+    lib.mkOption {
+      type = lib.types.listOf lib.types.lines;
+      default = [ ];
+      description = "Fish startup fragments for this deterministic terminal phase.";
+    });
+
+  config = {
+    package = pkgs.fish;
+    shellAliases = {
+      ".." = "cd ..";
+      "..." = "cd ../..";
+      "...." = "cd ../../../";
+      "....." = "cd ../../../../";
+      configs = "cd ~/nixconfigs";
+
+      cp = "cp -v";
+      ddf = "df -h";
+      mkdir = "mkdir -p";
+      mv = "mv -v";
+      rm = "rm -v";
+      rr = "rm -rf";
+    };
+    abbreviations.ncg = "nix-collect-garbage";
+    terminalFish.hooks = [ ''fish_vi_key_bindings'' ];
+    terminalFish.functions = [
+      ''
+        function nsf -a host
+          sudo nixos-rebuild switch --flake ~/nixconfigs#$host --verbose
+        end
+
+        function config -a name
+          nix flake init -t mytemplates; and mv config.nix $name.nix
+        end
+      ''
+    ];
+    configFile.content = lib.concatMapStringsSep "\n" (phase:
+      lib.concatStringsSep "\n" config.terminalFish.${phase}) phases;
+  };
+}

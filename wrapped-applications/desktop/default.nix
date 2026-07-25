@@ -1,6 +1,7 @@
 { inputs, ... }:
 let
-  defaultDesktopConfigHome = "/home/soywater/nixconfigs/wrapped-applications/desktop/config";
+  defaultDesktopConfigHome = "/home/soywater/nixconfigs";
+  defaultDesktopTempHome = "/home/soywater/nixconfigs/.temp";
 in
 {
   flake.wrappers = {
@@ -8,12 +9,13 @@ in
       { config, pkgs, wlib, ... }:
       let
         desktopConfigHome = config._module.args.desktopConfigHome or defaultDesktopConfigHome;
+        desktopTempHome = config._module.args.desktopTempHome or defaultDesktopTempHome;
       in
       {
         imports = [ wlib.modules.default ];
         package = inputs.noctalia.packages.${pkgs.stdenv.hostPlatform.system}.default;
-        env.NOCTALIA_CONFIG_HOME = wlib.mkOutOfStoreSymlink pkgs desktopConfigHome;
-        env.NOCTALIA_STATE_HOME = "/home/soywater/.local/state/noctalia";
+        env.NOCTALIA_CONFIG_HOME = wlib.mkOutOfStoreSymlink pkgs "${desktopConfigHome}/wrapped-applications/desktop/config/noctalia";
+        env.NOCTALIA_STATE_HOME = "${desktopTempHome}/noctalia";
       };
 
     kitty =
@@ -25,16 +27,20 @@ in
         imports = [ wlib.modules.default ];
         package = pkgs.kitty;
         addFlag = [
-          [ "--config" "${desktopConfigHome}/kitty/kitty.conf" ]
+          [ "--config" "${desktopConfigHome}/wrapped-applications/desktop/config/kitty/kitty.conf" ]
           "--single-instance"
         ];
       };
 
     vicinae =
-      { pkgs, wlib, ... }:
+      { config, pkgs, wlib, ... }:
+      let
+        desktopTempHome = config._module.args.desktopTempHome or defaultDesktopTempHome;
+      in
       {
         imports = [ wlib.modules.default ];
         package = inputs.vicinae.packages.${pkgs.stdenv.hostPlatform.system}.default;
+        env.XDG_DATA_HOME = desktopTempHome;
       };
 
     niri =
@@ -43,16 +49,19 @@ in
         imports = [
           wlib.wrapperModules.niri
           (import ./niri-module {
-            inherit lib pkgs wlib defaultDesktopConfigHome;
+            inherit lib pkgs wlib;
+            desktopConfigHome = defaultDesktopConfigHome;
           })
         ];
       };
 
     desktop =
-      { lib, pkgs, wlib, ... }:
+      { config, lib, pkgs, wlib, ... }:
       let
+        desktopConfigHome = config._module.args.desktopConfigHome or defaultDesktopConfigHome;
+        desktopTempHome = config._module.args.desktopTempHome or defaultDesktopTempHome;
         importDesktopModule = module: args@{ config, lib, pkgs, wlib, ... }:
-          import module (args // { inherit inputs defaultDesktopConfigHome; });
+          import module (args // { inherit inputs desktopConfigHome desktopTempHome; });
       in
       {
         imports = [

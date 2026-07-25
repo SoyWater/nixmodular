@@ -7,6 +7,7 @@
     imports = with config.flake.modules.nixos; [
       baseConfig
       desktop
+      terminal
       services
       dualBoot
       fonts
@@ -18,7 +19,6 @@
       {
         home-manager.users.soywater.imports = with config.flake.modules.homeManager; [
           baseConfig
-          direnv
         ];
       }
     ];

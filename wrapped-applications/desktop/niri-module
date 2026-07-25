@@ -1,9 +1,6 @@
-{ config ? null, lib, pkgs, wlib, defaultDesktopConfigHome, ... }:
+{ lib, pkgs, wlib, desktopConfigHome, ... }:
 let
-  desktopConfigHome =
-    if config == null then defaultDesktopConfigHome
-    else config._module.args.desktopConfigHome or defaultDesktopConfigHome;
-  niriConfigDir = "${desktopConfigHome}/niri";
+  niriConfigDir = "${desktopConfigHome}/wrapped-applications/desktop/config/niri";
   niriStaticIncludes = map (path: wlib.mkOutOfStoreSymlink pkgs path) [
     "${niriConfigDir}/config.kdl"
     "${niriConfigDir}/monitors.kdl"

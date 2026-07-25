@@ -1,0 +1,24 @@
+{ inputs, lib, pkgs, terminalConfigHome, ... }:
+{
+  plugins = [ pkgs.starship ];
+  terminalFish.functions = lib.mkAfter [
+    ''
+      function starship_transient_prompt_func
+        starship module character
+      end
+    ''
+  ];
+  terminalFish.prompt = lib.mkAfter [
+    ''
+      starship init fish | source
+      enable_transience
+    ''
+  ];
+  constructFiles.starship = {
+    relPath = "bin/starship";
+    content = "${inputs.self.packages.${pkgs.stdenv.hostPlatform.system}.starship.wrap {
+      _module.args.terminalConfigHome = terminalConfigHome;
+    }}/bin/starship";
+    builder = ''ln -s "$(cat "$1")" "$2"'';
+  };
+}

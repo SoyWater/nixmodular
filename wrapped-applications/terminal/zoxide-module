@@ -1,0 +1,10 @@
+{ lib, pkgs, ... }:
+{
+  plugins = [ pkgs.zoxide ];
+  terminalFish.hooks = lib.mkAfter [ ''zoxide init fish | source'' ];
+  constructFiles.zoxide = {
+    relPath = "bin/zoxide";
+    content = "${pkgs.zoxide}/bin/zoxide";
+    builder = ''ln -s "$(cat "$1")" "$2"'';
+  };
+}

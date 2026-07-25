@@ -1,0 +1,9 @@
+{ pkgs, ... }:
+{
+  plugins = [ pkgs.direnv ];
+  constructFiles.direnv = {
+    relPath = "bin/direnv";
+    content = "${pkgs.direnv}/bin/direnv";
+    builder = ''ln -s "$(cat "$1")" "$2"'';
+  };
+}

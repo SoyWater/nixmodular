@@ -1,0 +1,9 @@
+{ lib, pkgs, ... }:
+{
+  terminalFish.hooks = lib.mkAfter [ ''fzf --fish | source'' ];
+  constructFiles.fzf = {
+    relPath = "bin/fzf";
+    content = "${pkgs.fzf}/bin/fzf";
+    builder = ''ln -s "$(cat "$1")" "$2"'';
+  };
+}

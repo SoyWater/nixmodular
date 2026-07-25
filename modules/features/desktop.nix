@@ -3,7 +3,7 @@
   flake.modules.nixos.desktop =
     { config, inputs, packages, pkgs, ... }:
     let
-      desktopConfigHome = "${config.users.users.soywater.home}/nixconfigs/wrapped-applications/desktop/config";
+      desktopConfigHome = "${config.users.users.soywater.home}/nixconfigs";
       desktopPackage = packages.desktop.wrap {
         _module.args.desktopConfigHome = desktopConfigHome;
       };

@@ -1,7 +1,4 @@
-{ config, inputs, pkgs, defaultDesktopConfigHome, ... }:
-let
-  desktopConfigHome = config._module.args.desktopConfigHome or defaultDesktopConfigHome;
-in
+{ inputs, pkgs, desktopConfigHome, ... }:
 {
   constructFiles.kitty = {
     relPath = "bin/kitty";

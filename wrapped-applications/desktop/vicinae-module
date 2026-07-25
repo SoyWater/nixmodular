@@ -1,7 +1,6 @@
-{ config, inputs, pkgs, defaultDesktopConfigHome, ... }:
+{ inputs, pkgs, desktopConfigHome, desktopTempHome, ... }:
 let
-  desktopConfigHome = config._module.args.desktopConfigHome or defaultDesktopConfigHome;
-  vicinaeConfig = "${desktopConfigHome}/vicinae/settings.json";
+  vicinaeConfig = "${desktopConfigHome}/wrapped-applications/desktop/config/vicinae/settings.json";
 in
 {
   # The settings file remains user-writable for GUI changes. Keep it outside
@@ -13,7 +12,9 @@ in
 
   constructFiles.vicinae = {
     relPath = "bin/vicinae";
-    content = "${inputs.self.packages.${pkgs.stdenv.hostPlatform.system}.vicinae}/bin/vicinae";
+    content = "${inputs.self.packages.${pkgs.stdenv.hostPlatform.system}.vicinae.wrap {
+      _module.args.desktopTempHome = desktopTempHome;
+    }}/bin/vicinae";
     builder = ''ln -s "$(cat "$1")" "$2"'';
   };
 }

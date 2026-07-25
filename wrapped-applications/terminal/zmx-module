@@ -1,0 +1,9 @@
+{ pkgs, ... }:
+{
+  plugins = [ pkgs.zmx ];
+  constructFiles.zmx = {
+    relPath = "bin/zmx";
+    content = "${pkgs.zmx}/bin/zmx";
+    builder = ''ln -s "$(cat "$1")" "$2"'';
+  };
+}
