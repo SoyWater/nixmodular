@@ -8,7 +8,6 @@
       baseConfig
       desktop
       services
-      ghostty
       dualBoot
       docker
       fonts
@@ -20,7 +19,6 @@
       {
         home-manager.users.soywater.imports = with config.flake.modules.homeManager; [
           baseConfig
-          ghostty
           direnv
         ];
       }
