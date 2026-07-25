@@ -8,9 +8,5 @@ in
     package = inputs.self.packages.${pkgs.stdenv.hostPlatform.system}.kitty.wrap {
       _module.args.desktopConfigHome = desktopConfigHome;
     };
-    addFlag = [
-      [ "--config" "${desktopConfigHome}/kitty/kitty.conf" ]
-      "--single-instance"
-    ];
   };
 }
