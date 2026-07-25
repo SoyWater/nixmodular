@@ -14,9 +14,11 @@
       { pkgs, wlib, ... }:
       {
         imports = [ wlib.modules.default ];
-        package = pkgs.ghostty;
-        env.XDG_CONFIG_HOME = wlib.mkOutOfStoreSymlink pkgs "/home/soywater/nixconfigs/wrapped-applications/desktop/config";
-      };
+      }
+      // (import ./ghostty-wrapper {
+          ghosttyPackage = pkgs.ghostty;
+          inherit pkgs wlib;
+        });
 
     vicinae =
       { pkgs, wlib, ... }:

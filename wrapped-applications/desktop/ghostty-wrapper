@@ -1,0 +1,5 @@
+{ pkgs, wlib, ghosttyPackage }:
+{
+  package = ghosttyPackage;
+  env.XDG_CONFIG_HOME = wlib.mkOutOfStoreSymlink pkgs "/home/soywater/nixconfigs/wrapped-applications/desktop/config";
+}
