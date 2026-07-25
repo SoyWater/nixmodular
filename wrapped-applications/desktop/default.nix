@@ -36,15 +36,18 @@
 
     desktop =
       { lib, pkgs, wlib, ... }:
+      let
+        importDesktopModule = module: import module { inherit inputs lib pkgs wlib; };
+      in
       {
         imports = [
           wlib.wrapperModules.niri
-          (import ./niri-module { inherit lib pkgs wlib; })
-          ((import ./noctalia-module { inherit inputs; }) { inherit pkgs wlib; })
-          ((import ./vicinae-module { inherit inputs; }) { inherit pkgs; })
-          ((import ./ghostty-module { inherit inputs; }) { inherit pkgs; })
-          (import ./force-kill-module { inherit pkgs; })
-          (import ./gpu-selector-module { inherit pkgs; })
+          (importDesktopModule ./niri-module)
+          (importDesktopModule ./noctalia-module)
+          (importDesktopModule ./vicinae-module)
+          (importDesktopModule ./ghostty-module)
+          (importDesktopModule ./force-kill-module)
+          (importDesktopModule ./gpu-selector-module)
         ];
       };
   };

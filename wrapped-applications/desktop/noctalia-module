@@ -1,5 +1,4 @@
-{ inputs }:
-{ pkgs, wlib, ... }:
+{ inputs, pkgs, wlib, ... }:
 let
   noctaliaConfigDir = "/home/soywater/nixconfigs/wrapped-applications/desktop/config";
   noctaliaNiriConfig = wlib.mkOutOfStoreSymlink pkgs "${noctaliaConfigDir}/noctalia/noctalia.kdl";
