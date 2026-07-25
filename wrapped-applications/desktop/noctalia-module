@@ -1,4 +1,4 @@
-{ config, inputs, lib, pkgs, wlib, defaultDesktopConfigHome, ... }:
+{ config, inputs, pkgs, wlib, defaultDesktopConfigHome, ... }:
 let
   desktopConfigHome = config._module.args.desktopConfigHome or defaultDesktopConfigHome;
   noctaliaNiriConfig = wlib.mkOutOfStoreSymlink pkgs "${desktopConfigHome}/noctalia/noctalia.kdl";
@@ -22,7 +22,7 @@ in
   constructFiles.noctalia = {
     relPath = "bin/noctalia";
     content = "${inputs.self.packages.${pkgs.stdenv.hostPlatform.system}.noctalia.wrap {
-      env.NOCTALIA_CONFIG_HOME = lib.mkForce (wlib.mkOutOfStoreSymlink pkgs desktopConfigHome);
+      _module.args.desktopConfigHome = desktopConfigHome;
     }}/bin/noctalia";
     builder = ''ln -s "$(cat "$1")" "$2"'';
   };
