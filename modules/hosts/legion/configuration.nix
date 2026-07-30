@@ -9,6 +9,7 @@
       desktop
       terminal
       services
+      sunshine
       dualBoot
       virtualization
 
