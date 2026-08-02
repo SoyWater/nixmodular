@@ -1,4 +1,5 @@
 spawn-at-startup "noctalia"
+spawn-at-startup "nm-applet" "--indicator"
 
 window-rule {
     match app-id="dev.noctalia.Noctalia"

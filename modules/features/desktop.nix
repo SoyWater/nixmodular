@@ -13,7 +13,9 @@
 
       environment = {
         pathsToLink = [ "/share/wayland-sessions" ];
-        systemPackages = [ desktopPackage ];
+        # nm-applet is NetworkManager's desktop secret agent.  It supplies the
+        # OpenConnect authentication flow (including the SSO browser handoff).
+        systemPackages = [ desktopPackage pkgs.networkmanagerapplet ];
       };
 
       services.gnome.gnome-keyring.enable = true;
