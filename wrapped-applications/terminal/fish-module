@@ -37,7 +37,10 @@ in
       rm = "rm -v";
       rr = "rm -rf";
     };
-    abbreviations.ncg = "nix-collect-garbage";
+    abbreviations.ncg = {
+      position = "command";
+      expansion = "nix-collect-garbage";
+    };
     terminalFish.hooks = [ ''fish_vi_key_bindings'' ];
     terminalFish.functions = [
       ''
