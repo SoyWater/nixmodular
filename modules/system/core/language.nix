@@ -1,5 +1,5 @@
 {
-  flake.modules.nixos.baseConfig =
+  flake.nixosModules.coreLanguage =
   { pkgs, ... }:
   {
     time.timeZone = "Asia/Singapore";

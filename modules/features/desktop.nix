@@ -1,7 +1,7 @@
-{ ... }:
+{ inputs, ... }:
 {
-  flake.modules.nixos.desktop =
-    { config, inputs, packages, pkgs, ... }:
+  flake.nixosModules.desktop =
+    { config, packages, pkgs, ... }:
     let
       desktopConfigHome = "${config.users.users.soywater.home}/nixconfigs";
       desktopPackage = packages.desktop.wrap {
@@ -32,16 +32,6 @@
           }
         });
       '';
-
-      hardware.logitech.wireless = {
-        enable = true;
-        enableGraphical = true;
-      };
-
-      # Solaar needs this to emulate key events for device rules.  Keep the
-      # capability limited to the logged-in desktop user.
-      hardware.uinput.enable = true;
-      users.groups.uinput.members = [ "soywater" ];
 
       xdg.portal = {
         enable = true;

@@ -1,44 +1,48 @@
 {
-  flake.modules.nixos."hosts/legion" =
+  flake.nixosModules.legionHardware =
   { config, lib, pkgs, ... }:
   {
+    nixpkgs.hostPlatform = "x86_64-linux";
 
-    boot.initrd.availableKernelModules = [ "xhci_pci" "thunderbolt" "nvme" "usbhid" "usb_storage" "sd_mod" ];
-    boot.initrd.kernelModules = [ "i915" ];
-    boot.kernelModules = [ "kvm-intel" "mt7925e" ];
-    boot.extraModulePackages = [ config.boot.kernelPackages.lenovo-legion-module ];
+    windows-boot-drive = "FS0";
 
-    boot.extraModprobeConfig = ''
-      options snd-hda-intel model=auto
-    '';
-    boot.blacklistedKernelModules = [ "snd_soc_avs" ];
+    environment.systemPackages = [
+      config.boot.kernelPackages.kernel.dev
+    ];
 
-    fileSystems."/" =
-      { device = "/dev/disk/by-uuid/f129f428-794b-4ef2-a341-a0bde5095f76";
-        fsType = "ext4";
-      };
+    boot = {
+      initrd.availableKernelModules = [ "xhci_pci" "thunderbolt" "nvme" "usbhid" "usb_storage" "sd_mod" ];
+      initrd.kernelModules = [ "i915" ];
+      kernelModules = [ "kvm-intel" "mt7925e" ];
+      extraModulePackages = [ config.boot.kernelPackages.lenovo-legion-module ];
+      kernelPackages = pkgs.linuxPackages_latest;
+      kernelParams = [ "usbhid.quirks=048d:c195:0x0004" ];
+      extraModprobeConfig = ''
+        options snd-hda-intel model=auto
+      '';
+      blacklistedKernelModules = [ "snd_soc_avs" ];
+    };
 
-    fileSystems."/boot" =
-      { device = "/dev/disk/by-uuid/7D8E-D3EC";
-        fsType = "vfat";
-        options = [ "fmask=0077" "dmask=0077" ];
-      };
+    systemd.tmpfiles.rules = [
+      "w /sys/bus/platform/drivers/ideapad_acpi/VPC2004:00/conservation_mode - - - - 1"
+    ];
+
+    fileSystems."/" ={
+      device = "/dev/disk/by-uuid/f129f428-794b-4ef2-a341-a0bde5095f76";
+      fsType = "ext4";
+    };
+
+    fileSystems."/boot" ={
+      device = "/dev/disk/by-uuid/7D8E-D3EC";
+      fsType = "vfat";
+      options = [ "fmask=0077" "dmask=0077" ];
+    };
 
     swapDevices = [ ];
 
-    # Enables DHCP on each ethernet and wireless interface. In case of scripted networking
-    # (the default) this is the recommended approach. When using systemd-networkd it's
-    # still possible to use this option, but it's recommended to use it in conjunction
-    # with explicit per-interface declarations with `networking.interfaces.<interface>.useDHCP`.
-    networking.useDHCP = lib.mkDefault true;
-    # networking.interfaces.enp129s0.useDHCP = lib.mkDefault true;
-    # networking.interfaces.wlp130s0.useDHCP = lib.mkDefault true;
-
     hardware.cpu.intel.updateMicrocode = lib.mkDefault config.hardware.enableRedistributableFirmware;
-
     hardware.enableRedistributableFirmware = true;
     hardware.enableAllFirmware = true;
-
     hardware.graphics = {
       enable = true;
       enable32Bit = true;
@@ -54,7 +58,6 @@
         intel-media-driver
       ];
     };
-
     hardware.nvidia = {
       open = true;
       modesetting.enable = true;

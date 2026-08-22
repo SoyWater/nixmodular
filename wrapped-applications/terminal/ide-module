@@ -1,0 +1,83 @@
+{ pkgs, terminalConfigHome, ... }:
+let
+  ide = pkgs.writeShellApplication {
+    name = "ide";
+    runtimeInputs = with pkgs; [
+      coreutils
+      findutils
+      fzf
+      git
+      zmx
+    ];
+    text = ''
+      set -eu
+
+      project_root() {
+        git -C "$1" rev-parse --show-toplevel
+      }
+
+      session_prefix() {
+        printf 'ide-%s' "$(printf '%s' "$1" | sha256sum | cut -d ' ' -f 1)"
+      }
+
+      choose_project() {
+        find "$HOME/dev" -type d -name .git -prune -printf '%h\\n' 2>/dev/null \
+          | LC_ALL=C sort -u \
+          | fzf --prompt='IDE project> ' --height=100% --reverse
+      }
+
+      open_ide() {
+        root="$(project_root "$1")"
+        IDE_ROOT="$root"
+        export IDE_ROOT
+        exec kitty --session "${terminalConfigHome}/wrapped-applications/desktop/config/kitty/ide.session"
+      }
+
+      open_shell() {
+        root="$(project_root "$(pwd -P)")"
+        session="$(session_prefix "$root")-shell"
+        shell="''${SHELL:-fish}"
+        exec zmx attach "$session" "$shell" --init-command "cd -- '$root'"
+      }
+
+      open_editor() {
+        root="$(project_root "$(pwd -P)")"
+        session="$(session_prefix "$root")-editor"
+        exec zmx attach "$session" hx --working-dir="$root"
+      }
+
+      case "''${1:-}" in
+        --shell)
+          [ "$#" -eq 1 ] || { echo 'usage: ide --shell' >&2; exit 2; }
+          open_shell
+          ;;
+        --editor)
+          [ "$#" -eq 1 ] || { echo 'usage: ide --editor' >&2; exit 2; }
+          open_editor
+          ;;
+        --pick)
+          [ "$#" -eq 1 ] || { echo 'usage: ide --pick' >&2; exit 2; }
+          selected="$(choose_project || true)"
+          [ -n "$selected" ] || exit 0
+          open_ide "$selected"
+          ;;
+        "")
+          # Niri has no terminal attached. Run the fuzzy picker in Kitty and
+          # let the picker replace itself with the selected IDE session.
+          exec kitty --title 'IDE project picker' "$0" --pick
+          ;;
+        *)
+          [ "$#" -eq 1 ] || { echo 'usage: ide [path]' >&2; exit 2; }
+          open_ide "$1"
+          ;;
+      esac
+    '';
+  };
+in
+{
+  constructFiles.ide = {
+    relPath = "bin/ide";
+    content = "${ide}/bin/ide";
+    builder = ''ln -s "$(cat "$1")" "$2"'';
+  };
+}

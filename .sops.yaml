@@ -2,7 +2,7 @@ keys:
   - &master_backup "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIAvjnBXoUlfQnMh3YQCAymYeSkq/p8vUr1NrZTLVObo9"
   - &legion_host "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIOC+nCzSY90Yj0QXD8ZHbOysDoYBcyRw2ab4Z3PlpsNw"
 creation_rules:
-  - path_regex: secrets/secrets.yaml$
+  - path_regex: modules/secrets.yaml$
     key_groups:
       - age:
         - *master_backup

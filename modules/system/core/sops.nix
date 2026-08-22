@@ -1,7 +1,7 @@
-
+{ inputs, ... }:
 {
-  flake.modules.nixos.baseConfig =
-  { inputs, packages, ... }:
+  flake.nixosModules.coreSops =
+  { packages, ... }:
 
 {
     imports = [
@@ -14,7 +14,7 @@
 
     sops = {
       age.sshKeyPaths = [ "/etc/ssh/ssh_host_ed25519_key" ];
-      defaultSopsFile = ../../secrets/secrets.yaml;
+      defaultSopsFile = ../../secrets.yaml;
       defaultSopsFormat = "yaml";
     };
   };

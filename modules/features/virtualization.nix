@@ -1,5 +1,5 @@
 {
-  flake.modules.nixos.virtualization =
+  flake.nixosModules.virtualization =
     { pkgs, ... }:
     {
       environment.systemPackages = with pkgs; [

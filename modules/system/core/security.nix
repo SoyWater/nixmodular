@@ -1,5 +1,5 @@
 {
-  flake.modules.nixos.baseConfig = {
+  flake.nixosModules.coreSecurity = {
     security.sudo.wheelNeedsPassword = false;
     security.polkit.enable = true;
     security.rtkit.enable = true;

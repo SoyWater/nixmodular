@@ -3,6 +3,7 @@ binds {
     Mod+Shift+Slash { show-hotkey-overlay; }
 
     Mod+T hotkey-overlay-title="Open a Terminal: kitty" { spawn "kitty"; }
+    Mod+Shift+T hotkey-overlay-title="Open an IDE project" { spawn "ide"; }
     Mod+B hotkey-overlay-title="Open Zen Browser" { spawn "zen-beta"; }
 
     XF86AudioRaiseVolume allow-when-locked=true { spawn-sh "wpctl set-volume @DEFAULT_AUDIO_SINK@ 0.1+ -l 1.0"; }

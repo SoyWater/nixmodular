@@ -1,6 +1,6 @@
 { ... }:
 {
-  flake.modules.nixos.terminal =
+  flake.nixosModules.terminal =
     { config, packages, ... }:
     let
       terminalConfigHome = "${config.users.users.soywater.home}/nixconfigs";

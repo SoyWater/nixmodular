@@ -1,5 +1,5 @@
 {
-  flake.modules.nixos.dualBoot =
+  flake.nixosModules.dualBoot =
   { lib, config, pkgs, ... }:
   {
     options = {

@@ -1,15 +1,15 @@
 {
-  flake.modules.nixos.baseConfig =
+  flake.nixosModules.coreBoot =
   { config, lib, pkgs, ... }:
   {
     options = {
       bootLoader = lib.mkOption {
         type = lib.types.enum [ "systemd-boot" "limine" ];
-        default = "systemd-boot";
+        default = "limine";
       };
-      limine.secureBoot = lib.mkEnableOption {
-        name = "Enable limine secure boot";
-        default = false;
+      limine.secureBoot = lib.mkOption {
+        type = lib.types.bool;
+        default = true;
       };
     };
 
@@ -28,7 +28,6 @@
             ${pkgs.coreutils}/bin/install -Dm700 ${config.boot.loader.efi.efiSysMountPoint}/EFI/BOOT/BOOTX64.EFI \
               ${config.boot.loader.efi.efiSysMountPoint}/EFI/limine/BOOTX64.EFI
           '';
-
           limine.secureBoot.enable = config.limine.secureBoot;
         })
       ];

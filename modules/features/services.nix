@@ -1,16 +1,8 @@
 {
-  flake.modules.nixos.services =
-    { hostName, lib, pkgs, ... }:
+  flake.nixosModules.services =
+    { lib, pkgs, ... }:
     {
       # Networking and remote access.
-      networking.hostName = hostName;
-      networking.networkmanager = {
-        enable = true;
-        plugins = [
-          pkgs.networkmanager-openconnect
-        ];
-      };
-
       services.tailscale = {
         enable = true;
         openFirewall = true;
@@ -30,15 +22,6 @@
       networking.firewall.interfaces.tailscale0.allowedTCPPorts = [ 22 ];
 
       # Audio and Bluetooth.
-      services.pulseaudio.enable = false;
-      services.pipewire = {
-        enable = true;
-        alsa.enable = true;
-        alsa.support32Bit = true;
-        pulse.enable = true;
-        wireplumber.enable = true;
-      };
-
       hardware.bluetooth = {
         enable = true;
         powerOnBoot = true;

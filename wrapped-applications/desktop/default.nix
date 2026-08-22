@@ -70,12 +70,12 @@ in
       {
         imports = [
           wlib.wrapperModules.niri
-          (importDesktopModule ./niri-module)
           (importDesktopModule ./noctalia-module)
           (importDesktopModule ./vicinae-module)
           (importDesktopModule ./kitty-module)
           (importDesktopModule ./force-kill-module)
           (importDesktopModule ./gpu-selector-module)
+          (importDesktopModule ./niri-module)
         ];
       };
   };

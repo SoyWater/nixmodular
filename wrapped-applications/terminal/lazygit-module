@@ -1,0 +1,8 @@
+{ pkgs, ... }:
+{
+  constructFiles.lazygit = {
+    relPath = "bin/lazygit";
+    content = "${pkgs.lazygit}/bin/lazygit";
+    builder = ''ln -s "$(cat "$1")" "$2"'';
+  };
+}

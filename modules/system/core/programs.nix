@@ -1,5 +1,6 @@
+{ inputs, ... }:
 {
-  flake.modules.nixos.baseConfig =
+  flake.nixosModules.corePrograms =
   { pkgs, ... }:
   {
     environment.systemPackages = with pkgs; [
@@ -21,5 +22,7 @@
       python314 
       nodejs_24
     ];
+    nix.registry.nixpkgs.flake = inputs.nixpkgs;
+
   };
 }

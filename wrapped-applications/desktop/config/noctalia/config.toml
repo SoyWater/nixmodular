@@ -1,5 +1,5 @@
-# Noctalia v5 configuration flattened from the active user settings.
-# Keep the wrapper's config and templates as the source of truth.
+[audio]
+enable_overdrive = true
 
 [backdrop]
 blur_intensity = 0.5
@@ -9,11 +9,12 @@ tint_intensity = 0.29999999999999999
 [bar.main]
 background_opacity = 0.0
 border_width = 0.0
-capsule_opacity = 1.0
 capsule = true
+capsule_opacity = 1.0
 capsule_thickness = 1.0
 center = [ "media", "clock" ]
-end = [ "tray", "notifications", "network", "bluetooth", "volume", "brightness", "battery", "control-center", "session" ]
+end = [ "tray", "notifications", "group:g1", "session" ]
+font_family = "Maple Mono NF CN Medium"
 margin_edge = 2
 margin_ends = 2
 margin_opposite_edge = 2
@@ -21,13 +22,24 @@ padding = 1
 position = "top"
 radius = 80
 reserve_space = true
-scale = 0.85
+scale = 0.84999999999999998
 shadow = false
 start = [ "wallpaper", "workspaces" ]
 thickness = 25
 
-[control_center.calendar]
-show_events_card = false
+    [[bar.main.capsule_group]]
+    enabled = true
+    fill = "surface_variant"
+    id = "g1"
+    members = [ "network", "bluetooth", "volume", "brightness", "battery" ]
+    opacity = 1.0
+    padding = 11.0
+
+[control_center]
+hidden_tabs = [ "power" ]
+
+    [control_center.calendar]
+    show_events_card = false
 
 [desktop_widgets]
 enabled = false
@@ -40,6 +52,31 @@ widget_order = []
     visible = true
 
     [desktop_widgets.widget]
+
+[dock]
+auto_hide = true
+reserve_space = false
+
+[hot_corners.top_left]
+action = "launcher"
+
+[idle]
+behavior_order = [ "lock", "screen-off", "lock-and-suspend" ]
+
+    [idle.behavior.lock]
+    action = "lock"
+    enabled = false
+    timeout = 600.0
+
+    [idle.behavior.lock-and-suspend]
+    action = "lock_and_suspend"
+    enabled = false
+    timeout = 900.0
+
+    [idle.behavior.screen-off]
+    action = "screen_off"
+    enabled = true
+    timeout = 660.0
 
 [lockscreen]
 enabled = true
@@ -128,6 +165,8 @@ position_vertical = "center_left"
 
 [shell]
 clipboard_enabled = false
+external_ip_enabled = true
+font_family = "Maple Mono NF CN Light"
 niri_overview_type_to_launch_enabled = false
 offline_mode = true
 polkit_agent = true
@@ -161,24 +200,24 @@ wallpaper_scheme = "m3-tonal-spot"
     enable_builtin_templates = false
     enable_community_templates = false
 
-        [theme.templates.user.kitty]
-        input_path = "templates/kitty.conf"
-        output_path = "/home/soywater/nixconfigs/.temp/noctalia/themes/kitty/dankcolors.conf"
-        post_hook = "pgrep -x kitty >/dev/null && pkill -SIGUSR1 kitty || true"
-
         [theme.templates.user.helix]
         input_path = "templates/helix.toml"
         output_path = "/home/soywater/nixconfigs/.temp/noctalia/themes/helix/matugen.toml"
         post_hook = "mkdir -p \"$HOME/.config/helix/themes\" && ln -sfn \"$HOME/nixconfigs/.temp/noctalia/themes/helix/matugen.toml\" \"$HOME/.config/helix/themes/matugen.toml\""
 
-        [theme.templates.user.starship]
-        input_path = "templates/starship.toml"
-        output_path = "/home/soywater/nixconfigs/.temp/noctalia/themes/starship/matugen.toml"
+        [theme.templates.user.kitty]
+        input_path = "templates/kitty.conf"
+        output_path = "/home/soywater/nixconfigs/.temp/noctalia/themes/kitty/dankcolors.conf"
+        post_hook = "pgrep -x kitty >/dev/null && pkill -SIGUSR1 kitty || true"
 
         [theme.templates.user.niri]
         input_path = "templates/niri.kdl"
         output_path = "/home/soywater/nixconfigs/.temp/noctalia/themes/niri/noctalia.kdl"
         post_hook = "niri msg action load-config-file"
+
+        [theme.templates.user.starship]
+        input_path = "templates/starship.toml"
+        output_path = "/home/soywater/nixconfigs/.temp/noctalia/themes/starship/matugen.toml"
 
         [theme.templates.user.vicinae]
         input_path = "templates/vicinae.toml"
@@ -191,16 +230,16 @@ enabled = true
 fill_mode = "crop"
 
     [wallpaper.default]
-    path = "/home/soywater/Pictures/Wallpapers/a_pixel_art_of_a_person_walking_by_a_building.jpg"
+    path = "/home/soywater/Pictures/Wallpapers/a_purple_cube_with_a_black_circle_and_buttons.jpg"
 
     [wallpaper.last]
-    path = "/home/soywater/Pictures/Wallpapers/a_pixel_art_of_a_person_walking_by_a_building.jpg"
+    path = "/home/soywater/Pictures/Wallpapers/a_purple_cube_with_a_black_circle_and_buttons.jpg"
 
     [wallpaper.monitors.HDMI-A-1]
-    path = "/home/soywater/Pictures/Wallpapers/a_pixel_art_of_a_person_walking_by_a_building.jpg"
+    path = "/home/soywater/Pictures/Wallpapers/a_purple_cube_with_a_black_circle_and_buttons.jpg"
 
     [wallpaper.monitors.eDP-1]
-    path = "/home/soywater/Pictures/Wallpapers/a_pixel_art_of_a_person_walking_by_a_building.jpg"
+    path = "/home/soywater/Pictures/Wallpapers/a_purple_cube_with_a_black_circle_and_buttons.jpg"
 
 [weather]
 enabled = false
@@ -210,5 +249,7 @@ refresh_minutes = 5
 format = "{:%H:%M · %a %d/%m}"
 
 [widget.session]
+capsule = true
 color = "primary"
+glyph = "noctalia"
 icon_color = "secondary"
