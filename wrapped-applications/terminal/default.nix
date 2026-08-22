@@ -8,7 +8,12 @@ in
     # corresponding per-tool modules, so adding or removing a tool is a
     # one-line change to each list.
     starship =
-      { config, pkgs, wlib, ... }:
+      {
+        config,
+        pkgs,
+        wlib,
+        ...
+      }:
       let
         terminalConfigHome = config._module.args.terminalConfigHome or defaultTerminalConfigHome;
       in
@@ -19,7 +24,12 @@ in
       };
 
     helix =
-      { config, pkgs, wlib, ... }:
+      {
+        config,
+        pkgs,
+        wlib,
+        ...
+      }:
       let
         terminalConfigHome = config._module.args.terminalConfigHome or defaultTerminalConfigHome;
         forest = pkgs.fetchFromGitHub {
@@ -67,39 +77,26 @@ in
           clang-tools
         ];
         addFlag = [
-          [ "--config" "${steelixConfigHome}/helix/config.toml" ]
+          [
+            "--config"
+            "${steelixConfigHome}/helix/config.toml"
+          ]
         ];
       };
 
-    terminal =
-      { config, lib, pkgs, wlib, ... }:
-      let
-        terminalConfigHome = config._module.args.terminalConfigHome or defaultTerminalConfigHome;
-        importTerminalModule = module: args@{ config, lib, pkgs, wlib, ... }:
-          import module (args // { inherit inputs terminalConfigHome; });
-      in
-      {
-        imports = [
-          (importTerminalModule ./fish-module)
-          (importTerminalModule ./kitty-module)
-          (importTerminalModule ./direnv-module)
-          (importTerminalModule ./fzf-module)
-          (importTerminalModule ./helix-module)
-          (importTerminalModule ./zoxide-module)
-          (importTerminalModule ./starship-module)
-          (importTerminalModule ./yazi-module)
-          (importTerminalModule ./lazygit-module)
-          (importTerminalModule ./zmx-module)
-          (importTerminalModule ./ide-module)
-        ];
-      };
   };
 
   perSystem = { config, pkgs, ... }: {
-    # `fish` is the canonical terminal shell, not a second divergent wrapper.
     packages = {
-      fish = config.packages.terminal;
-      inherit (pkgs) direnv fzf yazi zmx zoxide;
+      inherit (pkgs)
+        direnv
+        fish
+        fzf
+        lazygit
+        yazi
+        zmx
+        zoxide
+        ;
     };
   };
 }

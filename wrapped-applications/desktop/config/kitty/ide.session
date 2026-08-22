@@ -1,6 +1,0 @@
-# The ide launcher exports IDE_ROOT before Kitty parses this file. Kitty expands
-# it in --cwd; the launched ide helper derives the stable Zmx role from that cwd.
-new_tab IDE
-layout splits
-launch --cwd=$IDE_ROOT ide --editor
-launch --location=vsplit --cwd=$IDE_ROOT lazygit
