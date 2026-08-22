@@ -26,7 +26,7 @@
       printf 'niri-gpu-selector: HDMI-A-1 is %s; selected %s (%s)\n' \
         "$(${pkgs.coreutils}/bin/tr -d '[:space:]' < "$connector_status_file" 2>/dev/null || printf 'unknown')" \
         "$selected_gpu" \
-        "$render_device"
+        "$render_device" >&2
     '';
     builder = ''
       cp "$1" "$2"
