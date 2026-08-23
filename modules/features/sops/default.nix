@@ -1,4 +1,4 @@
-{ ... }:
+{ moduleWithSystem, ... }:
 {
   perSystem = { pkgs, ... }: {
     packages.sops = pkgs.symlinkJoin {
@@ -13,4 +13,8 @@
       '';
     };
   };
+
+  flake.nixosModules.sops = moduleWithSystem ({ config, ... }: {
+    environment.systemPackages = [ config.packages.sops ];
+  });
 }

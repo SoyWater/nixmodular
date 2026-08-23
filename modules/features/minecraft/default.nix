@@ -1,4 +1,4 @@
-{ ... }:
+{ moduleWithSystem, ... }:
 {
   perSystem = { pkgs, ... }: {
     packages.minecraft = pkgs.prismlauncher.override {
@@ -10,4 +10,8 @@
       ];
     };
   };
+
+  flake.nixosModules.minecraft = moduleWithSystem ({ config, ... }: {
+    environment.systemPackages = [ config.packages.minecraft ];
+  });
 }

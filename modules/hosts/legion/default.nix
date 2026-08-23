@@ -5,6 +5,15 @@
       core
       desktop
       terminal
+      compression
+      editors
+      factorio
+      ghDash
+      lutris
+      minecraft
+      neovim
+      zenBrowserWayland
+      zoom
       services
       dualBoot
       virtualization

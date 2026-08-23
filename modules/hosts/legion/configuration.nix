@@ -2,20 +2,7 @@
   flake.nixosModules.legion =
     { packages, pkgs, ... }:
     {
-      environment.systemPackages = [
-        packages.compress
-        pkgs.gh
-        pkgs.codex
-        packages.editors
-        packages.factorio
-        packages.gh-dash
-        packages.lutris
-        packages.minecraft
-        packages.neovim
-        packages.zen-browser-wayland
-        packages.zoom
-        pkgs.chromium
-      ];
+      environment.systemPackages = with pkgs; [ gh codex chromium ];
 
       programs.comma.enable = true;
 

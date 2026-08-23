@@ -1,4 +1,4 @@
-{ ... }:
+{ moduleWithSystem, ... }:
 {
   perSystem = { pkgs, ... }:
     let
@@ -31,4 +31,8 @@
         pathsToLink = [ "/bin" ];
       };
     };
+
+  flake.nixosModules.compression = moduleWithSystem ({ config, ... }: {
+    environment.systemPackages = [ config.packages.compress ];
+  });
 }
