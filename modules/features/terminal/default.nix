@@ -34,12 +34,12 @@ in
           hash = "sha256-TpYnGqROkKfoB9G+JTjADWvMtpRJbv4NVaTqiUfW1Eg=";
         };
         steelixConfigHome = pkgs.runCommand "steelix-config-home" { } ''
-          mkdir -p "$out/helix/cogs" "$out/helix/themes"
+          mkdir -p "$out/helix/themes" "$out/steel/cogs"
           cp ${./wrapper/config/helix/config.toml} "$out/helix/config.toml"
           cp ${./wrapper/config/helix/init.scm} "$out/helix/init.scm"
-          ln -s ${forest} "$out/helix/cogs/forest"
-          ln -s ${notify} "$out/helix/cogs/notify"
-          ln -s ${glyph} "$out/helix/cogs/glyph"
+          ln -s ${forest} "$out/steel/cogs/forest"
+          ln -s ${notify} "$out/steel/cogs/notify"
+          ln -s ${glyph} "$out/steel/cogs/glyph"
           ln -s ${terminalConfigHome}/.temp/noctalia/themes/helix/matugen.toml "$out/helix/themes/matugen.toml"
         '';
       in {
@@ -47,6 +47,7 @@ in
         package = pkgs.steelix;
         env.FONTCONFIG_FILE = inputs.self.packages.${pkgs.stdenv.hostPlatform.system}.maple-mono-fontconfig;
         env.XDG_CONFIG_HOME = steelixConfigHome;
+        env.XDG_DATA_HOME = steelixConfigHome;
         runtimePkgs = with pkgs; [ nixd gopls typescript-language-server vscode-json-languageserver ty clang-tools ];
         addFlag = [ [ "--config" "${steelixConfigHome}/helix/config.toml" ] ];
       };
