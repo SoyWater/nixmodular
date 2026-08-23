@@ -34,22 +34,29 @@ in
           hash = "sha256-TpYnGqROkKfoB9G+JTjADWvMtpRJbv4NVaTqiUfW1Eg=";
         };
         steelixConfigHome = pkgs.runCommand "steelix-config-home" { } ''
-          mkdir -p "$out/helix/themes" "$out/steel/cogs"
+          mkdir -p "$out/helix/themes"
           cp ${./wrapper/config/helix/config.toml} "$out/helix/config.toml"
           cp ${./wrapper/config/helix/init.scm} "$out/helix/init.scm"
-          ln -s ${forest} "$out/steel/cogs/forest"
-          ln -s ${notify} "$out/steel/cogs/notify"
-          ln -s ${glyph} "$out/steel/cogs/glyph"
           ln -s ${terminalConfigHome}/.temp/noctalia/themes/helix/matugen.toml "$out/helix/themes/matugen.toml"
         '';
+        helixRuntimePkgs = with pkgs; [ nixd gopls typescript-language-server vscode-json-languageserver ty clang-tools ];
+        steelix = pkgs.writeShellApplication {
+          name = "hx";
+          runtimeInputs = [ pkgs.steelix ] ++ helixRuntimePkgs;
+          text = ''
+            steel_data_home="''${XDG_DATA_HOME:-$HOME/.local/share}/steel"
+            mkdir -p "$steel_data_home/cogs"
+            ln -sfn ${forest} "$steel_data_home/cogs/forest"
+            ln -sfn ${notify} "$steel_data_home/cogs/notify"
+            ln -sfn ${glyph} "$steel_data_home/cogs/glyph"
+            export XDG_CONFIG_HOME=${steelixConfigHome}
+            exec ${pkgs.steelix}/bin/hx --config ${steelixConfigHome}/helix/config.toml "$@"
+          '';
+        };
       in {
         imports = [ wlib.modules.default ];
-        package = pkgs.steelix;
+        package = steelix;
         env.FONTCONFIG_FILE = inputs.self.packages.${pkgs.stdenv.hostPlatform.system}.maple-mono-fontconfig;
-        env.XDG_CONFIG_HOME = steelixConfigHome;
-        env.XDG_DATA_HOME = steelixConfigHome;
-        runtimePkgs = with pkgs; [ nixd gopls typescript-language-server vscode-json-languageserver ty clang-tools ];
-        addFlag = [ [ "--config" "${steelixConfigHome}/helix/config.toml" ] ];
       };
   };
 
