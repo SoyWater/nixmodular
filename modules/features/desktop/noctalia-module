@@ -1,6 +1,6 @@
 { inputs, pkgs, wlib, desktopConfigHome, ... }:
 let
-  noctaliaNiriConfig = wlib.mkOutOfStoreSymlink pkgs "${desktopConfigHome}/wrapped-applications/desktop/config/noctalia/noctalia.kdl";
+  noctaliaNiriConfig = wlib.mkOutOfStoreSymlink pkgs "${desktopConfigHome}/modules/features/desktop/config/noctalia/noctalia.kdl";
 in
 {
   extraSettings = [

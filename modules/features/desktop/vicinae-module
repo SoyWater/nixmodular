@@ -1,6 +1,6 @@
 { inputs, pkgs, desktopConfigHome, ... }:
 let
-  vicinaeConfig = "${desktopConfigHome}/wrapped-applications/desktop/config/vicinae/settings.json";
+  vicinaeConfig = "${desktopConfigHome}/modules/features/desktop/config/vicinae/settings.json";
 in
 {
   # The settings file remains user-writable for GUI changes. Keep it outside

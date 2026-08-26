@@ -1,6 +1,6 @@
 { inputs, lib, pkgs, wlib, desktopConfigHome, ... }:
 let
-  niriConfigDir = "${desktopConfigHome}/wrapped-applications/desktop/config/niri";
+  niriConfigDir = "${desktopConfigHome}/modules/features/desktop/config/niri";
   niriStaticIncludes = map (path: wlib.mkOutOfStoreSymlink pkgs path) [
     "${niriConfigDir}/config.kdl"
     "${niriConfigDir}/monitors.kdl"
