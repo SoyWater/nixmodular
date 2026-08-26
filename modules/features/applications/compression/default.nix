@@ -32,7 +32,7 @@
       };
     };
 
-  flake.nixosModules.compression = moduleWithSystem ({ config, ... }: {
-    environment.systemPackages = [ config.packages.compress ];
+  flake.nixosModules.compression = moduleWithSystem ({ packages, ... }: {
+    environment.systemPackages = [ packages.compress ];
   });
 }

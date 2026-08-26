@@ -11,7 +11,7 @@
     };
   };
 
-  flake.nixosModules.minecraft = moduleWithSystem ({ config, ... }: {
-    environment.systemPackages = [ config.packages.minecraft ];
+  flake.nixosModules.minecraft = moduleWithSystem ({ packages, ... }: {
+    environment.systemPackages = [ packages.minecraft ];
   });
 }

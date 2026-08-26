@@ -4,7 +4,7 @@
     packages.factorio = inputs'.factorio-flake.packages.default;
   };
 
-  flake.nixosModules.factorio = moduleWithSystem ({ config, ... }: {
-    environment.systemPackages = [ config.packages.factorio ];
+  flake.nixosModules.factorio = moduleWithSystem ({ packages, ... }: {
+    environment.systemPackages = [ packages.factorio ];
   });
 }

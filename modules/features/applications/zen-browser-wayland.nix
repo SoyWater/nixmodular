@@ -17,7 +17,7 @@
       };
   };
 
-  flake.nixosModules.zenBrowserWayland = moduleWithSystem ({ config, ... }: {
-    environment.systemPackages = [ config.packages.zen-browser-wayland ];
+  flake.nixosModules.zenBrowserWayland = moduleWithSystem ({ packages, ... }: {
+    environment.systemPackages = [ packages.zen-browser-wayland ];
   });
 }

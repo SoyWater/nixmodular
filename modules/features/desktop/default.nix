@@ -44,18 +44,6 @@ in
         env.FONTCONFIG_FILE = inputs.self.packages.${pkgs.stdenv.hostPlatform.system}.maple-mono-fontconfig;
       };
 
-    niri =
-      { lib, pkgs, wlib, ... }:
-      {
-        imports = [
-          wlib.wrapperModules.niri
-          (import ./niri-module {
-            inherit inputs lib pkgs wlib;
-            desktopConfigHome = defaultDesktopConfigHome;
-          })
-        ];
-      };
-
     desktop =
       { config, lib, pkgs, wlib, ... }:
       let
@@ -65,13 +53,12 @@ in
       in
       {
         imports = [
-          wlib.wrapperModules.niri
+          inputs.self.wrapperModules.niri
           (importDesktopModule ./noctalia-module)
           (importDesktopModule ./vicinae-module)
           (importDesktopModule ./kitty-module)
           (importDesktopModule ./force-kill-module)
           (importDesktopModule ./gpu-selector-module)
-          (importDesktopModule ./niri-module)
         ];
       };
   };

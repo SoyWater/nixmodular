@@ -7,7 +7,7 @@
     };
   };
 
-  flake.nixosModules.editors = moduleWithSystem ({ config, ... }: {
-    environment.systemPackages = [ config.packages.editors ];
+  flake.nixosModules.editors = moduleWithSystem ({ packages, ... }: {
+    environment.systemPackages = [ packages.editors ];
   });
 }

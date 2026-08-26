@@ -1,10 +1,9 @@
 {
   flake.nixosModules.legion =
-    { packages, pkgs, ... }:
+    { pkgs, ... }:
     {
-      environment.systemPackages = with pkgs; [ gh codex chromium ];
-
       programs.comma.enable = true;
+      programs.nix-index-database.comma.enable = true;
 
       networking.hostName = "legion";
       xdg.mime.defaultApplications = {
