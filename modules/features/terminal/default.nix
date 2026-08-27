@@ -60,41 +60,30 @@ in
       };
   };
 
-  perSystem = { pkgs, ... }: {
+  perSystem = { config, pkgs, ... }: {
+    _module.args.packages = config.packages;
     packages = with pkgs; { inherit direnv fish fzf lazygit yazi zmx zoxide; };
   };
 
-  flake.nixosModules.terminal = moduleWithSystem ({ config, pkgs, ... }: {
-    environment.systemPackages = with config.packages; [ fish starship helix direnv fzf yazi zmx zoxide lazygit ];
-    users.users.soywater.shell = config.packages.fish;
+  flake.nixosModules.terminal = moduleWithSystem ({ packages, pkgs, ... }: {
+    environment.systemPackages = with packages; [ fish starship helix direnv fzf yazi zmx zoxide lazygit ];
+    users.defaultUserShell = packages.fish;
     programs.fish = {
       enable = true;
-      package = config.packages.fish;
+      package = packages.fish;
       shellAliases = {
         ".." = "cd .."; "..." = "cd ../.."; "...." = "cd ../../../"; "....." = "cd ../../../../";
         configs = "cd ~/nixconfigs"; cp = "cp -v"; ddf = "df -h"; mkdir = "mkdir -p"; mv = "mv -v"; rm = "rm -v"; rr = "rm -rf";
+        ncg = "nix-collect-garbage";
+      };
+      shellAbbrs = {
+        nsf = "sudo nixos-rebuild switch --flake --verbose ~/nixconfigs#";
+        
       };
       interactiveShellInit = ''
-        set -gx FONTCONFIG_FILE ${config.packages.maple-mono-fontconfig}
-        abbr --add --position command ncg nix-collect-garbage
+        set -gx FONTCONFIG_FILE ${packages.maple-mono-fontconfig}
         fish_vi_key_bindings
-        source ${config.packages.fzf}/share/fzf/completion.fish
-        if set -q KITTY_INSTALLATION_DIR
-          set kitty_fish "$KITTY_INSTALLATION_DIR/shell-integration/fish"
-          if test -f "$kitty_fish/vendor_conf.d/kitty-shell-integration.fish"
-            source "$kitty_fish/vendor_conf.d/kitty-shell-integration.fish"
-          end
-          if test -d "$kitty_fish/vendor_completions.d"
-            set -a fish_complete_path "$kitty_fish/vendor_completions.d"
-          end
-          set -e kitty_fish
-        end
-        function nsf -a host
-          sudo nixos-rebuild switch --flake ~/nixconfigs#$host --verbose
-        end
-        function config -a name
-          nix flake init -t mytemplates; and mv config.nix $name.nix
-        end
+        source ${packages.fzf}/share/fzf/completion.fish
         function y
           set -l cwd_file (mktemp -t yazi-cwd.XXXXXX)
           command yazi $argv --cwd-file="$cwd_file"
@@ -108,7 +97,7 @@ in
         end
       '';
     };
-    programs.starship = { enable = true; package = config.packages.starship; transientPrompt = { enable = true; left = "starship module character"; }; };
+    programs.starship = { enable = true; package = packages.starship; transientPrompt = { enable = true; left = "starship module character"; }; };
     programs.direnv = { enable = true; enableFishIntegration = false; };
     programs.fzf.keybindings = true;
     programs.yazi.enable = true;

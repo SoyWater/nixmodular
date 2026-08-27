@@ -11,10 +11,12 @@ in
       in
       {
         imports = [ wlib.modules.default ];
-        package = inputs.noctalia.packages.${pkgs.stdenv.hostPlatform.system}.default;
-        env.NOCTALIA_CONFIG_HOME = wlib.mkOutOfStoreSymlink pkgs "${desktopConfigHome}/modules/features/desktop/config";
-        env.NOCTALIA_STATE_HOME = "${desktopConfigHome}/.temp";
-        env.FONTCONFIG_FILE = inputs.self.packages.${pkgs.stdenv.hostPlatform.system}.maple-mono-fontconfig;
+        config = {
+          package = inputs.noctalia.packages.${pkgs.stdenv.hostPlatform.system}.default;
+          env.NOCTALIA_CONFIG_HOME = wlib.mkOutOfStoreSymlink pkgs "${desktopConfigHome}/modules/features/desktop/config";
+          env.NOCTALIA_STATE_HOME = "${desktopConfigHome}/.temp";
+          env.FONTCONFIG_FILE = inputs.self.packages.${pkgs.stdenv.hostPlatform.system}.maple-mono-fontconfig;
+        };
       };
 
     kitty =
@@ -24,12 +26,18 @@ in
       in
       {
         imports = [ wlib.modules.default ];
-        package = pkgs.kitty;
-        env.FONTCONFIG_FILE = inputs.self.packages.${pkgs.stdenv.hostPlatform.system}.maple-mono-fontconfig;
-        addFlag = [
-          [ "--config" "${desktopConfigHome}/modules/features/desktop/config/kitty/kitty.conf" ]
-          "--single-instance"
-        ];
+        config = {
+          package = pkgs.kitty;
+          env = {
+            EDITOR = "hx";
+            VISUAL = "hx";
+            FONTCONFIG_FILE = inputs.self.packages.${pkgs.stdenv.hostPlatform.system}.maple-mono-fontconfig;
+          };
+          addFlag = [
+            [ "--config" "${desktopConfigHome}/modules/features/desktop/config/kitty/kitty.conf" ]
+            "--single-instance"
+          ];
+        };
       };
 
     vicinae =
@@ -39,9 +47,11 @@ in
       in
       {
         imports = [ wlib.modules.default ];
-        package = inputs.vicinae.packages.${pkgs.stdenv.hostPlatform.system}.default;
-        env.XDG_DATA_HOME = "${desktopConfigHome}/.temp";
-        env.FONTCONFIG_FILE = inputs.self.packages.${pkgs.stdenv.hostPlatform.system}.maple-mono-fontconfig;
+        config = {
+          package = inputs.vicinae.packages.${pkgs.stdenv.hostPlatform.system}.default;
+          env.XDG_DATA_HOME = "${desktopConfigHome}/.temp";
+          env.FONTCONFIG_FILE = inputs.self.packages.${pkgs.stdenv.hostPlatform.system}.maple-mono-fontconfig;
+        };
       };
 
     desktop =
