@@ -6,6 +6,10 @@
       programs.nix-index-database.comma.enable = true;
 
       networking.hostName = "legion";
+      environment.sessionVariables = {
+        EDITOR = "hx";
+        VISUAL = "hx";
+      };
       xdg.mime.defaultApplications = {
         "application/pdf" = "zen-beta.desktop";
       };
