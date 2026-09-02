@@ -1,25 +1,15 @@
-{ moduleWithSystem, inputs, ... }:
+{ moduleWithSystem, ... }:
 {
   flake.nixosModules.kitty = moduleWithSystem (
-    { self', ... }: {
-      environment.systemPackages = [ self'.packages.kitty ];
+    { pkgs, ... }: {
+      environment = {
+        systemPackages = [ pkgs.kitty ];
+        etc."xdg/kitty/kitty.conf".source = ./config/kitty.conf;
+      };
     }
   );
 
   perSystem = { pkgs, ... }: {
-    packages.kitty = inputs.wrappers.wrappers.kitty.wrap {
-      inherit pkgs;
-      env = {
-        EDITOR = "hx";
-        VISUAL = "hx";
-      };
-      addFlag = [
-        [
-          "--config"
-          ./config/kitty.conf
-        ]
-        "--single-instance"
-      ];
-    };
+    packages.kitty = pkgs.kitty;
   };
 }
