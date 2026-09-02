@@ -6,7 +6,7 @@
     }
   );
 
-  perSystem = { pkgs, ... }: {
+  perSystem = { lib, pkgs, self', ... }: {
     packages.niri = inputs.wrappers.wrappers.niri.wrap {
       inherit pkgs;
       imports = [
@@ -24,8 +24,8 @@
       settings.binds = {
         "Mod+Shift+Slash".show-hotkey-overlay = _: { };
 
-        "Mod+T" = _: { props.hotkey-overlay-title = "Open a Terminal: kitty"; content.spawn = "kitty"; };
-        "Mod+B" = _: { props.hotkey-overlay-title = "Open Zen Browser"; content.spawn = "zen-beta"; };
+        "Mod+T" = _: { props.hotkey-overlay-title = "Open a Terminal: kitty"; content.spawn = lib.getExe self'.packages.kitty; };
+        "Mod+B" = _: { props.hotkey-overlay-title = "Open Zen Browser"; content.spawn = lib.getExe' self'.packages.zen-browser-wayland "zen-beta"; };
 
         XF86AudioRaiseVolume = _: { props.allow-when-locked = true; content.spawn-sh = "wpctl set-volume @DEFAULT_AUDIO_SINK@ 0.1+ -l 1.0"; };
         XF86AudioLowerVolume = _: { props.allow-when-locked = true; content.spawn-sh = "wpctl set-volume @DEFAULT_AUDIO_SINK@ 0.1-"; };
@@ -138,6 +138,14 @@
         "Mod+Escape" = _: { props.allow-inhibiting = false; content.toggle-keyboard-shortcuts-inhibit = _: { }; };
         "Ctrl+Alt+Delete".quit = _: { };
       };
+      settings.spawn-at-startup = [
+        [
+          (lib.getExe self'.packages.vicinae)
+          "server"
+          "--config"
+          "/home/soywater/nixconfigs/modules/features/desktop/vicinae/config/settings.json"
+        ]
+      ];
       # The app configurations are immutable store paths; user-generated
       # Noctalia theme files remain optional at their runtime location.
       extraSettings = [
@@ -154,14 +162,6 @@
           include = [
             { optional = true; }
             "/home/soywater/nixconfigs/.temp/noctalia/themes/niri/noctalia.kdl"
-          ];
-        }
-        {
-          "spawn-at-startup" = [
-            "vicinae"
-            "server"
-            "--config"
-            "/home/soywater/nixconfigs/modules/features/desktop/vicinae/config/settings.json"
           ];
         }
       ];
