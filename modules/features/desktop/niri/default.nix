@@ -10,7 +10,6 @@
     packages.niri = inputs.wrappers.wrappers.niri.wrap {
       inherit pkgs;
       imports = [
-        ./force-kill-module
         ./gpu-selector-module
       ];
       runtimePkgs = [ pkgs.xwayland-satellite ];
@@ -37,10 +36,10 @@
         XF86AudioNext = _: { props.allow-when-locked = true; content.spawn-sh = "playerctl next"; };
 
         "Mod+Shift+P".power-off-monitors = _: { };
-        "Mod+Ctrl+0".spawn-sh = "niri msg outputs | grep -n2 eDP | grep Disabled -q && { niri msg output eDP-1 on; } || { niri msg output eDP-1 off; }";
+        "Mod+Ctrl+0".spawn-sh = "niri msg outputs | ${lib.getExe' pkgs.gnugrep "grep"} -n2 eDP | ${lib.getExe' pkgs.gnugrep "grep"} Disabled -q && { niri msg output eDP-1 on; } || { niri msg output eDP-1 off; }";
         "Mod+O" = _: { props.repeat = false; content.toggle-overview = _: { }; };
         "Mod+Q" = _: { props.repeat = false; content.close-window = _: { }; };
-        "Mod+Ctrl+Shift+Q" = _: { props.hotkey-overlay-title = "Force Kill Picked Window"; content.spawn = "niri-force-kill-picked-window"; };
+        "Mod+Ctrl+Shift+Q" = _: { props.hotkey-overlay-title = "Force Kill Picked Window"; content.spawn-sh = "kill -9 $(niri msg --json pick-window 2>/dev/null | ${lib.getExe pkgs.jq} .pid)"; };
 
         "Mod+Left".focus-column-left = _: { };
         "Mod+Down".focus-window-down = _: { };
@@ -54,7 +53,7 @@
         "Mod+Ctrl+Right".move-column-right = _: { };
         "Mod+Ctrl+H".move-column-left = _: { };
         "Mod+Ctrl+L".move-column-right = _: { };
-        "Mod+Ctrl+P".spawn-sh = "niri msg action set-dynamic-cast-window --id $(niri msg --json pick-window | jq .id)";
+        "Mod+Ctrl+P".spawn-sh = "niri msg action set-dynamic-cast-window --id $(niri msg --json pick-window | ${lib.getExe pkgs.jq} .id)";
 
         "Mod+Home".focus-column-first = _: { };
         "Mod+End".focus-column-last = _: { };
