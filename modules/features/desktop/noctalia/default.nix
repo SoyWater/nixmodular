@@ -36,12 +36,14 @@
 
   perSystem = { pkgs, ... }: {
     packages.noctalia = inputs.wrappers.lib.wrapPackage (
-      { wlib, ... }: {
+      { ... }: {
         inherit pkgs;
         package = inputs.noctalia.packages.${pkgs.stdenv.hostPlatform.system}.default;
         env = {
-          NOCTALIA_CONFIG_HOME = wlib.mkOutOfStoreSymlink pkgs "/home/soywater/nixconfigs/modules/features/desktop/noctalia/config";
-          NOCTALIA_STATE_HOME = "/home/soywater/nixconfigs/.temp";
+          # This path is copied to the Nix store, making the declarative base
+          # configuration immutable at runtime. Noctalia's Settings UI keeps
+          # its normal writable overlay in $XDG_STATE_HOME/noctalia.
+          NOCTALIA_CONFIG_HOME = "${./config}";
         };
       }
     );
