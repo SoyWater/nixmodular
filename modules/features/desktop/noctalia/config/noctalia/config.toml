@@ -215,6 +215,10 @@ wallpaper_scheme = "m3-tonal-spot"
         output_path = "/home/soywater/nixconfigs/.temp/noctalia/themes/niri/noctalia.kdl"
         post_hook = "niri msg action load-config-file"
 
+        [theme.templates.user.starship_palette]
+        input_path = "templates/starship-palette.toml"
+        output_path = "/home/soywater/.cache/noctalia/starship-palette.toml"
+
         [theme.templates.user.vicinae]
         input_path = "templates/vicinae.toml"
         output_path = "/home/soywater/nixconfigs/.temp/vicinae/themes/matugen.toml"
