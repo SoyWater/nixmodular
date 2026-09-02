@@ -1,12 +1,12 @@
 { moduleWithSystem, inputs, ... }:
 {
-  flake.nixosModules.niri = moduleWithSystem ({ self', pkgs, ... }: {
-    environment.systemPackages = [ self'.packages.niri ];
-  });
+  flake.nixosModules.niri = moduleWithSystem (
+    { self', pkgs, ... }: {
+      environment.systemPackages = [ self'.packages.niri ];
+    }
+  );
 
-  perSystem = { pkgs, ... }:
-    let fontconfigFile = pkgs.writeText "maple-mono-fontconfig" ''<fontconfig><dir>${pkgs.maple-mono.NF-CN}/share/fonts</dir></fontconfig>'';
-    in {
+  perSystem = { pkgs, ... }: {
     packages.niri = inputs.wrappers.wrappers.niri.wrap {
       inherit pkgs;
       imports = [
@@ -17,7 +17,6 @@
       env = {
         EDITOR = "hx";
         VISUAL = "hx";
-        FONTCONFIG_FILE = fontconfigFile;
         XCURSOR_THEME = "Bibata-Modern-Ice";
         XCURSOR_SIZE = "24";
         XCURSOR_PATH = "${pkgs.bibata-cursors}/share/icons";
@@ -29,9 +28,26 @@
         { include = ./config/monitors.kdl; }
         { include = ./config/inputs.kdl; }
         { include = ./config/binds.kdl; }
-        { include = [ { optional = true; } ./../noctalia/config/noctalia.kdl ]; }
-        { include = [ { optional = true; } "/home/soywater/nixconfigs/.temp/noctalia/themes/niri/noctalia.kdl" ]; }
-        { "spawn-at-startup" = [ "vicinae" "server" "--config" "/home/soywater/nixconfigs/modules/features/desktop/vicinae/config/settings.json" ]; }
+        {
+          include = [
+            { optional = true; }
+            ./../noctalia/config/noctalia.kdl
+          ];
+        }
+        {
+          include = [
+            { optional = true; }
+            "/home/soywater/nixconfigs/.temp/noctalia/themes/niri/noctalia.kdl"
+          ];
+        }
+        {
+          "spawn-at-startup" = [
+            "vicinae"
+            "server"
+            "--config"
+            "/home/soywater/nixconfigs/modules/features/desktop/vicinae/config/settings.json"
+          ];
+        }
       ];
       passthru.cargoBuildNoDefaultFeatures = pkgs.niri.cargoBuildNoDefaultFeatures;
       passthru.cargoBuildFeatures = pkgs.niri.cargoBuildFeatures;

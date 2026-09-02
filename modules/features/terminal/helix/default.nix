@@ -1,12 +1,14 @@
 { moduleWithSystem, inputs, ... }:
 {
-  flake.nixosModules.helix = moduleWithSystem ({ self', ... }: {
-    environment.systemPackages = [ self'.packages.helix ];
-  });
+  flake.nixosModules.helix = moduleWithSystem (
+    { self', ... }: {
+      environment.systemPackages = [ self'.packages.helix ];
+    }
+  );
 
-  perSystem = { pkgs, ... }:
+  perSystem =
+    { pkgs, ... }:
     let
-      fontconfigFile = pkgs.writeText "maple-mono-fontconfig" ''<fontconfig><dir>${pkgs.maple-mono.NF-CN}/share/fonts</dir></fontconfig>'';
       forest = pkgs.fetchFromGitHub {
         owner = "Ra77a3l3-jar";
         repo = "forest.hx";
@@ -33,7 +35,15 @@
       '';
       steelix = pkgs.writeShellApplication {
         name = "hx";
-        runtimeInputs = with pkgs; [ pkgs.steelix nixd gopls typescript-language-server vscode-json-languageserver ty clang-tools ];
+        runtimeInputs = with pkgs; [
+          pkgs.steelix
+          nixd
+          gopls
+          typescript-language-server
+          vscode-json-languageserver
+          ty
+          clang-tools
+        ];
         text = ''
           steel_data_home="''${XDG_DATA_HOME:-$HOME/.local/share}/steel"
           mkdir -p "$steel_data_home/cogs"
@@ -41,15 +51,16 @@
           ln -sfn ${notify} "$steel_data_home/cogs/notify"
           ln -sfn ${glyph} "$steel_data_home/cogs/glyph"
           export XDG_CONFIG_HOME=${steelixConfigHome}
-          export FONTCONFIG_FILE=${fontconfigFile}
           exec ${pkgs.steelix}/bin/hx --config ${steelixConfigHome}/helix/config.toml "$@"
         '';
       };
     in
     {
-      packages.helix = inputs.wrappers.lib.wrapPackage ({ ... }: {
-        inherit pkgs;
-        package = steelix;
-      });
+      packages.helix = inputs.wrappers.lib.wrapPackage (
+        { ... }: {
+          inherit pkgs;
+          package = steelix;
+        }
+      );
     };
 }
