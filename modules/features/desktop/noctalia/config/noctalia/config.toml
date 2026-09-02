@@ -195,9 +195,9 @@ source = "wallpaper"
 wallpaper_scheme = "m3-tonal-spot"
 
     [theme.templates]
-    builtin_ids = []
+    builtin_ids = [ "starship" ]
     community_ids = []
-    enable_builtin_templates = false
+    enable_builtin_templates = true
     enable_community_templates = false
 
         [theme.templates.user.helix]
@@ -214,10 +214,6 @@ wallpaper_scheme = "m3-tonal-spot"
         input_path = "templates/niri.kdl"
         output_path = "/home/soywater/nixconfigs/.temp/noctalia/themes/niri/noctalia.kdl"
         post_hook = "niri msg action load-config-file"
-
-        [theme.templates.user.starship]
-        input_path = "templates/starship.toml"
-        output_path = "/home/soywater/nixconfigs/.temp/noctalia/themes/starship/matugen.toml"
 
         [theme.templates.user.vicinae]
         input_path = "templates/vicinae.toml"
