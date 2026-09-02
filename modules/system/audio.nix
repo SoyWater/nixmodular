@@ -1,8 +1,8 @@
-{ self, inputs, ... }: {
-
+{ self, inputs, ... }:
+{
   flake.nixosModules.audio =
-  { pkgs, ... }: {
-
+  { pkgs, ... }:
+  {
     environment.systemPackages = with pkgs; [
       playerctl
       pavucontrol
@@ -10,8 +10,7 @@
       pulseaudioFull
       pipewire
       pipewire.jack
-      
-    ]
+    ];
 
     services.pulseaudio.enable = false;
     security.rtkit.enable = true;
@@ -25,5 +24,5 @@
       jack.enable = true;
       wireplumber.enable = true;
     };
-  }
+  };
 }

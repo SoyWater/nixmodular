@@ -36,11 +36,10 @@
       url = "github:SoyWater/custom-nix-applications";
       inputs.nixpkgs.follows = "nixpkgs";
     };
-    nvim = {
-      url = "./nvim";
+    codebuddy = {
+      url = "github:Soywater/codebuddy-nix";
       inputs.nixpkgs.follows = "nixpkgs";
     };
-
     flake-parts.url = "github:hercules-ci/flake-parts";
     import-tree.url = "github:vic/import-tree";
     wrappers = {
@@ -53,8 +52,8 @@
     };
     nix-index-database = {
       url = "github:nix-community/nix-index-database";
-      inputs.nixpkgs.follow = "nixpkgs";
-    }
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
   };
 
   outputs = { flake-parts, import-tree, ... } @ inputs:
@@ -70,16 +69,20 @@
       imports = [
         inputs.wrappers.flakeModules.wrappers
         (import-tree ./modules)
-        (import-tree ./wrapped-applications)
       ];
 
-      perSystem = { system, ... }:
+      perSystem = { config, system, ... }:
         let
           nixpkgsConfig = {
             allowUnfree = true;
           };
         in
         {
+          # Make all per-system packages available to moduleWithSystem
+          # consumers.  App modules can then use either `self'.packages` or
+          # the existing `packages` argument without depending on an
+          # aggregate feature module being imported first.
+          _module.args.packages = config.packages;
           _module.args.pkgs = import inputs.nixpkgs {
             inherit system;
             overlays = [

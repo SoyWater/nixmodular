@@ -29,7 +29,6 @@
       };
 
       services.udisks2.enable = true;
-      programs.nix-ld.enable = true;
 
       powerManagement.enable = true;
       services.thermald.enable = true;
@@ -81,6 +80,7 @@
         fwupd
         bolt
         alsa-utils
+        sshpass
       ];
     };
 }
