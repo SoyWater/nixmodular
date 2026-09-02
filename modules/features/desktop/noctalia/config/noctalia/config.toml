@@ -195,7 +195,7 @@ source = "wallpaper"
 wallpaper_scheme = "m3-tonal-spot"
 
     [theme.templates]
-    builtin_ids = [ "starship" ]
+    builtin_ids = []
     community_ids = []
     enable_builtin_templates = true
     enable_community_templates = false
