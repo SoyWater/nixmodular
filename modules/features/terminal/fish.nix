@@ -44,10 +44,10 @@
             set -l tmp (mktemp --suffix=.sh)
             or return 1
 
-            hx "$tmp"
+            "$EDITOR" "$tmp"
             set -l exit_status $status
             if test $exit_status -eq 0
-              bash "$tmp"
+              ${pkgs.bash}/bin/bash "$tmp"
               set exit_status $status
             end
 

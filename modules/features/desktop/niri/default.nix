@@ -14,8 +14,6 @@
       ];
       runtimePkgs = [ pkgs.xwayland-satellite ];
       env = {
-        EDITOR = "hx";
-        VISUAL = "hx";
         XCURSOR_THEME = "Bibata-Modern-Ice";
         XCURSOR_SIZE = "24";
         XCURSOR_PATH = "${pkgs.bibata-cursors}/share/icons";

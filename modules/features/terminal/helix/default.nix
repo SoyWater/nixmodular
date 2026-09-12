@@ -3,6 +3,10 @@
   flake.nixosModules.helix = moduleWithSystem (
     { self', ... }: {
       environment.systemPackages = [ self'.packages.helix ];
+      environment.variables = {
+        EDITOR = "hx";
+        VISUAL = "hx";
+      };
     }
   );
 
