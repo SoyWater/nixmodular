@@ -27,7 +27,6 @@
       power
       removableStorage
       media
-      runtime
     ];
   };
 }
