@@ -24,7 +24,7 @@
         "Mod+Shift+Slash".show-hotkey-overlay = _: { };
 
         "Mod+T" = _: { props.hotkey-overlay-title = "Open a Terminal: kitty"; content.spawn = lib.getExe self'.packages.kitty; };
-        "Mod+B" = _: { props.hotkey-overlay-title = "Open Zen Browser"; content.spawn = lib.getExe' self'.packages.zen-browser-wayland "zen-beta"; };
+        "Mod+B" = _: { props.hotkey-overlay-title = "Open Zen Browser"; content.spawn = lib.getExe inputs.zen-browser.packages.${pkgs.system}.default; };
 
         XF86AudioRaiseVolume = _: { props.allow-when-locked = true; content.spawn-sh = "wpctl set-volume @DEFAULT_AUDIO_SINK@ 0.1+ -l 1.0"; };
         XF86AudioLowerVolume = _: { props.allow-when-locked = true; content.spawn-sh = "wpctl set-volume @DEFAULT_AUDIO_SINK@ 0.1-"; };

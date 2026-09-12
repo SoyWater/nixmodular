@@ -8,10 +8,7 @@
       terminal
       applications
       compression
-      editors
-      factorio
       minecraft
-      zenBrowserWayland
       dualBoot
       virtualization
       soywater
