@@ -1,4 +1,4 @@
-spawn-at-startup "noctalia"
+spawn-sh-at-startup "exec \"$DESKTOP_SHELL\""
 spawn-at-startup "nm-applet" "--indicator"
 
 window-rule {
@@ -32,14 +32,14 @@ debug {
 
 binds {
     // Noctalia panels and shell actions.
-    Mod+S hotkey-overlay-title="Noctalia Control Center" { spawn-sh "noctalia msg panel-toggle control-center"; }
-    Mod+Comma hotkey-overlay-title="Noctalia Settings" { spawn-sh "noctalia msg settings-toggle"; }
-    Mod+Alt+L hotkey-overlay-title="Lock Screen" { spawn-sh "noctalia msg session lock"; }
-    Mod+Y hotkey-overlay-title="Browse Wallpapers" { spawn-sh "noctalia msg panel-toggle wallpaper"; }
-    Mod+Tab hotkey-overlay-title="Window Switcher" { spawn-sh "noctalia msg window-switcher"; }
-    Mod+N hotkey-overlay-title="Notification Center" { spawn-sh "noctalia msg panel-toggle control-center notifications"; }
+    Mod+S hotkey-overlay-title="Noctalia Control Center" { spawn-sh "exec \"$DESKTOP_SHELL\" msg panel-toggle control-center"; }
+    Mod+Comma hotkey-overlay-title="Noctalia Settings" { spawn-sh "exec \"$DESKTOP_SHELL\" msg settings-toggle"; }
+    Mod+Alt+L hotkey-overlay-title="Lock Screen" { spawn-sh "exec \"$DESKTOP_SHELL\" msg session lock"; }
+    Mod+Y hotkey-overlay-title="Browse Wallpapers" { spawn-sh "exec \"$DESKTOP_SHELL\" msg panel-toggle wallpaper"; }
+    Mod+Tab hotkey-overlay-title="Window Switcher" { spawn-sh "exec \"$DESKTOP_SHELL\" msg window-switcher"; }
+    Mod+N hotkey-overlay-title="Notification Center" { spawn-sh "exec \"$DESKTOP_SHELL\" msg panel-toggle control-center notifications"; }
 
-    XF86MonBrightnessDown allow-when-locked=true { spawn-sh "noctalia msg brightness-down"; }
-    XF86MonBrightnessUp allow-when-locked=true { spawn-sh "noctalia msg brightness-up"; }
+    XF86MonBrightnessDown allow-when-locked=true { spawn-sh "exec \"$DESKTOP_SHELL\" msg brightness-down"; }
+    XF86MonBrightnessUp allow-when-locked=true { spawn-sh "exec \"$DESKTOP_SHELL\" msg brightness-up"; }
 
 }

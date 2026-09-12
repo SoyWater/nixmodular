@@ -5,6 +5,7 @@
     {
       imports = [ inputs.noctalia-greeter.nixosModules.default ];
       environment = {
+        sessionVariables.DESKTOP_SHELL = "noctalia";
         pathsToLink = [ "/share/wayland-sessions" ];
         systemPackages = [
           self'.packages.noctalia
