@@ -40,6 +40,20 @@
           yy.body = ''
             y $argv
           '';
+          shx.body = ''
+            set -l tmp (mktemp --suffix=.sh)
+            or return 1
+
+            hx "$tmp"
+            set -l exit_status $status
+            if test $exit_status -eq 0
+              bash "$tmp"
+              set exit_status $status
+            end
+
+            command rm -f -- "$tmp"
+            return $exit_status
+          '';
         };
       };
       programs.direnv.enable = true;
