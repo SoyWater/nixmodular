@@ -3,11 +3,9 @@
 
   nixConfig = {
     extra-substituters = [
-      "https://custom-nix-applications.cachix.org"
       "https://noctalia.cachix.org"
     ];
     extra-trusted-public-keys = [
-      "custom-nix-applications.cachix.org-1:PK67OYpIq7614gth55JteSG/U2Q1DKqDAN/Wb+rEzOY="
       "noctalia.cachix.org-1:pCOR47nnMEo5thcxNDtzWpOxNFQsBRglJzxWPp3dkU4="
     ];
   };
@@ -32,8 +30,8 @@
       url = "github:SoyWater/factorio-flake";
       inputs.nixpkgs.follows = "nixpkgs";
     };
-    custom-applications = {
-      url = "github:SoyWater/custom-nix-applications";
+    llm-agents = {
+      url = "github:numtide/llm-agents.nix";
       inputs.nixpkgs.follows = "nixpkgs";
     };
     codebuddy = {
@@ -83,11 +81,8 @@
           # the existing `packages` argument without depending on an
           # aggregate feature module being imported first.
           _module.args.packages = config.packages;
-          _module.args.pkgs = import inputs.nixpkgs {
+            _module.args.pkgs = import inputs.nixpkgs {
             inherit system;
-            overlays = [
-              inputs.custom-applications.overlays.default
-            ];
             config = nixpkgsConfig;
           };
         };

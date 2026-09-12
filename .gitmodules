@@ -1,3 +1,0 @@
-[submodule "custom-applications"]
-	path = custom-applications
-	url = git@github.com:SoyWater/custom-nix-applications.git

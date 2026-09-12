@@ -16,11 +16,9 @@
         extra-substituters = [
           "https://aseipp-nix-cache.freetls.fastly.net?priority=30"
           "https://nix-community.cachix.org?priority=35"
-          "https://custom-nix-applications.cachix.org?priority=40"
         ];
         extra-trusted-public-keys = [
           "nix-community.cachix.org-1:mB9FSh9qf2dCimDSUo8Zy7bkq5CX+/rkCWyvRCYg3Fs="
-          "custom-nix-applications.cachix.org-1:PK67OYpIq7614gth55JteSG/U2Q1DKqDAN/Wb+rEzOY="
         ];
       };
       gc = {
@@ -32,7 +30,6 @@
 
     nixpkgs = {
       config.allowUnfree = true;
-      overlays = [ inputs.custom-applications.overlays.default ];
     };
 
     _module.args.packages = config.packages;
