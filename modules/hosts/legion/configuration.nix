@@ -3,6 +3,10 @@
     { lib, pkgs, ... }:
     {
       networking.hostName = "legion";
+      nix.settings = {
+        max-jobs = 10;
+        cores = 10;
+      };
       environment.sessionVariables = {
         EDITOR = "hx";
         VISUAL = "hx";

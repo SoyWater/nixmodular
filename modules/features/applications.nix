@@ -19,7 +19,7 @@
         pkgs.chromium
         pkgs.obsidian
         inputs.codebuddy.packages.${system}.default
-        inputs.llm-agents.packages.${system}.codex
+        pkgs.llm-agents.codex
         pkgs.gh
         pkgs.gh-dash
         pkgs.lutris
