@@ -6,6 +6,7 @@
     environment.systemPackages = with pkgs; [
       playerctl
       pavucontrol
+      alsa-utils
       pulseaudio
       pulseaudioFull
       pipewire

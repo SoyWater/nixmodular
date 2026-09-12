@@ -17,15 +17,22 @@
       lutris
       minecraft
       zenBrowserWayland
-      services
       dualBoot
       virtualization
       soywater
       legion
       legionHardware
       audio
+      bluetooth
+      firmware
+      graphics
+      hardwareTools
       network
       nix-ld
+      power
+      removableStorage
+      media
+      runtime
     ];
   };
 }

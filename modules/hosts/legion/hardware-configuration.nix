@@ -8,6 +8,7 @@
 
     environment.systemPackages = [
       config.boot.kernelPackages.kernel.dev
+      pkgs.bolt
     ];
 
     boot = {
@@ -74,6 +75,9 @@
         offload.enableOffloadCmd = true;
       };
     };
+
+    services.hardware.bolt.enable = true;
+    services.xserver.videoDrivers = [ "nvidia" ];
 
     services.xserver.dpi = 189;
 
