@@ -25,7 +25,7 @@
           nsf = "sudo nixos-rebuild switch --flake ~/nixconfigs#${config.networking.hostName}";
         };
         extraCompletionPackages = [
-          "${pkgs.fzf}/share/fzf/completion.fish"
+          pkgs.fzf
         ];
         interactiveShellInit = "fish_vi_key_bindings";
         shellFunctions = {
