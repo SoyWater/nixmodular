@@ -2,7 +2,6 @@
 {
   flake.nixosConfigurations.legion = inputs.nixpkgs.lib.nixosSystem {
     modules = with self.nixosModules; [
-      inputs.nix-index-database.nixosModules.nix-index
       core
       desktop
       terminal

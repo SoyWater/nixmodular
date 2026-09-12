@@ -1,6 +1,11 @@
 { inputs, moduleWithSystem, ... }:
 {
   flake.nixosModules.coreNix = moduleWithSystem ({ config, ... }: {
+    imports = [ inputs.nix-index-database.nixosModules.nix-index ];
+
+    programs.comma.enable = true;
+    programs.nix-index-database.comma.enable = true;
+
     nix = {
       extraOptions = ''
         connect-timeout = 5

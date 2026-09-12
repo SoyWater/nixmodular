@@ -2,9 +2,6 @@
   flake.nixosModules.legion =
     { lib, pkgs, ... }:
     {
-      programs.comma.enable = true;
-      programs.nix-index-database.comma.enable = true;
-
       networking.hostName = "legion";
       environment.sessionVariables = {
         EDITOR = "hx";
