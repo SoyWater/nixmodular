@@ -140,7 +140,7 @@
           (lib.getExe self'.packages.vicinae)
           "server"
           "--config"
-          "/home/soywater/nixconfigs/modules/features/desktop/vicinae/config/settings.json"
+          "/home/soywater/nixconfigs/modules/features/vicinae/config/settings.json"
         ]
       ];
       # The app configurations are immutable store paths; user-generated

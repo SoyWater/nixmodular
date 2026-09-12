@@ -3,7 +3,11 @@
   flake.nixosConfigurations.legion = inputs.nixpkgs.lib.nixosSystem {
     modules = with self.nixosModules; [
       core
-      desktop
+      fonts
+      niri
+      noctalia
+      kitty
+      vicinae
       terminalFish
       starship
       helix
