@@ -1,6 +1,6 @@
 { ... }:
 {
-  flake.nixosModules.terminalFish = { config, pkgs, ... }: {
+  flake.nixosModules.terminalFish = { pkgs, ... }: {
       environment.systemPackages = with pkgs; [
         fzf
         zmx
@@ -22,7 +22,6 @@
           rm = "rm -v";
           rr = "rm -rf";
           ncg = "nix-collect-garbage";
-          nsf = "sudo nixos-rebuild switch --flake ~/nixconfigs#${config.networking.hostName}";
         };
         extraCompletionPackages = [
           pkgs.fzf

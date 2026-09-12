@@ -1,7 +1,19 @@
 { inputs, moduleWithSystem, ... }:
 {
-  flake.nixosModules.coreNix = moduleWithSystem ({ config, ... }: {
+  flake.nixosModules.coreNix = moduleWithSystem ({ config, pkgs, ... }:
+  let
+    nsf = pkgs.writeShellApplication {
+      name = "nsf";
+      runtimeInputs = [ pkgs.hostname pkgs.nixos-rebuild pkgs.sudo ];
+      text = ''
+        exec sudo nixos-rebuild switch --flake "$HOME/nixconfigs#$(hostname)" "$@"
+      '';
+    };
+  in
+  {
     imports = [ inputs.nix-index-database.nixosModules.nix-index ];
+
+    environment.systemPackages = [ nsf ];
 
     programs.comma.enable = true;
     programs.nix-index-database.comma.enable = true;
