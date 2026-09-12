@@ -4,7 +4,7 @@
   let
     nsf = pkgs.writeShellApplication {
       name = "nsf";
-      runtimeInputs = [ pkgs.hostname pkgs.nixos-rebuild pkgs.sudo ];
+      runtimeInputs = [ pkgs.hostname pkgs.nixos-rebuild ];
       text = ''
         exec sudo nixos-rebuild switch --flake "$HOME/nixconfigs#$(hostname)" "$@"
       '';
