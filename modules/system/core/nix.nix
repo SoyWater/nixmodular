@@ -35,6 +35,7 @@
 
     nixpkgs = {
       config.allowUnfree = true;
+      overlays = [ inputs.llm-agents.overlays.shared-nixpkgs ];
     };
 
     _module.args.packages = config.packages;
