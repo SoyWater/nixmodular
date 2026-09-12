@@ -10,6 +10,7 @@
     packages.niri = inputs.wrappers.wrappers.niri.wrap {
       inherit pkgs;
       imports = [
+        ./niri-config
         ./gpu-selector-module
       ];
       runtimePkgs = [ pkgs.xwayland-satellite ];
@@ -143,25 +144,7 @@
           "/home/soywater/nixconfigs/modules/features/vicinae/config/settings.json"
         ]
       ];
-      # The app configurations are immutable store paths; user-generated
-      # Noctalia theme files remain optional at their runtime location.
-      extraSettings = [
-        { include = ./config/config.kdl; }
-        { include = ./config/monitors.kdl; }
-        { include = ./config/inputs.kdl; }
-        {
-          include = [
-            { optional = true; }
-            ./../noctalia/config/noctalia.kdl
-          ];
-        }
-        {
-          include = [
-            { optional = true; }
-            "/home/soywater/nixconfigs/.temp/noctalia/themes/niri/noctalia.kdl"
-          ];
-        }
-      ];
+
       passthru.cargoBuildNoDefaultFeatures = pkgs.niri.cargoBuildNoDefaultFeatures;
       passthru.cargoBuildFeatures = pkgs.niri.cargoBuildFeatures;
     };

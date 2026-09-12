@@ -1,0 +1,121 @@
+{ ... }:
+{
+  settings = {
+    input = {
+      keyboard = {
+        xkb = {
+          layout = "us";
+          options = "fkeys:basic_13-24";
+        };
+        numlock = _: { };
+      };
+
+      touchpad = {
+        tap = _: { };
+        natural-scroll = _: { };
+      };
+    };
+
+    outputs = {
+      "eDP-1" = {
+        mode = "2560x1600@165.000";
+        scale = 1.5;
+        transform = "normal";
+        position = _: {
+          props = {
+            x = 0;
+            y = 0;
+          };
+        };
+        focus-at-startup = _: { };
+      };
+
+      "HDMI-A-1" = {
+        focus-at-startup = _: { };
+        mode = "1920x1080@165.002";
+        scale = 1;
+        transform = "normal";
+        hot-corners.off = _: { };
+      };
+    };
+
+    layout = {
+      center-focused-column = "never";
+      gaps = 8;
+      preset-column-widths = [
+        { proportion = 0.33333; }
+        { proportion = 0.5; }
+        { proportion = 0.66667; }
+      ];
+      default-column-width = { proportion = 0.5; };
+
+      focus-ring = {
+        width = 3;
+        active-color = "#7fc8ff";
+        inactive-color = "#505050";
+      };
+
+      border = {
+        off = _: { };
+        width = 4;
+        active-color = "#ffc87f";
+        inactive-color = "#505050";
+        urgent-color = "#9b0000";
+      };
+    };
+
+    hotkey-overlay.skip-at-startup = _: { };
+    prefer-no-csd = _: { };
+    cursor = {
+      xcursor-theme = "Bibata-Modern-Ice";
+      xcursor-size = 24;
+    };
+    screenshot-path = "~/Pictures/Screenshots/Screenshot from %Y-%m-%d %H-%M-%S.png";
+
+    layer-rules = [
+      {
+        background-effect = {
+          xray = false;
+        };
+      }
+    ];
+
+    window-rules = [
+      {
+        geometry-corner-radius = 5;
+        clip-to-geometry = true;
+      }
+      {
+        matches = [
+          {
+            app-id = "firefox$";
+            title = "^Picture-in-Picture$";
+          }
+          { app-id = "nm-openconnect-auth-dialog"; }
+          {
+            app-id = "^zen-beta$";
+            title = "^Picture-in-Picture$";
+          }
+        ];
+        open-floating = true;
+      }
+    ];
+
+    debug.honor-xdg-activation-with-invalid-serial = _: { };
+  };
+
+  extraSettings = [
+    {
+      include = [
+        { optional = true; }
+        "~/.config/niri/gpu.kdl"
+      ];
+    }
+    {
+      include = [
+        { optional = true; }
+        ./../noctalia/config/noctalia.kdl
+      ];
+    }
+  ];
+}
