@@ -15,6 +15,10 @@
       zenBrowser = inputs.zen-browser.packages.${system}.default;
     in
     {
+      xdg.mime.defaultApplications = {
+        "application/pdf" = "zen-beta.desktop";
+      };
+
       environment.systemPackages = [
         pkgs.chromium
         pkgs.obsidian

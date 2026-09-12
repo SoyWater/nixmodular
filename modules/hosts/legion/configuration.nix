@@ -11,9 +11,6 @@
         EDITOR = "hx";
         VISUAL = "hx";
       };
-      xdg.mime.defaultApplications = {
-        "application/pdf" = "zen-beta.desktop";
-      };
       xdg.portal.config.niri."org.freedesktop.impl.portal.FileChooser" =
         lib.mkForce [ "gtk" ];
 
