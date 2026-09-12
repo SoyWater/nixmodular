@@ -4,7 +4,9 @@
     modules = with self.nixosModules; [
       core
       desktop
-      terminal
+      terminalFish
+      starship
+      helix
       applications
       compression
       minecraft
