@@ -12,6 +12,7 @@
       starship
       helix
       applications
+      sandboxing
       compression
       minecraft
       dualBoot
