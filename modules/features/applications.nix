@@ -3,6 +3,10 @@
   flake.nixosModules.applications = { pkgs, ... }:
     let
       system = pkgs.stdenv.hostPlatform.system;
+      voxtype = pkgs.voxtype.override {
+        onnxSupport = true;
+        vulkanSupport = true;
+      };
       editors = pkgs.buildEnv {
         name = "editors";
         paths = with pkgs; [
@@ -28,6 +32,8 @@
         pkgs.gh-dash
         pkgs.lutris
         editors
+        voxtype
+        pkgs.wtype
         factorio
         zenBrowser
       ];
