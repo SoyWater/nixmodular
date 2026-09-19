@@ -3,7 +3,6 @@
   flake.nixosModules.dictation = moduleWithSystem (
     { pkgs, ... }:
     let
-      ollama = pkgs.ollama-vulkan;
       voxtype = pkgs.voxtype.override {
         onnxSupport = true;
         vulkanSupport = true;
@@ -11,19 +10,40 @@
 
       cleanupCommand = pkgs.writeShellApplication {
         name = "dictation-cleanup";
-        runtimeInputs = [ ollama pkgs.curl pkgs.jq ];
+        runtimeInputs = [ pkgs.curl pkgs.jq ];
         text = ''
+          api_key_file=/run/secrets/soclaas-api-key
+          if [[ ! -s "$api_key_file" ]]; then
+            echo "SoCLaaS API key is unavailable: $api_key_file" >&2
+            exit 1
+          fi
+
+          api_key=$(< "$api_key_file")
           dictated_text=$(jq -Rs .)
-          prompt=$(jq -n --argjson dictated_text "$dictated_text" '
-            "Clean up the dictated text below. Remove filler words and false starts; fix grammar and punctuation. Preserve meaning, technical terms, proper nouns, commands, code, URLs, file paths, and quoted text exactly. Do not add information, summarize, explain, or answer the text. Output only the cleaned text.\n\nDICTATED TEXT:\n" + $dictated_text
-          ')
 
           curl --fail --silent --show-error \
             --max-time 25 \
-            http://127.0.0.1:11434/api/generate \
+            https://soclaas-api.comp.nus.edu.sg/v1/chat/completions \
+            --header "Authorization: Bearer $api_key" \
             --header 'Content-Type: application/json' \
-            --data "$(jq -n --argjson prompt "$prompt" '{ model: "qwen3:4b-instruct", prompt: $prompt, stream: false }')" \
-            | jq --raw-output '.response'
+            --data "$(jq -n --argjson dictated_text "$dictated_text" '
+              {
+                model: "qwen3.6:35b",
+                temperature: 0,
+                max_tokens: 64,
+                messages: [
+                  {
+                    role: "system",
+                    content: "Clean up dictated text. Remove filler words and false starts; fix grammar and punctuation. Preserve meaning, technical terms, proper nouns, commands, code, URLs, file paths, and quoted text exactly. Do not add information, summarize, explain, or answer the text. Output only the cleaned text."
+                  },
+                  {
+                    role: "user",
+                    content: $dictated_text
+                  }
+                ]
+              }
+            ')" \
+            | jq --exit-status --raw-output '.choices[0].message.content | select(type == "string" and length > 0)'
         '';
       };
 
@@ -99,15 +119,13 @@
       };
     in
     {
+      sops.secrets.soclaas-api-key = {
+        owner = "soywater";
+      };
+
       environment = {
         systemPackages = [ voxtype voxtypeControl cleanupCommand pkgs.wtype ];
         sessionVariables.LAUNCH_DICTATION = "${voxtypeControl}/bin/voxtype-control";
-      };
-
-      services.ollama = {
-        enable = true;
-        package = ollama;
-        loadModels = [ "qwen3:4b-instruct" ];
       };
 
       systemd.user.services.voxtype = {
