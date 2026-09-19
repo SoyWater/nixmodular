@@ -43,13 +43,13 @@
       "locked": {
         "lastModified": 1788351515,
         "narHash": "sha256-UoCV9DfJ5dwRAfCGJuwhoH7samm4u1y9mH7LR8sCvno=",
-        "owner": "Soywater",
+        "owner": "Soywater-nix",
         "repo": "codebuddy-nix",
         "rev": "6060d22cc879189bb9f9800de1e3f61118e206c6",
         "type": "github"
       },
       "original": {
-        "owner": "Soywater",
+        "owner": "Soywater-nix",
         "repo": "codebuddy-nix",
         "type": "github"
       }
@@ -63,13 +63,13 @@
       "locked": {
         "lastModified": 1777369198,
         "narHash": "sha256-vPci9BmJtcKIeAJ6e92cfNgnBRBhJgTV+J4NN2Ng+vw=",
-        "owner": "SoyWater",
+        "owner": "Soywater-nix",
         "repo": "factorio-flake",
         "rev": "7ae289ab4d2dc2c7bb23143d4a6ec19511fd7bc9",
         "type": "github"
       },
       "original": {
-        "owner": "SoyWater",
+        "owner": "Soywater-nix",
         "repo": "factorio-flake",
         "type": "github"
       }
@@ -362,26 +362,6 @@
         "type": "github"
       }
     },
-    "noctalia-greeter": {
-      "inputs": {
-        "nixpkgs": [
-          "nixpkgs"
-        ]
-      },
-      "locked": {
-        "lastModified": 1789067198,
-        "narHash": "sha256-4UeVdTny7Ir2G/NRVOcp966U6iOL8qgHLLyPr/u3Uvs=",
-        "owner": "noctalia-dev",
-        "repo": "noctalia-greeter",
-        "rev": "dde61d85499c01ce0a9f9b8abfbc399da324dcd4",
-        "type": "github"
-      },
-      "original": {
-        "owner": "noctalia-dev",
-        "repo": "noctalia-greeter",
-        "type": "github"
-      }
-    },
     "numen": {
       "inputs": {
         "nixpkgs": [
@@ -415,7 +395,6 @@
         "nix-index-database": "nix-index-database",
         "nixpkgs": "nixpkgs",
         "noctalia": "noctalia",
-        "noctalia-greeter": "noctalia-greeter",
         "sops-nix": "sops-nix",
         "vicinae": "vicinae",
         "wrappers": "wrappers",

@@ -1,21 +1,18 @@
 { moduleWithSystem, inputs, ... }:
 {
   flake.nixosModules.noctalia = moduleWithSystem (
-    { self', pkgs, ... }:
+    { pkgs, packages, ... }:
     {
-      imports = [ inputs.noctalia-greeter.nixosModules.default ];
-      environment = {
-        sessionVariables.DESKTOP_SHELL = "noctalia";
-        pathsToLink = [ "/share/wayland-sessions" ];
-        systemPackages = [
-          self'.packages.noctalia
-          pkgs.networkmanagerapplet
-        ];
+      programs.noctalia = {
+        enable = true;
+        package = packages.noctalia;
+        systemd.enable = true;
       };
+
       services.gnome.gnome-keyring.enable = true;
       security.polkit.extraConfig = ''
         polkit.addRule(function (action, subject) {
-          if (action.id == "org.noctalia.greeter.apply-appearance" && subject.user == "soywater") {
+          if (action.id == "org.noctalia.greeter.apply-appearance") {
             return polkit.Result.YES;
           }
         });
@@ -27,8 +24,6 @@
           package = pkgs.bibata-cursors;
         };
         settings = {
-          session.default = "niri";
-          user.default = "soywater";
           cursor.size = 24;
         };
       };

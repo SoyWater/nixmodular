@@ -1,0 +1,52 @@
+[meta]
+name = "Matugen"
+description = "Noctalia palette generated theme"
+variant = "dark"
+
+[colors.core]
+accent = "#bcc2ff"
+accent_foreground = "#1a2678"
+background = "#191019"
+foreground = "#efdeea"
+secondary_background = "#261d25"
+border = "#534152"
+
+[colors.main_window]
+border = "#534152"
+
+[colors.settings_window]
+border = "#a18a9d"
+
+[colors.accents]
+blue = "#bcc2ff"
+green = "#edb4ea"
+magenta = "#bcc2ff"
+orange = "#ffb4ab"
+red = "#ffb4ab"
+yellow = "#edb4ea"
+cyan = "#bcc2ff"
+purple = "#bcc2ff"
+
+[colors.text]
+default = "#efdeea"
+muted = "#d8bfd4"
+danger = "#ffb4ab"
+success = "#edb4ea"
+placeholder = "#a18a9d"
+
+[colors.text.selection]
+background = "#bcc2ff"
+foreground = "#1a2678"
+
+[colors.input]
+border = "#a18a9d"
+border_focus = "#bcc2ff"
+border_error = "#ffb4ab"
+
+[colors.button.primary]
+background = "#312730"
+foreground = "#efdeea"
+
+[colors.list.item.hover]
+background = "#333f90"
+foreground = "#dfe0ff"

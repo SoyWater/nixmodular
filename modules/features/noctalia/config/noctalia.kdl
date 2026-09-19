@@ -1,6 +1,3 @@
-spawn-sh-at-startup "exec \"$DESKTOP_SHELL\""
-spawn-at-startup "nm-applet" "--indicator"
-
 window-rule {
     match app-id="dev.noctalia.Noctalia"
     open-floating true
@@ -43,3 +40,5 @@ binds {
     XF86MonBrightnessUp allow-when-locked=true { spawn-sh "exec \"$DESKTOP_SHELL\" msg brightness-up"; }
 
 }
+
+include optional=true "~/.local/state/noctalia/themes/niri/noctalia.kdl"

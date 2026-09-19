@@ -110,7 +110,6 @@ widget_order = [ "lockscreen-login-box@winit", "lockscreen-login-box@HDMI-A-1", 
         show_caps_lock = true
         show_keyboard_layout = true
         show_login_button = true
-        show_password_hint = true
 
     [lockscreen_widgets.widget."lockscreen-login-box@eDP-1"]
     box_height = 70.0
@@ -130,7 +129,6 @@ widget_order = [ "lockscreen-login-box@winit", "lockscreen-login-box@HDMI-A-1", 
         show_caps_lock = true
         show_keyboard_layout = true
         show_login_button = true
-        show_password_hint = true
 
     [lockscreen_widgets.widget."lockscreen-login-box@winit"]
     box_height = 70.0
@@ -150,7 +148,6 @@ widget_order = [ "lockscreen-login-box@winit", "lockscreen-login-box@HDMI-A-1", 
         show_caps_lock = true
         show_keyboard_layout = true
         show_login_button = true
-        show_password_hint = true
 
 [notification]
 enable_daemon = true
@@ -178,6 +175,8 @@ time_format = "{:%H:%M · %a %d/%m}"
 
     [shell.greeter_sync]
     auto_sync = true
+    privilege_command = "pkexec"
+
 
     [shell.panel]
     control_center_placement = "floating"
@@ -192,36 +191,32 @@ builtin = "Noctalia"
 community_palette = "Oxocarbon"
 mode = "dark"
 source = "wallpaper"
-wallpaper_scheme = "m3-tonal-spot"
+wallpaper_scheme = "m3-fruit-salad"
+
 
     [theme.templates]
-    builtin_ids = []
-    community_ids = []
+    builtin_ids = [ "btop", "gtk3", "gtk4", "ghostty", "helix", "kitty", "qt", "starship" ]
+    community_ids = [ "obsidian", "zed", "vicinae", "pi-agent", "yazi" ]
     enable_builtin_templates = true
-    enable_community_templates = false
+    enable_community_templates = true
 
         [theme.templates.user.helix]
-        input_path = "templates/helix.toml"
+        input_path = "../templates/helix.toml"
         output_path = "/home/soywater/nixconfigs/.temp/noctalia/themes/helix/matugen.toml"
         post_hook = "mkdir -p \"$HOME/.config/helix/themes\" && ln -sfn \"$HOME/nixconfigs/.temp/noctalia/themes/helix/matugen.toml\" \"$HOME/.config/helix/themes/matugen.toml\""
 
-        [theme.templates.user.kitty]
-        input_path = "templates/kitty.conf"
-        output_path = "/home/soywater/nixconfigs/.temp/noctalia/themes/kitty/dankcolors.conf"
-        post_hook = "pgrep -x kitty >/dev/null && pkill -SIGUSR1 kitty || true"
-
         [theme.templates.user.niri]
-        input_path = "templates/niri.kdl"
-        output_path = "/home/soywater/nixconfigs/.temp/noctalia/themes/niri/noctalia.kdl"
+        input_path = "../templates/niri.kdl"
+        output_path = "~/.local/state/noctalia/themes/niri/noctalia.kdl"
         post_hook = "niri msg action load-config-file"
 
         [theme.templates.user.starship_palette]
-        input_path = "templates/starship-palette.toml"
+        input_path = "../templates/starship-palette.toml"
         output_path = "/home/soywater/.cache/noctalia/starship-palette.toml"
 
         [theme.templates.user.vicinae]
-        input_path = "templates/vicinae.toml"
-        output_path = "/home/soywater/nixconfigs/.temp/vicinae/themes/matugen.toml"
+        input_path = "../templates/vicinae.toml"
+        output_path = "/home/soywater/.local/share/vicinae/themes/matugen.toml"
         post_hook = "vicinae theme set matugen"
 
 [wallpaper]
@@ -230,15 +225,6 @@ enabled = true
 fill_mode = "crop"
 
     [wallpaper.default]
-    path = "/home/soywater/Pictures/Wallpapers/a_purple_cube_with_a_black_circle_and_buttons.jpg"
-
-    [wallpaper.last]
-    path = "/home/soywater/Pictures/Wallpapers/a_purple_cube_with_a_black_circle_and_buttons.jpg"
-
-    [wallpaper.monitors.HDMI-A-1]
-    path = "/home/soywater/Pictures/Wallpapers/a_purple_cube_with_a_black_circle_and_buttons.jpg"
-
-    [wallpaper.monitors.eDP-1]
     path = "/home/soywater/Pictures/Wallpapers/a_purple_cube_with_a_black_circle_and_buttons.jpg"
 
 [weather]

@@ -1,9 +1,0 @@
-// Let windows opened by Vicinae receive focus on Niri.
-debug {
-    honor-xdg-activation-with-invalid-serial
-}
-
-binds {
-    Alt+Space hotkey-overlay-title="Vicinae Launcher" { spawn "vicinae" "toggle"; }
-    Mod+V hotkey-overlay-title="Vicinae Clipboard" { spawn "vicinae" "vicinae://launch/clipboard/history?toggle=true"; }
-}

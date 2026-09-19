@@ -14,6 +14,7 @@
 
   inputs = {
     nixpkgs.url = "github:nixos/nixpkgs/nixos-unstable";
+
     zen-browser = {
       url = "github:0xc000022070/zen-browser-flake";
       inputs.nixpkgs.follows = "nixpkgs";
@@ -23,13 +24,9 @@
       inputs.nixpkgs.follows = "nixpkgs";
     };
     noctalia.url = "github:noctalia-dev/noctalia/cachix";
-    noctalia-greeter = {
-      url = "github:noctalia-dev/noctalia-greeter";
-      inputs.nixpkgs.follows = "nixpkgs";
-    };
     vicinae.url = "github:vicinaehq/vicinae";
     factorio-flake = {
-      url = "github:SoyWater/factorio-flake";
+      url = "github:Soywater-nix/factorio-flake";
       inputs.nixpkgs.follows = "nixpkgs";
     };
     llm-agents = {
@@ -37,9 +34,10 @@
       inputs.nixpkgs.follows = "nixpkgs";
     };
     codebuddy = {
-      url = "github:Soywater/codebuddy-nix";
+      url = "github:Soywater-nix/codebuddy-nix";
       inputs.nixpkgs.follows = "nixpkgs";
     };
+
     flake-parts.url = "github:hercules-ci/flake-parts";
     import-tree.url = "github:vic/import-tree";
     wrappers = {

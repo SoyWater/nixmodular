@@ -1,20 +1,32 @@
 { moduleWithSystem, inputs, ... }:
 {
-  flake.nixosModules.vicinae = moduleWithSystem (
-    { self', ... }: {
-      environment.systemPackages = [ self'.packages.vicinae ];
-    }
-  );
+  flake.nixosModules.vicinae =
+    { config, ... }:
+    {
+      imports = [
+        (moduleWithSystem (
+          { pkgs, ... }:
+          let
+            vicinaePackage = inputs.vicinae.packages.${pkgs.stdenv.hostPlatform.system}.with-soulver;
+          in
+          {
+            imports = [
+              ./vicinae-module
+            ];
 
-  perSystem = { pkgs, ... }: {
-    packages.vicinae = inputs.wrappers.lib.wrapPackage (
-      { ... }: {
-        inherit pkgs;
-        package = inputs.vicinae.packages.${pkgs.stdenv.hostPlatform.system}.default;
-        env = {
-          XDG_DATA_HOME = "/home/soywater/nixconfigs/.temp";
-        };
-      }
-    );
-  };
+            services.vicinae = {
+              enable = true;
+              package = vicinaePackage;
+            };
+
+            environment = {
+              sessionVariables.LAUNCH_LAUNCHER = "vicinae toggle";
+              sessionVariables.LAUNCH_CLIPBOARD = "vicinae vicinae://launch/clipboard/history?toggle=true";
+            };
+          }
+        ))
+      ];
+
+      services.vicinae.settingsDir = "${config.settingsDir}/vicinae";
+    };
 }

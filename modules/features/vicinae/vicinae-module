@@ -1,0 +1,139 @@
+{ config, lib, pkgs, ... }:
+
+let
+  cfg = config.services.vicinae;
+  jsonFormat = pkgs.formats.json { };
+  tomlFormat = pkgs.formats.toml { };
+
+  generatedSettingsFile = jsonFormat.generate "vicinae-settings.json" cfg.settings;
+  settingsLink = lib.optionalString (cfg.settings != {}) ''
+    ln -sfn "${generatedSettingsFile}" "${cfg.settingsDir}/settings.json"
+  '';
+  themeFiles = lib.mapAttrs'
+    (name: theme: lib.nameValuePair "${name}.toml" (tomlFormat.generate "vicinae-${name}.toml" theme))
+    cfg.themes;
+
+  extensionLinks = lib.concatMapStringsSep "\n" (extension: ''
+    ln -sfn "${extension}" "$XDG_DATA_HOME/vicinae/extensions/${builtins.baseNameOf extension}"
+  '') cfg.extensions;
+
+  themeLinks = lib.concatStringsSep "\n" (lib.mapAttrsToList (name: themeFile: ''
+    ln -sfn "${themeFile}" "$XDG_DATA_HOME/vicinae/themes/${name}.toml"
+  '') themeFiles);
+
+  setupScript = pkgs.writeShellScript "vicinae-setup" ''
+    set -eu
+
+    : "''${XDG_DATA_HOME:=$HOME/.local/share}"
+
+    install -d "$XDG_DATA_HOME/vicinae/themes"
+    install -d "$XDG_DATA_HOME/vicinae/extensions"
+
+    ${settingsLink}
+    ${themeLinks}
+    ${extensionLinks}
+  '';
+
+  nativeMessagingHost = pkgs.writeTextDir
+    "lib/mozilla/native-messaging-hosts/com.vicinae.vicinae.json"
+    (builtins.toJSON {
+      name = "com.vicinae.vicinae";
+      description = "Vicinae Native Messaging Host";
+      path = "${cfg.package}/libexec/vicinae/vicinae-browser-link";
+      type = "stdio";
+      allowed_extensions = [ "firefox@vicinae.com" ];
+    });
+in
+{
+  options.services.vicinae = {
+    enable = lib.mkEnableOption "the Vicinae launcher daemon";
+
+    package = lib.mkPackageOption pkgs "vicinae" { };
+
+    systemd = {
+      enable = lib.mkEnableOption "the Vicinae systemd user service" // { default = true; };
+
+      autoStart = lib.mkOption {
+        type = lib.types.bool;
+        default = true;
+        description = "Start Vicinae with the configured graphical session target.";
+      };
+
+      target = lib.mkOption {
+        type = lib.types.str;
+        default = "graphical-session.target";
+        example = "niri.service";
+        description = "Systemd user target that starts Vicinae.";
+      };
+    };
+
+    settings = lib.mkOption {
+      type = jsonFormat.type;
+      default = { };
+      description = "Vicinae settings written to the user's settings.json.";
+    };
+
+    settingsDir = lib.mkOption {
+      type = lib.types.str;
+      description = "Directory containing Vicinae's settings and themes.";
+    };
+
+    themes = lib.mkOption {
+      type = tomlFormat.type;
+      default = { };
+      description = "Attribute set of theme names to TOML theme definitions.";
+    };
+
+    extensions = lib.mkOption {
+      type = lib.types.listOf lib.types.package;
+      default = [ ];
+      description = "Vicinae extension packages to expose in the user's data directory.";
+    };
+
+    enableFirefoxIntegration = lib.mkOption {
+      type = lib.types.bool;
+      default = true;
+      description = "Install the Firefox native messaging host.";
+    };
+  };
+
+  config = lib.mkIf cfg.enable {
+    assertions = [
+      {
+        assertion = pkgs.stdenv.hostPlatform.isLinux;
+        message = "services.vicinae is only supported on Linux.";
+      }
+    ];
+
+    environment.systemPackages = [ cfg.package ];
+
+    programs.firefox.nativeMessagingHosts.packages =
+      lib.mkIf cfg.enableFirefoxIntegration [ nativeMessagingHost ];
+
+    systemd.user.services.vicinae = lib.mkIf cfg.systemd.enable {
+      description = "Vicinae server daemon";
+      documentation = [ "https://docs.vicinae.com" ];
+      after = [ cfg.systemd.target ];
+      partOf = [ cfg.systemd.target ];
+      unitConfig.X-Restart-Triggers = [ setupScript ]
+        ++ lib.optional (cfg.settings != {}) generatedSettingsFile
+        ++ lib.attrValues themeFiles
+        ++ cfg.extensions;
+
+      # Desktop-entry Exec values are usually bare commands.  Give the server
+      # the system profile that provides those commands when it launches one.
+      path = [ config.system.path ];
+
+      serviceConfig = {
+        Type = "simple";
+        ExecStartPre = setupScript;
+        ExecStart = "${lib.getExe' cfg.package "vicinae"} server --config ${cfg.settingsDir}/settings.json";
+        Restart = "always";
+        RestartSec = 5;
+        KillMode = "process";
+      };
+
+      wantedBy = lib.mkIf cfg.systemd.autoStart [ cfg.systemd.target ];
+    };
+  };
+}

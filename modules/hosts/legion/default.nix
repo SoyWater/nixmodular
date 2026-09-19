@@ -12,6 +12,7 @@
       starship
       helix
       applications
+      dictation
       sandboxing
       compression
       minecraft

@@ -1,12 +1,13 @@
 { moduleWithSystem, inputs, ... }:
 {
   flake.nixosModules.niri = moduleWithSystem (
-    { self', pkgs, ... }: {
-      environment.systemPackages = [ self'.packages.niri ];
+    { packages, ... }: {
+      programs.niri.enable = true;
+      programs.niri.package = packages.niri;
     }
   );
 
-  perSystem = { lib, pkgs, self', ... }: {
+  perSystem = { lib, pkgs, ... }: {
     packages.niri = inputs.wrappers.wrappers.niri.wrap {
       inherit pkgs;
       imports = [
@@ -22,8 +23,12 @@
       settings.binds = {
         "Mod+Shift+Slash".show-hotkey-overlay = _: { };
 
-        "Mod+T" = _: { props.hotkey-overlay-title = "Open a Terminal: kitty"; content.spawn = lib.getExe self'.packages.kitty; };
-        "Mod+B" = _: { props.hotkey-overlay-title = "Open Zen Browser"; content.spawn = lib.getExe inputs.zen-browser.packages.${pkgs.system}.default; };
+        "Mod+T" = _: { props.hotkey-overlay-title = "Open Terminal"; content.spawn-sh = "$LAUNCH_TERMINAL"; };
+        "Mod+B" = _: { props.hotkey-overlay-title = "Open Browser"; content.spawn-sh = "$LAUNCH_BROWSER"; };
+        "Alt+Space" = _: { props.hotkey-overlay-title = "Open launcher"; content.spawn-sh = "$LAUNCH_LAUNCHER"; };
+        "Mod+V" = _: { props.hotkey-overlay-title = "Open clipboard"; content.spawn-sh = "$LAUNCH_CLIPBOARD"; };
+        "Mod+Shift+V" = _: { props.hotkey-overlay-title = "Toggle Dictation"; content.spawn-sh = "$LAUNCH_DICTATION toggle"; };
+
 
         XF86AudioRaiseVolume = _: { props.allow-when-locked = true; content.spawn-sh = "wpctl set-volume @DEFAULT_AUDIO_SINK@ 0.1+ -l 1.0"; };
         XF86AudioLowerVolume = _: { props.allow-when-locked = true; content.spawn-sh = "wpctl set-volume @DEFAULT_AUDIO_SINK@ 0.1-"; };
@@ -39,6 +44,7 @@
         "Mod+O" = _: { props.repeat = false; content.toggle-overview = _: { }; };
         "Mod+Q" = _: { props.repeat = false; content.close-window = _: { }; };
         "Mod+Ctrl+Shift+Q" = _: { props.hotkey-overlay-title = "Force Kill Picked Window"; content.spawn-sh = "kill -9 $(niri msg --json pick-window 2>/dev/null | ${lib.getExe pkgs.jq} .pid)"; };
+        "Mod+Ctrl+P".spawn-sh = "niri msg action set-dynamic-cast-window --id $(niri msg --json pick-window | ${lib.getExe pkgs.jq} .id)";
 
         "Mod+Left".focus-column-left = _: { };
         "Mod+Down".focus-window-down = _: { };
@@ -52,7 +58,6 @@
         "Mod+Ctrl+Right".move-column-right = _: { };
         "Mod+Ctrl+H".move-column-left = _: { };
         "Mod+Ctrl+L".move-column-right = _: { };
-        "Mod+Ctrl+P".spawn-sh = "niri msg action set-dynamic-cast-window --id $(niri msg --json pick-window | ${lib.getExe pkgs.jq} .id)";
 
         "Mod+Home".focus-column-first = _: { };
         "Mod+End".focus-column-last = _: { };
@@ -136,15 +141,6 @@
         "Mod+Escape" = _: { props.allow-inhibiting = false; content.toggle-keyboard-shortcuts-inhibit = _: { }; };
         "Ctrl+Alt+Delete".quit = _: { };
       };
-      settings.spawn-at-startup = [
-        [
-          (lib.getExe self'.packages.vicinae)
-          "server"
-          "--config"
-          "/home/soywater/nixconfigs/modules/features/vicinae/config/settings.json"
-        ]
-      ];
-
       passthru.cargoBuildNoDefaultFeatures = pkgs.niri.cargoBuildNoDefaultFeatures;
       passthru.cargoBuildFeatures = pkgs.niri.cargoBuildFeatures;
     };
