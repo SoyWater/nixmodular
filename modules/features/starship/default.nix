@@ -38,6 +38,19 @@
           fi
 
           export STARSHIP_CONFIG="$runtime_config"
+
+          # Fish redraws a right prompt for every edited character.  JetBrains'
+          # terminal mishandles that redraw in narrow panes, leaving each render
+          # on screen.  Limit the workaround to IntelliJ; other terminals keep
+          # the normal right-side language and clock modules.
+          if [ "''${TERMINAL_EMULATOR:-}" = "JetBrains-JediTerm" ] && [ "$1" = "prompt" ]; then
+            for arg in "$@"; do
+              if [ "$arg" = "--right" ]; then
+                exit 0
+              fi
+            done
+          fi
+
           exec -a "$0" ${pkgs.starship}/bin/starship "$@"
         '';
       };
