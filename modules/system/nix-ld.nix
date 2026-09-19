@@ -8,6 +8,14 @@
         stdenv.cc.cc
         zlib
         libusb1
+        libglvnd
+        libxkbcommon
+        wayland
+        libx11
+        libxcursor
+        libxi
+        libxinerama
+        libxrandr
       ];
     }
   );
