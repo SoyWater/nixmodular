@@ -116,6 +116,7 @@
     "Mod+Shift+Equal".set-window-height = "+10%";
     "Mod+W".toggle-column-tabbed-display = _: { };
     Print.screenshot = _: { };
+    "Mod+Shift+X" = _: { props.hotkey-overlay-title = "Annotate Screenshot"; content.spawn-sh = "noctalia msg screenshot-annotate"; };
     "Ctrl+Print".screenshot-screen = _: { };
     "Alt+Print".screenshot-window = _: { };
     "Mod+Escape" = _: { props.allow-inhibiting = false; content.toggle-keyboard-shortcuts-inhibit = _: { }; };
